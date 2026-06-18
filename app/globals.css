@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --blue: #1247D6;
+  --blue2: #1E5AFF;
+  --blue-tint: #EEF3FF;
+  --blue-mid: #D4E0FF;
+  --gold: #F5B800;
+  --gold2: #FFCA28;
+  --gold-tint: #FFFAE8;
+  --gold-dark: #9A7000;
+  --ink: #0A0F1E;
+  --ink2: #3D4460;
+  --ink3: #8892A4;
+  --surface: #FAFBFF;
+  --line: #E8EBF5;
+}
+
+body {
+  background-color: var(--surface);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── Mobile global rules ─────────────────────────────── */
+
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Minimum line height for mobile readability */
+@media (max-width: 767px) {
+  p, li, label {
+    line-height: 1.6;
+  }
+}

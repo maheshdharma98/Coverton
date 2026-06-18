@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"c:\\\\Users\\\\LTP-1\\\\Coverton Next js\\\\asset\")",
+      "PowerShell(Copy-Item \"c:\\\\Users\\\\LTP-1\\\\Coverton Next js\\\\asset\\\\Web logo.png\" \"c:\\\\Users\\\\LTP-1\\\\Coverton Next js\\\\app\\\\icon.png\" -Force)"
+    ]
+  }
+}
