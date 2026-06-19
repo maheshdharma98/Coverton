@@ -66,7 +66,7 @@ export async function sendEnquiryEmail(
 ): Promise<void> {
   const transporter = getTransporter();
   const from = `"Coverton Insurance" <${process.env.GMAIL_USER}>`;
-  const subject = `[${data.refId}] New ${formatInsuranceType(data.insuranceType)} Enquiry — ${data.name}`;
+  const subject = `New ${formatInsuranceType(data.insuranceType)} Enquiry from ${data.name} (Ref ${data.refId})`;
 
   // Team email: attach policy file if uploaded
   const teamAttachments: nodemailer.SendMailOptions["attachments"] = policyAttachment
@@ -87,12 +87,41 @@ export async function sendEnquiryEmail(
     attachments: teamAttachments,
   });
 
+  const insuranceLabel = formatInsuranceType(data.insuranceType);
+  const customerSubject = `Your ${insuranceLabel} Enquiry Confirmation — Ref ${data.refId}`;
+  const firstName = data.name.split(" ")[0] ?? data.name;
+  const customerText = [
+    `Hi ${firstName},`,
+    ``,
+    `Thank you for your ${insuranceLabel} enquiry. We have received your request and our advisor will call you within 60 minutes during business hours.`,
+    ``,
+    `Reference Number: ${data.refId}`,
+    ``,
+    `What happens next?`,
+    `1. Our advisor reviews your requirements and calls you within 60 minutes.`,
+    `2. You receive a personalised quote with the best available premium.`,
+    `3. Policy documents are issued digitally — fast and paperless.`,
+    ``,
+    `Business Hours (IST):`,
+    `Mon–Fri: 9:00 AM – 6:00 PM`,
+    `Saturday: 10:00 AM – 4:00 PM`,
+    ``,
+    `Need help? Call +91 95660 85116 or email wecare@coverton.in`,
+    ``,
+    `— Coverton Insurance Broking Pvt Ltd`,
+  ].join("\n");
+
   const customerTask = customerEmailEnabled()
     ? transporter.sendMail({
         from,
         to: data.email,
-        subject: `Your ${formatInsuranceType(data.insuranceType)} Enquiry — Ref ${data.refId}`,
+        subject: customerSubject,
+        text: customerText,
         html: buildConfirmationEmailHtml(data.name, data.insuranceType, data.refId, logoDataUri),
+        headers: {
+          "X-Entity-Ref-ID": data.refId,
+          "List-Unsubscribe": `<mailto:${process.env.GMAIL_USER}?subject=Unsubscribe>`,
+        },
       })
     : Promise.resolve(null);
 
