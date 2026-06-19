@@ -48,7 +48,10 @@ function customerEmailEnabled(): boolean {
 }
 
 function getLogoUrl(): string {
-  const siteUrl = (process.env.SITE_URL ?? "").replace(/\/$/, "");
+  const siteUrl = (
+    process.env.SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "")
+  ).replace(/\/$/, "");
   return siteUrl ? `${siteUrl}/coverton-logo.png` : "";
 }
 

@@ -255,6 +255,8 @@ function FormInput({
   value,
   onChange,
   error,
+  maxLength,
+  inputMode,
 }: {
   label: string;
   type?: string;
@@ -264,6 +266,8 @@ function FormInput({
   value: string;
   onChange: (v: string) => void;
   error?: string;
+  maxLength?: number;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode'];
 }) {
   const [focused, setFocused] = useState(false);
   return (
@@ -273,6 +277,8 @@ function FormInput({
         placeholder={placeholder}
         required={required}
         value={value}
+        maxLength={maxLength}
+        inputMode={inputMode}
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
@@ -836,14 +842,17 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
             placeholder="Your full name" error={fieldErrors.name} />
         )}
         <FormInput label="Mobile" type="tel" required accent={accent} value={mobile}
-          onChange={(v) => { setMobile(v); clearErr('mobile'); }}
-          placeholder="10-digit number" error={fieldErrors.mobile} />
+          onChange={(v) => { setMobile(v.replace(/\D/g, '').slice(0, 10)); clearErr('mobile'); }}
+          placeholder="10-digit number" error={fieldErrors.mobile}
+          maxLength={10} inputMode="numeric" />
         <FormInput label="Email" type="email" required accent={accent} value={email}
           onChange={(v) => { setEmail(v); clearErr('email'); }}
-          placeholder="you@email.com" error={fieldErrors.email} />
+          placeholder="you@email.com" error={fieldErrors.email}
+          maxLength={100} />
         <FormInput label="Pincode" required accent={accent} value={pincode}
-          onChange={(v) => { setPincode(v); clearErr('pincode'); }}
-          placeholder="6-digit pincode" error={fieldErrors.pincode} />
+          onChange={(v) => { setPincode(v.replace(/\D/g, '').slice(0, 6)); clearErr('pincode'); }}
+          placeholder="6-digit pincode" error={fieldErrors.pincode}
+          maxLength={6} inputMode="numeric" />
       </div>
 
       {/* Motor extra fields */}
