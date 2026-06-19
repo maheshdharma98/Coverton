@@ -50,9 +50,12 @@ function customerEmailEnabled(): boolean {
 function getLogoUrl(): string {
   const siteUrl = (
     process.env.SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "") ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "")
   ).replace(/\/$/, "");
-  return siteUrl ? `${siteUrl}/coverton-logo.png` : "";
+  const url = siteUrl ? `${siteUrl}/coverton-logo.png` : "";
+  console.log(`[mailer] logo URL: ${url || "(none — text fallback)"}`);
+  return url;
 }
 
 // ─── sendEnquiryEmail ─────────────────────────────────────────────────────────
