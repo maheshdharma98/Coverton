@@ -15,7 +15,7 @@ import cholaLogo from "@/asset/Partner Logo/Cholamandalam.svg";
 // @ts-ignore
 import ecgcLogo from "@/asset/Partner Logo/ECGC.png";
 // @ts-ignore
-import futureGeneraliLogo from "@/asset/Partner Logo/Future Generali India Insurance Company Limited.jpg";
+import futureGeneraliLogo from "@/asset/Partner Logo/Future Generali India Insurance Company Limited.png";
 // @ts-ignore
 import galaxyLogo from "@/asset/Partner Logo/Galaxy.jpeg";
 // @ts-ignore
@@ -23,7 +23,7 @@ import icicLombardLogo from "@/asset/Partner Logo/ICICI_Lombard_GIC_idlwpVghRG_0
 // @ts-ignore
 import kotakLogo from "@/asset/Partner Logo/Kotak.jpg";
 // @ts-ignore
-import manipalCignaLogo from "@/asset/Partner Logo/Mnipal cigna.png";
+import manipalCignaLogo from "@/asset/Partner Logo/Mnipal cigna.jpg";
 // @ts-ignore
 import nationalLogo from "@/asset/Partner Logo/National.jpg";
 // @ts-ignore
@@ -52,6 +52,8 @@ import extraLogo1 from "@/asset/Partner Logo/id58KXJzPV_1781713035166.png";
 import extraLogo2 from "@/asset/Partner Logo/id5mJwi2PF_logos.png";
 // @ts-ignore
 import extraLogo3 from "@/asset/Partner Logo/images.png";
+// @ts-ignore
+import liberty from "@/asset/Partner Logo/Liberty.png";
 
 // ── Life Insurance logos ─────────────────────────────────────────────────────
 // @ts-ignore
@@ -62,6 +64,9 @@ import licLogo from "@/asset/Partner Logo/LIC.jpg";
 import starUnionLogo from "@/asset/Partner Logo/Star Union Dai-ichi Life.jpg";
 // @ts-ignore
 import tataAiaLogo from "@/asset/Partner Logo/Tata AIA Life.png";
+// @ts-ignore
+import sbiLife from "@/asset/Partner Logo/SBI_Life_Insurance.png";
+
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 
@@ -71,7 +76,7 @@ const GENERAL = [
   { src: careLogo,           alt: "Care Health Insurance" },
   { src: cholaLogo,          alt: "Cholamandalam MS General Insurance" },
   { src: ecgcLogo,           alt: "ECGC" },
-  { src: futureGeneraliLogo, alt: "Future Generali India Insurance" },
+  { src: futureGeneraliLogo, alt: "Generali Central Life Insurance" },
   { src: galaxyLogo,         alt: "Galaxy Health Insurance" },
   { src: icicLombardLogo,    alt: "ICICI Lombard General Insurance" },
   { src: kotakLogo,          alt: "Kotak Mahindra General Insurance" },
@@ -80,16 +85,18 @@ const GENERAL = [
   { src: newIndiaLogo,       alt: "The New India Assurance Co." },
   { src: orientalLogo,       alt: "The Oriental Insurance Co." },
   { src: rahejaLogo,         alt: "Raheja QBE General Insurance" },
-  { src: relianceLogo,       alt: "Reliance General Insurance" },
+  { src: relianceLogo,       alt: "Indusland General Insurance`" },
   { src: royalSundaramLogo,  alt: "Royal Sundaram Alliance Insurance" },
   { src: sbiGeneralLogo,     alt: "SBI General Insurance" },
   { src: shriramLogo,        alt: "Shriram General Insurance" },
   { src: starHealthLogo,     alt: "Star Health & Allied Insurance" },
   { src: tataAigLogo,        alt: "Tata AIG General Insurance" },
   { src: unitedIndiaLogo,    alt: "United India Insurance" },
-  { src: extraLogo1,         alt: "Go Digit General Insurance" },
+  { src: extraLogo1,         alt: "IFFCO Tokio General Insurance" },
   { src: extraLogo2,         alt: "HDFC ERGO General Insurance" },
-  { src: extraLogo3,         alt: "IFFCO Tokio General Insurance" },
+  { src: extraLogo3,         alt: "Go Digit General Insurance" },
+  { src: liberty,            alt: "Liberty General Insurance" },
+  
 ];
 
 const LIFE = [
@@ -97,6 +104,7 @@ const LIFE = [
   { src: icicPruLogo,   alt: "ICICI Prudential Life Insurance" },
   { src: tataAiaLogo,   alt: "Tata AIA Life Insurance" },
   { src: starUnionLogo, alt: "Star Union Dai-ichi Life Insurance" },
+  { src: sbiLife, alt : "Sbi Life Insurance"},
 ];
 
 // ── Card ─────────────────────────────────────────────────────────────────────
@@ -175,6 +183,8 @@ const MOBILE_GENERAL: { src: unknown; name: string }[] = [
   { src: extraLogo1,         name: "Go Digit"       },
   { src: extraLogo2,         name: "HDFC ERGO"      },
   { src: extraLogo3,         name: "IFFCO Tokio"    },
+  { src: liberty,            name: "Liberty General Insurance" },
+
 ];
 
 const MOBILE_LIFE: { src: unknown; name: string }[] = [
@@ -182,6 +192,7 @@ const MOBILE_LIFE: { src: unknown; name: string }[] = [
   { src: icicPruLogo,   name: "ICICI Pru Life" },
   { src: tataAiaLogo,   name: "Tata AIA Life"  },
   { src: starUnionLogo, name: "Star Union"     },
+  { src: sbiLife , name: "Sbi Life"}
 ];
 
 // ── Mobile logo pill ──────────────────────────────────────────────────────────
