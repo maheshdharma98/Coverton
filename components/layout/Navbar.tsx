@@ -28,10 +28,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const navBg     = scrolled ? "rgba(255,255,255,0.92)" : "rgba(10,18,45,0.55)";
-  const navBorder = scrolled ? "1px solid rgba(255,255,255,0.5)"  : "1px solid rgba(255,255,255,0.12)";
-  const linkColor = scrolled ? "#4a5568" : "rgba(255,255,255,0.75)";
-
   return (
     <div
       className="fixed top-0 left-0 right-0 z-[1000] flex flex-col items-center"
@@ -42,13 +38,13 @@ export default function Navbar() {
         style={{
           pointerEvents: "auto",
           marginTop: 14,
-          background: navBg,
+          background: "rgba(255,255,255,0.95)",
           backdropFilter: "blur(18px)",
           WebkitBackdropFilter: "blur(18px)",
-          border: navBorder,
-          padding: scrolled ? "5px 5px 5px 16px" : "6px 6px 6px 18px",
-          transition: "all 0.35s ease",
-          boxShadow: scrolled ? "0 4px 28px rgba(0,0,0,0.12)" : "0 2px 16px rgba(0,0,0,0.25)",
+          border: "1px solid rgba(0,0,0,0.07)",
+          padding: "5px 5px 5px 16px",
+          transition: "box-shadow 0.35s ease",
+          boxShadow: scrolled ? "0 4px 28px rgba(0,0,0,0.12)" : "0 2px 16px rgba(0,0,0,0.08)",
         }}
       >
         {/* Logo */}
@@ -58,11 +54,7 @@ export default function Navbar() {
             alt="Coverton Insurance"
             height={32}
             width={115}
-            style={{
-              objectFit: "contain",
-              filter: scrolled ? "none" : "brightness(0) invert(1)",
-              transition: "all 0.35s ease",
-            }}
+            style={{ objectFit: "contain" }}
             priority
           />
         </Link>
@@ -73,13 +65,7 @@ export default function Navbar() {
             const active = pathname === href || (href !== "/" && pathname.startsWith(href));
             return (
               <li key={href}>
-                <NavLink
-                  href={href}
-                  label={label}
-                  active={active}
-                  scrolled={scrolled}
-                  linkColor={linkColor}
-                />
+                <NavLink href={href} label={label} active={active} />
               </li>
             );
           })}
@@ -94,7 +80,7 @@ export default function Navbar() {
             className="flex items-center gap-1.5 rounded-full font-semibold text-white min-h-[44px]"
             style={{
               background: "#25D366",
-              padding: scrolled ? "7px 13px" : "8px 16px",
+              padding: "7px 13px",
               fontSize: 12,
               transition: "all 0.3s ease",
             }}
@@ -111,7 +97,7 @@ export default function Navbar() {
             className="flex items-center rounded-full font-semibold text-white transition-all duration-300 min-h-[44px]"
             style={{
               background: "#1247D6",
-              padding: scrolled ? "7px 15px" : "8px 18px",
+              padding: "7px 15px",
               fontSize: 12,
             }}
             onMouseEnter={e => (e.currentTarget.style.background = "#0e3ab0")}
@@ -123,7 +109,7 @@ export default function Navbar() {
 
           <button
             className="md:hidden min-w-[44px] min-h-[44px] flex items-center justify-center rounded-full"
-            style={{ color: scrolled ? "#1a202c" : "#ffffff" }}
+            style={{ color: "#1a202c" }}
             onClick={() => setOpen(!open)}
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
@@ -140,25 +126,8 @@ export default function Navbar() {
   );
 }
 
-function NavLink({
-  href,
-  label,
-  active,
-  scrolled,
-  linkColor,
-}: {
-  href: string;
-  label: string;
-  active: boolean;
-  scrolled: boolean;
-  linkColor: string;
-}) {
+function NavLink({ href, label, active }: { href: string; label: string; active: boolean }) {
   const [hovered, setHovered] = useState(false);
-
-  const activeBg    = scrolled ? "#1247D6"                  : "rgba(255,255,255,0.18)";
-  const activeColor = "#ffffff";
-  const hoverBg     = scrolled ? "rgba(18,71,214,0.08)"     : "rgba(255,255,255,0.1)";
-  const hoverColor  = scrolled ? "#1247D6"                  : "#ffffff";
 
   return (
     <Link
@@ -172,8 +141,8 @@ function NavLink({
         borderRadius: 50,
         fontSize: 12.5,
         fontWeight: active ? 700 : 500,
-        color: active ? activeColor : hovered ? hoverColor : linkColor,
-        background: active ? activeBg : hovered ? hoverBg : "transparent",
+        color: active ? "#ffffff" : hovered ? "#1247D6" : "#4a5568",
+        background: active ? "#1247D6" : hovered ? "rgba(18,71,214,0.08)" : "transparent",
         textDecoration: "none",
         transition: "all 0.2s ease",
         letterSpacing: active ? "0.01em" : "normal",
