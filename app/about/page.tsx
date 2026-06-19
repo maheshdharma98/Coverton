@@ -96,12 +96,12 @@ const ADDRESS_ROWS = [
   {
     icon: 'ti-phone',
     label: 'Phone',
-    value: '+91 98400 00000',
+    value: '+91 95660 85116',
   },
   {
     icon: 'ti-mail',
     label: 'Email',
-    value: 'info@coverton.in',
+    value: 'wecare@coverton.in',
   },
 ];
 
