@@ -18,21 +18,25 @@ export default function ProductsPage() {
         {/* ── Hero ──────────────────────────────────────────────────────────── */}
         <section
           className="pt-32 pb-10 sm:pt-36 sm:pb-14 lg:pt-40 lg:pb-20 text-center"
-          style={{ background: "var(--ink)" }}
+          style={{ background: "#0f1f3d", position: "relative", overflow: "hidden" }}
         >
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 flex flex-col items-center gap-4">
+          {/* Decorative blobs */}
+          <div style={{ position: "absolute", width: 300, height: 300, borderRadius: "50%", right: -80, top: -80, background: "rgba(18,71,214,0.15)", pointerEvents: "none" }} />
+          <div style={{ position: "absolute", width: 200, height: 200, borderRadius: "50%", left: "10%", bottom: -80, background: "rgba(245,184,0,0.07)", pointerEvents: "none" }} />
+
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 flex flex-col items-center gap-4" style={{ position: "relative", zIndex: 1 }}>
             <span
               className="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"
-              style={{ background: "rgba(255,255,255,0.08)", color: "#1E90FF" }}
+              style={{ background: "rgba(255,255,255,0.08)", color: "#F5B800" }}
             >
-              Our products
+              Insurance products
             </span>
-            <h1 className="text-2xl sm:text-3xl lg:text-5xl font-black text-white">
-              13 ways to stay{" "}
-              <span style={{ color: "var(--gold)" }}>protected.</span>
+            <h1 className="text-2xl sm:text-2xl lg:text-4xl font-black text-white">
+              Protection for Every Individual.{" "}
+              <span style={{ color: "#F5B800" }}>Solution for Every Business.</span>
             </h1>
             <p className="text-sm sm:text-base max-w-lg" style={{ color: "rgba(255,255,255,0.55)" }}>
-              From motor to marine, health to surety — find the coverage that fits your life or business.
+              From personal insurance to commercial risk solutions, we make insurance simple by comparing options and helping you choose the coverage that best fits your needs.
             </p>
           </div>
         </section>

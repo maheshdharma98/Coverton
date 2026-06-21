@@ -382,20 +382,6 @@ export default function BentoHero() {
               <span style={{ color: "#F5B800" }}>make a claim.</span>
             </h1>
 
-            {/* Brand tagline */}
-            <p
-              style={{
-                fontSize: 14,
-                fontWeight: 600,
-                fontStyle: "italic",
-                color: "#F5B800",
-                margin: 0,
-                letterSpacing: "0.01em",
-              }}
-            >
-              "We cover anything under the sky."
-            </p>
-
             {/* Body */}
             <p
               style={{
@@ -461,47 +447,8 @@ export default function BentoHero() {
                   style={{ fontSize: 13, color: "#F5B800" }}
                   aria-hidden="true"
                 />
-                Compare. Choose. Protect
+                Right Comparison. Right Protection.
               </span>
-            </div>
-
-            {/* CTA */}
-            <div>
-              <a
-                href={`https://wa.me/${waNumber}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  background: "#25D366",
-                  color: "#ffffff",
-                  borderRadius: 50,
-                  padding: "13px 26px",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  textDecoration: "none",
-                  minHeight: 48,
-                  transition: "background 0.2s ease",
-                }}
-                onMouseEnter={e =>
-                  ((e.currentTarget as HTMLAnchorElement).style.background =
-                    "#1ebe59")
-                }
-                onMouseLeave={e =>
-                  ((e.currentTarget as HTMLAnchorElement).style.background =
-                    "#25D366")
-                }
-                aria-label="Ask us anything on WhatsApp — No-Cost Consultation"
-              >
-                <i
-                  className="ti ti-brand-whatsapp"
-                  style={{ fontSize: 20 }}
-                  aria-hidden="true"
-                />
-                Ask us anything — No-Cost Consultation
-              </a>
             </div>
 
             {/* Stats row */}

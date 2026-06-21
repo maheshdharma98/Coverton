@@ -6,6 +6,7 @@ export default function FloatingActions() {
   const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
   const [waHover, setWaHover] = useState(false);
   const [mailHover, setMailHover] = useState(false);
+  const [callHover, setCallHover] = useState(false);
 
   return (
     <div
@@ -21,6 +22,33 @@ export default function FloatingActions() {
       }}
       aria-label="Quick contact actions"
     >
+      {/* Call */}
+      <a
+        href="tel:+919566085116"
+        aria-label="Call us"
+        onMouseEnter={() => setCallHover(true)}
+        onMouseLeave={() => setCallHover(false)}
+        style={{
+          width: 50,
+          height: 50,
+          borderRadius: "50%",
+          background: callHover ? "#1a6cbd" : "#1247D6",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "0 4px 16px rgba(18,71,214,0.4)",
+          transition: "background 0.2s ease, transform 0.2s ease",
+          transform: callHover ? "scale(1.1)" : "scale(1)",
+          textDecoration: "none",
+        }}
+      >
+        <i
+          className="ti ti-phone"
+          style={{ fontSize: 22, color: "#ffffff" }}
+          aria-hidden="true"
+        />
+      </a>
+
       {/* Email */}
       <a
         href="mailto:wecare@coverton.in"

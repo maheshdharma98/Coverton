@@ -304,7 +304,7 @@ function Screen2() {
           </div>
           <p className="text-[8px] font-semibold" style={{ color: "#1a0dab" }}>Coverton Insurance — Get a Quote in 2 Minutes</p>
           <p className="text-[7px]" style={{ color: "#006621" }}>www.covertoninsurance.in</p>
-          <p className="text-[7px]" style={{ color: "#545454" }}>IRDAI registered. 13 categories. Fast claim settlement.</p>
+          <p className="text-[7px]" style={{ color: "#545454" }}>IRDAI registered. Fast claim settlement.</p>
         </div>
 
         {/* Organic #1 */}
@@ -373,7 +373,7 @@ function Screen3() {
       {/* Mini hero */}
       <div className="px-2.5 py-2" style={{ background: "#0A0F1E" }}>
         <p className="text-[8px] font-black text-white leading-tight">Insurance that actually <span style={{ color: "#F5B800" }}>works</span> for you.</p>
-        <p className="text-[6px] mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>13 categories. Fast claims. Real advisors.</p>
+        <p className="text-[6px] mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>Fast claims. Real advisors.</p>
         <div className="mt-1.5 flex gap-1">
           <span className="text-[6px] px-2 py-0.5 rounded-full font-bold" style={{ background: "#F5B800", color: "#0A0F1E" }}>Get quote</span>
           <span className="text-[6px] px-2 py-0.5 rounded-full" style={{ border: "1px solid rgba(255,255,255,0.2)", color: "rgba(255,255,255,0.6)" }}>Learn more</span>
@@ -382,7 +382,7 @@ function Screen3() {
 
       {/* Products section */}
       <div style={{ background: "#0f1f3d", flex: 1, padding: "6px 8px 8px" }}>
-        <p className="text-[6.5px] font-bold text-white mb-0.5">Our Products</p>
+        <p className="text-[6.5px] font-bold text-white mb-0.5">Insurance Products</p>
         <div className="grid grid-cols-2 gap-1">
           {MINI_PRODUCTS.map(({ label, icon, color }) => (
             <div

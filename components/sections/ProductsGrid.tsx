@@ -387,7 +387,17 @@ export default function ProductsGrid({
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section style={{ background: "#F0F4FA", width: "100%", paddingTop: 30, paddingBottom: 64 }}>
+    <section style={{ background: "#F0F4FA", width: "100%", paddingTop: 30, paddingBottom: 64, position: "relative", overflow: "hidden" }}>
+      {/* Decorative blobs — light version of hero blobs */}
+      <div style={{ position: "absolute", width: 600, height: 600, borderRadius: "50%", right: -160, top: -160, background: "rgba(18,71,214,0.055)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", width: 400, height: 400, borderRadius: "50%", left: -100, bottom: -120, background: "rgba(245,184,0,0.07)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", width: 300, height: 300, borderRadius: "50%", left: "55%", top: "38%", background: "rgba(18,71,214,0.035)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", width: 220, height: 220, borderRadius: "50%", left: "28%", top: -60, background: "rgba(245,184,0,0.06)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", width: 180, height: 180, borderRadius: "50%", right: "18%", top: "52%", background: "rgba(245,184,0,0.055)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", width: 260, height: 260, borderRadius: "50%", left: "42%", bottom: -80, background: "rgba(18,71,214,0.04)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", width: 140, height: 140, borderRadius: "50%", left: "12%", top: "28%", background: "rgba(18,71,214,0.045)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", width: 100, height: 100, borderRadius: "50%", right: "6%", bottom: "18%", background: "rgba(245,184,0,0.08)", pointerEvents: "none" }} />
+
       <style>{`
         .pg-bento { display: block }
         .pg-accordion { display: none }
@@ -404,9 +414,20 @@ export default function ProductsGrid({
           to { opacity: 1; transform: translateY(0) }
         }
         .pg-acc-body { animation: pgFadeIn 0.2s ease }
+        .pg-section-dots {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle, rgba(18,71,214,0.09) 1px, transparent 1px);
+          background-size: 28px 28px;
+          pointer-events: none;
+          z-index: 0;
+        }
       `}</style>
 
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+      {/* Dot grid */}
+      <div className="pg-section-dots" />
+
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", position: "relative", zIndex: 1 }}>
 
         {/* Header */}
         {showHeader && (
@@ -561,7 +582,7 @@ export default function ProductsGrid({
               onMouseLeave={e => (e.currentTarget.style.background = "#1247D6")}
             >
               <i className="ti ti-category" style={{ fontSize: 16 }} aria-hidden="true" />
-              View all 13 categories
+              View all categories
               <i className="ti ti-arrow-right" style={{ fontSize: 14 }} aria-hidden="true" />
             </button>
           </div>
@@ -589,7 +610,7 @@ export default function ProductsGrid({
               }}
             >
               <i className="ti ti-category" aria-hidden="true" />
-              Browse all 13 categories
+              Browse all categories
               <i className="ti ti-arrow-right" aria-hidden="true" />
             </button>
           </div>

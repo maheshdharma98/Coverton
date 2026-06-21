@@ -42,7 +42,7 @@ export default function Navbar() {
           backdropFilter: "blur(18px)",
           WebkitBackdropFilter: "blur(18px)",
           border: "1px solid rgba(0,0,0,0.07)",
-          padding: "5px 5px 5px 16px",
+          padding: "5px 10px 5px 16px",
           transition: "box-shadow 0.35s ease",
           boxShadow: scrolled ? "0 4px 28px rgba(0,0,0,0.12)" : "0 2px 16px rgba(0,0,0,0.08)",
         }}
@@ -73,35 +73,17 @@ export default function Navbar() {
 
         {/* Right CTAs */}
         <div className="flex items-center gap-1.5 flex-shrink-0">
-          <a
-            href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ""}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 rounded-full font-semibold text-white min-h-[44px]"
-            style={{
-              background: "#25D366",
-              padding: "7px 13px",
-              fontSize: 12,
-              transition: "all 0.3s ease",
-            }}
-            onMouseEnter={e => (e.currentTarget.style.background = "#20BA5A")}
-            onMouseLeave={e => (e.currentTarget.style.background = "#25D366")}
-            aria-label="Contact us on WhatsApp"
-          >
-            <i className="ti ti-brand-whatsapp" style={{ fontSize: 15 }} aria-hidden="true" />
-            <span className="hidden md:inline">WhatsApp Us</span>
-          </a>
-
           <Link
             href="/products"
-            className="flex items-center rounded-full font-semibold text-white transition-all duration-300 min-h-[44px]"
+            className="flex items-center rounded-full font-semibold transition-all duration-300 min-h-[44px]"
             style={{
-              background: "#1247D6",
+              background: "#F5B800",
+              color: "#0A0F1E",
               padding: "7px 15px",
               fontSize: 12,
             }}
-            onMouseEnter={e => (e.currentTarget.style.background = "#0e3ab0")}
-            onMouseLeave={e => (e.currentTarget.style.background = "#1247D6")}
+            onMouseEnter={e => (e.currentTarget.style.background = "#e0a800")}
+            onMouseLeave={e => (e.currentTarget.style.background = "#F5B800")}
           >
             <span className="hidden sm:inline">Get a quote</span>
             <span className="sm:hidden">Quote</span>

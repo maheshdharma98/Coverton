@@ -49,7 +49,7 @@ export default function NotFound() {
             Page not found
           </h1>
           <p className="text-base leading-relaxed" style={{ color: "var(--ink3)" }}>
-            The page you're looking for doesn't exist or has been moved. Try heading back to the homepage or exploring our products.
+            The page you're looking for doesn't exist or has been moved. Try heading back to the homepage or exploring Insurance products.
           </p>
         </div>
 

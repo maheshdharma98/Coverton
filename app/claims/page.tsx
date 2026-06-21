@@ -183,11 +183,6 @@ export default function ClaimsPage() {
           <div style={{ position: 'absolute', width: 200, height: 200, borderRadius: '50%', left: '10%', bottom: -80, background: 'rgba(245,184,0,0.07)', pointerEvents: 'none' }} />
 
           <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto' }}>
-            {/* Breadcrumb */}
-            <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginBottom: 20 }}>
-              <a href="/" style={{ color: 'rgba(255,255,255,0.45)', textDecoration: 'none' }}>Home</a>
-              {' '}›{' '}Claims
-            </p>
 
             {/* Tag */}
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#F5B800', borderRadius: 20, padding: '4px 12px', marginBottom: 16 }}>
