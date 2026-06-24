@@ -565,7 +565,7 @@ export default function BentoHero() {
                   style={{ fontSize: 16 }}
                   aria-hidden="true"
                 />
-                View all 13 insurance categories
+                View all insurance categories
                 <i
                   className="ti ti-arrow-right"
                   style={{ fontSize: 14 }}

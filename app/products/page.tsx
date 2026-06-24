@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import ProductsGrid from "@/components/sections/ProductsGrid";
+import ProductCardsGrid from "@/components/sections/ProductCardsGrid";
 
 export const metadata: Metadata = {
   title: "All Products — Coverton Insurance",
@@ -41,8 +41,8 @@ export default function ProductsPage() {
           </div>
         </section>
 
-        {/* ── Bento grid ───────────────────────────────────────────────────── */}
-        <ProductsGrid showHeader={false} showViewAll={false} />
+        {/* ── Product cards grid ───────────────────────────────────────────── */}
+        <ProductCardsGrid />
       </main>
 
       <Footer />

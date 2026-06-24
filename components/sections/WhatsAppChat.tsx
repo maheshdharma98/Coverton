@@ -108,7 +108,7 @@ export default function WhatsAppChat() {
     >
       <div
         className="grid grid-cols-1 lg:grid-cols-2 items-center"
-        style={{ gap: 80, maxWidth: 1200, margin: "0 auto" }}
+        style={{ gap: "clamp(40px, 6vw, 80px)", maxWidth: 1200, margin: "0 auto" }}
       >
         {/* ── LEFT — copy ───────────────────────────────────────────── */}
         <div>
@@ -127,7 +127,7 @@ export default function WhatsAppChat() {
 
           <h2
             style={{
-              fontSize: 36,
+              fontSize: "clamp(24px, 5vw, 36px)",
               fontWeight: 800,
               color: "#0f1f3d",
               lineHeight: 1.2,
@@ -220,7 +220,7 @@ export default function WhatsAppChat() {
         </div>
 
         {/* ── RIGHT — WhatsApp mockup ────────────────────────────────── */}
-        <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
           <div
             style={{
               background: "#ECE5DD",
@@ -347,7 +347,7 @@ export default function WhatsAppChat() {
               color: "#8892A4",
               fontStyle: "italic",
               textAlign: "center",
-              marginTop: 12,
+              margin: 0,
             }}
           >
             Real conversation. Shared with permission.
