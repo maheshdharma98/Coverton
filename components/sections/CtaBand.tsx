@@ -27,17 +27,15 @@ export default function CtaBand() {
       >
         <h2
           style={{
-            fontSize: "clamp(28px, 4vw, 42px)",
+            fontSize: "clamp(28px, 4vw, 35px)",
             fontWeight: 900,
-            lineHeight: 1.15,
+            lineHeight: 1.00,
             color: "#ffffff",
             margin: 0,
             letterSpacing: "-0.02em",
           }}
         >
-          Still reading? You&apos;re exactly
-          <br />
-          the careful kind we like.
+          Have Questions? We're Here to Help.
         </h2>
 
         <p
@@ -48,7 +46,7 @@ export default function CtaBand() {
             lineHeight: 1.6,
           }}
         >
-          Start with a question. No forms. No pressure.
+          Start with a simple conversation—no lengthy forms, no pressure, just expert guidance.
         </p>
 
         <div

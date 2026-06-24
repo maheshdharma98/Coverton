@@ -5,6 +5,8 @@ import UserStory from "@/components/sections/UserStory";
 import ProductsGrid from "@/components/sections/ProductsGrid";
 import ClientsSection from "@/components/sections/ClientsSection";
 import WhatsAppChat from "@/components/sections/WhatsAppChat";
+import TermCalculator from "@/components/sections/TermCalculator";
+import GuidesSection from "@/components/sections/GuidesSection";
 import InsurersSection from "@/components/sections/InsurersSection";
 import CtaBand from "@/components/sections/CtaBand";
 
@@ -18,6 +20,8 @@ export default function HomePage() {
         <ProductsGrid />
         <ClientsSection />
         <WhatsAppChat />
+        <TermCalculator />
+        <GuidesSection />
         <InsurersSection />
         <CtaBand />
       </main>

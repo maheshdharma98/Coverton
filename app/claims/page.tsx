@@ -128,6 +128,62 @@ const PROMISES = [
   },
 ];
 
+const INTIMATION: {
+  company: string;
+  sector: 'Private' | 'Public';
+  garage: string;
+  rsa: string;
+  claim: string;
+}[] = [
+  { company: 'Acko General Insurance',                     sector: 'Private', garage: 'Garage list not available. Call the toll-free number to locate the nearest garage.', rsa: '18002662256',                              claim: '18002662256' },
+  { company: 'Bajaj Allianz General Insurance',            sector: 'Private', garage: 'https://www.bajajgeneralinsurance.com/preferred-garages.html',                       rsa: '18001035858',                              claim: '18002095858' },
+  { company: 'Cholamandalam MS General Insurance',         sector: 'Private', garage: 'https://www.cholainsurance.com/cashless-garages',                                    rsa: '18002085544',                              claim: '18002085544' },
+  { company: 'Future Generali India Insurance',            sector: 'Private', garage: 'https://www.generalicentralinsurance.com/garage-locator',                            rsa: '18002101212',                              claim: '1800 220233 / 1860 500 3333 / 022 6783 7800' },
+  { company: 'Go Digit General Insurance',                 sector: 'Private', garage: 'https://www.godigit.com/garages',                                                    rsa: '1800-258-5956',                            claim: '7709996079' },
+  { company: 'HDFC ERGO General Insurance',                sector: 'Private', garage: 'https://www.hdfcergo.com/locators/cashless-garages-networks',                        rsa: '022-6234-6234 / 0120-6234-6234',           claim: '022-6234-6234 / 0120-6234-6234' },
+  { company: 'ICICI Lombard General Insurance',            sector: 'Private', garage: 'https://www.icicilombard.com/cashless-garages',                                      rsa: '1800-2666',                                claim: '1800-2666' },
+  { company: 'IFFCO-Tokio General Insurance',              sector: 'Private', garage: 'https://www.iffcotokio.co.in/contact-us?tab=garage',                                 rsa: '1800-103-5499 / 0124-4285499',             claim: '1800-103-5499' },
+  { company: 'IndusInd General Insurance (formerly Reliance General)', sector: 'Private', garage: 'https://www.indusindinsurance.com/insurance/self-help/cashless-garages-and-hospitals.aspx', rsa: '+91 22 4890 3009', claim: '+91 22 4890 3009' },
+  { company: 'Liberty General Insurance',                  sector: 'Private', garage: 'https://www.libertyinsurance.in/products/CPMigration/garagelocator',                 rsa: '1800-266-5844',                            claim: '1800-266-5844' },
+  { company: 'Magma HDI General Insurance',                sector: 'Private', garage: 'https://www.coverfox.com/car-insurance/magma-hdi-car-insurance/cashless-garages/',    rsa: '1800 266 3202',                            claim: '1800 266 3202' },
+  { company: 'Navi General Insurance',                     sector: 'Private', garage: 'N/A',                                                                                rsa: '1800 123 0004',                            claim: '7406012341' },
+  { company: 'Raheja QBE General Insurance',               sector: 'Private', garage: 'https://www.rahejaqbe.com/garage-locator',                                           rsa: '1800-102-7723',                            claim: '1800-102-7723' },
+  { company: 'Royal Sundaram General Insurance',           sector: 'Private', garage: 'https://www.royalsundaram.in/cashless-garage',                                       rsa: '18005689999',                              claim: '18005689999' },
+  { company: 'SBI General Insurance',                      sector: 'Private', garage: 'https://www.sbigeneral.in/claim/garage-network',                                     rsa: '1800-102-1111 / 1800-22-1111',             claim: '18001021111' },
+  { company: 'Shriram General Insurance',                  sector: 'Private', garage: 'https://www.shriramgi.com/cashless-garages',                                         rsa: '1800-300-30000 / 1800-103-3009',           claim: '1800-300-30000 / 1800-103-3009' },
+  { company: 'Tata AIG General Insurance',                 sector: 'Private', garage: 'https://www.tataaig.com/locator/cashless-car-network-garages',                       rsa: '022 6489 8282 / 1800 267 1955',            claim: '022 6489 8282 / 1800 267 1955' },
+  { company: 'Universal Sompo General Insurance',          sector: 'Private', garage: 'https://www.universalsompo.com/cashless-hospitals/garages/',                         rsa: '1800-22-4030 / 1800-200-4030',             claim: '1800-22-4030 / 1800-200-4030' },
+  { company: 'Zuno General Insurance',                     sector: 'Private', garage: 'https://www.hizuno.com/cashless-garage-network',                                     rsa: '1800 12000',                               claim: '1800 12000' },
+  { company: 'Zurich Kotak General Insurance',             sector: 'Private', garage: 'https://www.zurichkotak.com/network-locator/cashless-garages',                       rsa: '1800 266 45 45',                           claim: '1800 266 45 45' },
+  { company: 'National Insurance Company',                 sector: 'Public',  garage: 'https://nationalinsurance.nic.co.in/key-links/our-networks/cashless-garages',        rsa: '18003450330',                              claim: '18003450330' },
+  { company: 'The New India Assurance Company',            sector: 'Public',  garage: 'https://www.newindia.co.in/garage-list',                                             rsa: '1800-209-1415',                            claim: '1800-209-1415' },
+  { company: 'The Oriental Insurance Company',             sector: 'Public',  garage: 'https://orientalinsurance.org.in/network-garage',                                    rsa: '011-3320-8485 / 1800-11-8485',             claim: '011-3320-8485 / 1800-11-8485' },
+  { company: 'United India Insurance Company',             sector: 'Public',  garage: 'https://uiic.co.in/web/garage-details',                                              rsa: '1800-425-9449 / 1800-425-33333',           claim: '1800-425-9449 / 1800-425-33333' },
+];
+
+const HOSPITAL_NETWORK: {
+  company: string;
+  sector: 'Private' | 'Public';
+  link: string;
+  linkText: string;
+}[] = [
+  { company: 'ICICI Lombard General Insurance',       sector: 'Private', link: 'https://www.icicilombard.com/cashless-hospitals',                                                         linkText: 'Cashless network hospitals' },
+  { company: 'Tata AIG General Insurance',            sector: 'Private', link: 'https://www.tataaig.com/locator/cashless-hospitals-network',                                               linkText: '12,000+ cashless hospitals' },
+  { company: 'Go Digit General Insurance',            sector: 'Private', link: 'https://www.godigit.com/hospitals',                                                                        linkText: '9,000+ cashless hospitals' },
+  { company: 'Future Generali India Insurance',       sector: 'Private', link: 'https://www.generalicentralinsurance.com/hospital-locator',                                                linkText: 'Hospital locator' },
+  { company: 'Bajaj Allianz General Insurance',       sector: 'Private', link: 'https://www.bajajallianz.com/find-a-hospital.html',                                                        linkText: 'Find network hospital' },
+  { company: 'IFFCO-Tokio General Insurance',         sector: 'Private', link: 'https://www.iffcotokio.co.in/content/dam/iffcotokio/pdfs/list-of-network-hospitals.pdf',                  linkText: 'Download hospital PDF list' },
+  { company: 'Shriram General Insurance',             sector: 'Private', link: 'https://www.shriramgi.com/cashless-hospitals',                                                             linkText: 'View hospital list' },
+  { company: 'Zurich Kotak General Insurance',        sector: 'Private', link: 'https://www.zurichkotak.com/network-locator/cashless-hospitals/chennai',                                   linkText: 'Cashless hospital locator' },
+  { company: 'Royal Sundaram General Insurance',      sector: 'Private', link: 'https://www.royalsundaram.in/cashless-hospital',                                                           linkText: '452+ cashless hospitals' },
+  { company: 'Cholamandalam MS General Insurance',    sector: 'Private', link: 'https://www.cholainsurance.com/cashless-hospitals',                                                        linkText: 'Cashless hospital list' },
+  { company: 'Raheja QBE General Insurance',          sector: 'Private', link: 'https://www.rahejaqbe.com/hospital-locator',                                                              linkText: 'Hospital locator' },
+  { company: 'The New India Assurance Company',       sector: 'Public',  link: 'https://www.newindia.co.in/hospitals-list',                                                               linkText: 'View hospital list' },
+  { company: 'National Insurance Company',            sector: 'Public',  link: 'https://medsave.in/NATIONAL%20INSURANCE%20NETWORK%20HOSPITALS.pdf',                                       linkText: 'Download hospital PDF list' },
+  { company: 'The Oriental Insurance Company',        sector: 'Public',  link: 'https://orientalinsurance.org.in/network-hospitals',                                                      linkText: 'View hospital list' },
+  { company: 'United India Insurance Company',        sector: 'Public',  link: 'https://uiic.co.in/web/tpa-ppn-network-hospitals',                                                        linkText: 'TPA/PPN network hospitals' },
+];
+
 const FAQS = [
   {
     q: 'How soon should I report a claim?',
@@ -160,6 +216,9 @@ const FAQS = [
 export default function ClaimsPage() {
   const [activeTab, setActiveTab] = useState('motor');
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [claimSearch, setClaimSearch] = useState('');
+  const [claimSector, setClaimSector] = useState<'All' | 'Private' | 'Public'>('All');
+  const [claimTableView, setClaimTableView] = useState<'garages' | 'hospitals'>('garages');
   const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '';
 
   return (
@@ -239,9 +298,9 @@ export default function ClaimsPage() {
             >
               {[
                 { num: '98%',    label: 'Claims settled successfully' },
-                { num: '7 days', label: 'Average settlement time' },
-                { num: '24/7',   label: 'Claims support available' },
-                { num: 'Zero',   label: 'Hidden charges ever' },
+                { num: 'Dedicated', label: 'Claims Assistance' },
+                { num: 'Expert',   label: 'Claims Support' },
+                { num: 'Zero',   label: 'Hidden charges' },
               ].map(({ num, label }) => (
                 <div key={label}>
                   <p style={{ fontSize: 22, fontWeight: 700, color: 'white', margin: 0 }}>{num}</p>
@@ -366,6 +425,223 @@ export default function ClaimsPage() {
             </div>
           </div>
         </section>
+
+        {/* ─── SECTION 3.5: INSURER CONTACTS TABLE ─────────────────────────── */}
+        {(() => {
+          const isUrl = (s: string) => s.startsWith('http');
+
+          const filteredGarages = INTIMATION.filter((r) => {
+            const matchSearch = r.company.toLowerCase().includes(claimSearch.toLowerCase());
+            const matchSector = claimSector === 'All' || r.sector === claimSector;
+            return matchSearch && matchSector;
+          });
+
+          const filteredHospitals = HOSPITAL_NETWORK.filter((r) => {
+            const matchSearch = r.company.toLowerCase().includes(claimSearch.toLowerCase());
+            const matchSector = claimSector === 'All' || r.sector === claimSector;
+            return matchSearch && matchSector;
+          });
+
+          const resultCount = claimTableView === 'garages' ? filteredGarages.length : filteredHospitals.length;
+
+          return (
+            <section style={{ background: 'white' }} className="px-5 lg:px-20 py-16">
+              <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+
+                {/* Header */}
+                <div style={{ textAlign: 'center', marginBottom: 32 }}>
+                  <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: '#1247D6', display: 'block', marginBottom: 10 }}>
+                    INSURER CONTACTS
+                  </span>
+                  <h2 style={{ fontSize: 26, fontWeight: 800, color: '#0A0F1E', margin: '0 0 8px', letterSpacing: '-0.5px' }}>
+                    Cashless network &amp; claim contacts
+                  </h2>
+                  <p style={{ fontSize: 14, color: '#8892A4', margin: 0, maxWidth: 540, marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.65 }}>
+                    Find cashless garages for motor claims, network hospitals for health claims, and direct intimation numbers.
+                  </p>
+                </div>
+
+                {/* Tab switcher */}
+                <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 28 }}>
+                  {([
+                    { key: 'garages',   label: 'Motor Cashless Garages',   icon: 'ti-car' },
+                    { key: 'hospitals', label: 'Cashless Hospital Networks', icon: 'ti-building-hospital' },
+                  ] as const).map((tab) => (
+                    <button
+                      key={tab.key}
+                      onClick={() => { setClaimTableView(tab.key); setClaimSearch(''); setClaimSector('All'); }}
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 7,
+                        padding: '10px 22px', borderRadius: 50, fontSize: 13, fontWeight: 700,
+                        border: `1.5px solid ${claimTableView === tab.key ? '#1247D6' : '#E8EBF5'}`,
+                        background: claimTableView === tab.key ? '#1247D6' : 'white',
+                        color: claimTableView === tab.key ? 'white' : '#3D4460',
+                        cursor: 'pointer', transition: 'all 0.18s',
+                        boxShadow: claimTableView === tab.key ? '0 4px 14px rgba(18,71,214,0.22)' : 'none',
+                      }}
+                    >
+                      <i className={`ti ${tab.icon}`} style={{ fontSize: 15 }} />
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Search + Filter bar */}
+                <div style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap', alignItems: 'center' }}>
+                  {/* Search input */}
+                  <div style={{ position: 'relative', flex: 1, minWidth: 220 }}>
+                    <i className="ti ti-search" style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', fontSize: 15, color: '#8892A4', pointerEvents: 'none' }} />
+                    <input
+                      type="text"
+                      placeholder="Search insurer…"
+                      value={claimSearch}
+                      onChange={(e) => setClaimSearch(e.target.value)}
+                      style={{
+                        width: '100%', boxSizing: 'border-box',
+                        paddingLeft: 40, paddingRight: 14, paddingTop: 10, paddingBottom: 10,
+                        fontSize: 13, color: '#0A0F1E',
+                        border: '1px solid #E8EBF5', borderRadius: 50,
+                        outline: 'none', background: '#FAFBFF',
+                      }}
+                    />
+                  </div>
+
+                  {/* Sector filter */}
+                  <div style={{ display: 'flex', gap: 6 }}>
+                    {(['All', 'Private', 'Public'] as const).map((s) => (
+                      <button
+                        key={s}
+                        onClick={() => setClaimSector(s)}
+                        style={{
+                          padding: '8px 18px', borderRadius: 50, fontSize: 12.5, fontWeight: 600,
+                          border: `1px solid ${claimSector === s ? '#0f1f3d' : '#E8EBF5'}`,
+                          background: claimSector === s ? '#0f1f3d' : 'white',
+                          color: claimSector === s ? 'white' : '#3D4460',
+                          cursor: 'pointer', transition: 'all 0.15s',
+                        }}
+                      >
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Result count */}
+                  <span style={{ fontSize: 12, color: '#8892A4', whiteSpace: 'nowrap' }}>
+                    {resultCount} insurer{resultCount !== 1 ? 's' : ''}
+                  </span>
+                </div>
+
+                {/* ── Garages table ── */}
+                {claimTableView === 'garages' && (
+                  <div style={{ overflowX: 'auto', borderRadius: 16, border: '1px solid #E8EBF5', boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 720 }}>
+                      <thead>
+                        <tr style={{ background: '#0f1f3d' }}>
+                          {['Insurance Company', 'Sector', 'Cashless Garage List', 'RSA Number', 'Claim Intimation'].map((h) => (
+                            <th key={h} style={{ padding: '13px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', whiteSpace: 'nowrap' }}>
+                              {h}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredGarages.length === 0 ? (
+                          <tr>
+                            <td colSpan={5} style={{ padding: '32px 16px', textAlign: 'center', fontSize: 13, color: '#8892A4' }}>
+                              No insurers match your search.
+                            </td>
+                          </tr>
+                        ) : filteredGarages.map((row, i) => (
+                          <tr key={row.company} style={{ background: i % 2 === 0 ? 'white' : '#FAFBFF', borderBottom: '1px solid #F0F2F8' }}>
+                            <td style={{ padding: '13px 16px', fontSize: 13, fontWeight: 600, color: '#0A0F1E', minWidth: 200 }}>{row.company}</td>
+                            <td style={{ padding: '13px 16px', whiteSpace: 'nowrap' }}>
+                              <span style={{ display: 'inline-block', fontSize: 10.5, fontWeight: 700, padding: '3px 10px', borderRadius: 50, background: row.sector === 'Public' ? '#EFF6FF' : '#F0FDF4', color: row.sector === 'Public' ? '#1247D6' : '#0F8060', border: `1px solid ${row.sector === 'Public' ? '#BFDBFE' : '#BBF7D0'}` }}>
+                                {row.sector}
+                              </span>
+                            </td>
+                            <td style={{ padding: '13px 16px', fontSize: 12.5, maxWidth: 220 }}>
+                              {isUrl(row.garage) ? (
+                                <a href={row.garage} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, color: '#1247D6', fontWeight: 600, textDecoration: 'none', fontSize: 12.5 }}>
+                                  <i className="ti ti-external-link" style={{ fontSize: 12 }} />
+                                  View garage list
+                                </a>
+                              ) : (
+                                <span style={{ color: '#8892A4', fontSize: 12 }}>{row.garage}</span>
+                              )}
+                            </td>
+                            <td style={{ padding: '13px 16px', fontSize: 12.5, color: '#374151', whiteSpace: 'nowrap' }}>
+                              <a href={`tel:${row.rsa.split(' /')[0].replace(/\s/g, '')}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+                                  <i className="ti ti-phone" style={{ fontSize: 12, color: '#8892A4' }} />
+                                  {row.rsa}
+                                </span>
+                              </a>
+                            </td>
+                            <td style={{ padding: '13px 16px', whiteSpace: 'nowrap' }}>
+                              <a href={`tel:${row.claim.split(' /')[0].split(',')[0].trim().replace(/\s/g, '')}`} style={{ textDecoration: 'none' }}>
+                                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#EEF3FF', borderRadius: 50, padding: '5px 12px', fontSize: 12.5, fontWeight: 600, color: '#1247D6' }}>
+                                  <i className="ti ti-phone-call" style={{ fontSize: 12 }} />
+                                  {row.claim}
+                                </span>
+                              </a>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {/* ── Hospitals table ── */}
+                {claimTableView === 'hospitals' && (
+                  <div style={{ overflowX: 'auto', borderRadius: 16, border: '1px solid #E8EBF5', boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 500 }}>
+                      <thead>
+                        <tr style={{ background: '#0f1f3d' }}>
+                          {['Insurance Company', 'Sector', 'Cashless Hospital Network'].map((h) => (
+                            <th key={h} style={{ padding: '13px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', whiteSpace: 'nowrap' }}>
+                              {h}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {filteredHospitals.length === 0 ? (
+                          <tr>
+                            <td colSpan={3} style={{ padding: '32px 16px', textAlign: 'center', fontSize: 13, color: '#8892A4' }}>
+                              No insurers match your search.
+                            </td>
+                          </tr>
+                        ) : filteredHospitals.map((row, i) => (
+                          <tr key={row.company} style={{ background: i % 2 === 0 ? 'white' : '#FAFBFF', borderBottom: '1px solid #F0F2F8' }}>
+                            <td style={{ padding: '13px 16px', fontSize: 13, fontWeight: 600, color: '#0A0F1E', minWidth: 220 }}>{row.company}</td>
+                            <td style={{ padding: '13px 16px', whiteSpace: 'nowrap' }}>
+                              <span style={{ display: 'inline-block', fontSize: 10.5, fontWeight: 700, padding: '3px 10px', borderRadius: 50, background: row.sector === 'Public' ? '#EFF6FF' : '#F0FDF4', color: row.sector === 'Public' ? '#1247D6' : '#0F8060', border: `1px solid ${row.sector === 'Public' ? '#BFDBFE' : '#BBF7D0'}` }}>
+                                {row.sector}
+                              </span>
+                            </td>
+                            <td style={{ padding: '13px 16px' }}>
+                              <a href={row.link} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#0F8060', fontWeight: 600, textDecoration: 'none', fontSize: 13 }}>
+                                <i className="ti ti-building-hospital" style={{ fontSize: 14 }} />
+                                {row.linkText}
+                                <i className="ti ti-external-link" style={{ fontSize: 11, opacity: 0.6 }} />
+                              </a>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {/* Disclaimer */}
+                <p style={{ fontSize: 11.5, color: '#8892A4', marginTop: 14, textAlign: 'center', lineHeight: 1.6 }}>
+                  Data last updated June 2026. Links and contact numbers are subject to change — always verify with the insurer directly.
+                </p>
+              </div>
+            </section>
+          );
+        })()}
 
         {/* ─── SECTION 4: CLAIMS PROMISE ────────────────────────────────────── */}
         <section style={{ background: '#0f1f3d' }} className="px-5 lg:px-20 py-12">
