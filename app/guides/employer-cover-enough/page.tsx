@@ -25,7 +25,7 @@ function Gap({ num, title, children }: { num: number; title: string; children: R
   );
 }
 
-function Callout({ type, children }: { type: "warning" | "tip" | "critical" }) {
+function Callout({ type, children }: { type: "warning" | "tip" | "critical"; children: React.ReactNode }) {
   const styles = {
     warning: { bg: "#FEF2F2", border: "#FECACA", color: "#7F1D1D" },
     tip: { bg: "#EFF6FF", border: "#BFDBFE", color: "#1E3A8A" },
