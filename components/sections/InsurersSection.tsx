@@ -144,7 +144,7 @@ function LogoCard({ src, alt }: { src: unknown; alt: string }) {
         style={{
           fontSize: 10,
           fontWeight: 500,
-          color: "#8892A4",
+          color: "#64748B",
           textAlign: "center",
           lineHeight: 1.35,
           margin: 0,
@@ -234,7 +234,7 @@ function MobileLogoPill({ src, name }: { src: unknown; name: string }) {
         style={{
           fontSize: 10,
           fontWeight: 500,
-          color: "#8892A4",
+          color: "#64748B",
           textAlign: "center",
           lineHeight: 1.3,
           maxWidth: 100,
@@ -257,7 +257,7 @@ export default function InsurersSection() {
   const companies = activeTab === "general" ? GENERAL : LIFE;
 
   return (
-    <section style={{ background: "#f7f9fc" }}>
+    <section style={{ background: "transparent" }}>
       <style>{`
         .ins-scroll {
           display: flex;
@@ -272,7 +272,7 @@ export default function InsurersSection() {
       `}</style>
 
       {/* ── Desktop ── */}
-      <div className="hidden md:block px-5 sm:px-10 lg:px-20 py-12 lg:py-16">
+      <div className="hidden md:block px-5 sm:px-10 lg:px-20 py-8 lg:py-12">
         <div style={{ textAlign: "center" }}>
           <p
             style={{
@@ -289,7 +289,7 @@ export default function InsurersSection() {
           <h2 style={{ fontSize: 28, fontWeight: 700, color: "#0f1f3d", marginBottom: 10 }}>
             Insurers we work with
           </h2>
-          <p style={{ fontSize: 14, color: "#8892A4", marginBottom: 32, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 14, color: "#64748B", marginBottom: 32, lineHeight: 1.6 }}>
             We partner with 30+ leading insurance companies across health, motor, life, and general insurance
           </p>
 
@@ -301,7 +301,7 @@ export default function InsurersSection() {
               border: "1px solid #E8EBF5",
               borderRadius: 10,
               padding: 4,
-              marginBottom: 36,
+              marginBottom: 24,
             }}
           >
             {(["general", "life"] as const).map((tab) => (
@@ -316,7 +316,7 @@ export default function InsurersSection() {
                   cursor: "pointer",
                   border: "none",
                   background: activeTab === tab ? "#1247D6" : "transparent",
-                  color: activeTab === tab ? "white" : "#8892A4",
+                  color: activeTab === tab ? "white" : "#64748B",
                   transition: "all 0.15s ease",
                 }}
               >
@@ -343,16 +343,16 @@ export default function InsurersSection() {
       </div>
 
       {/* ── Mobile ── */}
-      <div className="block md:hidden" style={{ background: "#FAFBFF", padding: "32px 20px" }}>
+      <div className="block md:hidden" style={{ background: "transparent", padding: "32px 20px" }}>
         <h2 style={{ fontSize: 20, fontWeight: 800, color: "#0A0F1E", margin: "0 0 4px" }}>
           Insurers we work with
         </h2>
-        <p style={{ fontSize: 12, color: "#8892A4", margin: "0 0 20px" }}>
+        <p style={{ fontSize: 12, color: "#64748B", margin: "0 0 20px" }}>
           30+ leading insurance companies
         </p>
 
         {/* General row */}
-        <p style={{ fontSize: 10, fontWeight: 600, color: "#8892A4", letterSpacing: "0.8px", textTransform: "uppercase", margin: "0 0 10px" }}>
+        <p style={{ fontSize: 10, fontWeight: 600, color: "#64748B", letterSpacing: "0.8px", textTransform: "uppercase", margin: "0 0 10px" }}>
           General Insurance
         </p>
         <div className="ins-scroll">
@@ -360,13 +360,13 @@ export default function InsurersSection() {
             <MobileLogoPill key={c.name} src={c.src} name={c.name} />
           ))}
         </div>
-        <p style={{ fontSize: 10, color: "#8892A4", display: "flex", alignItems: "center", gap: 4, margin: "0 0 16px" }}>
+        <p style={{ fontSize: 10, color: "#64748B", display: "flex", alignItems: "center", gap: 4, margin: "0 0 16px" }}>
           <i className="ti ti-arrow-right" style={{ fontSize: 11 }} aria-hidden="true" />
           Swipe to see all {MOBILE_GENERAL.length}
         </p>
 
         {/* Life row */}
-        <p style={{ fontSize: 10, fontWeight: 600, color: "#8892A4", letterSpacing: "0.8px", textTransform: "uppercase", margin: "0 0 10px" }}>
+        <p style={{ fontSize: 10, fontWeight: 600, color: "#64748B", letterSpacing: "0.8px", textTransform: "uppercase", margin: "0 0 10px" }}>
           Life Insurance
         </p>
         <div className="ins-scroll">
@@ -374,7 +374,7 @@ export default function InsurersSection() {
             <MobileLogoPill key={c.name} src={c.src} name={c.name} />
           ))}
         </div>
-        <p style={{ fontSize: 10, color: "#8892A4", display: "flex", alignItems: "center", gap: 4, margin: 0 }}>
+        <p style={{ fontSize: 10, color: "#64748B", display: "flex", alignItems: "center", gap: 4, margin: 0 }}>
           <i className="ti ti-arrow-right" style={{ fontSize: 11 }} aria-hidden="true" />
           Swipe to see all {MOBILE_LIFE.length}
         </p>

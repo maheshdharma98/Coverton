@@ -103,8 +103,8 @@ function ChatBubble({
 export default function WhatsAppChat() {
   return (
     <section
-      style={{ background: "white" }}
-      className="px-5 sm:px-10 lg:px-20 py-16 lg:py-20"
+      style={{ background: "transparent" }}
+      className="px-5 sm:px-10 lg:px-20 py-10 lg:py-14"
     >
       <div
         className="grid grid-cols-1 lg:grid-cols-2 items-center"
@@ -141,7 +141,7 @@ export default function WhatsAppChat() {
           <p
             style={{
               fontSize: 15,
-              color: "#8892A4",
+              color: "#64748B",
               lineHeight: 1.7,
               marginBottom: 32,
             }}
@@ -182,7 +182,7 @@ export default function WhatsAppChat() {
                   <p style={{ fontSize: 14, fontWeight: 600, color: "#0f1f3d", margin: "0 0 2px" }}>
                     {f.title}
                   </p>
-                  <p style={{ fontSize: 13, color: "#8892A4", margin: 0 }}>{f.sub}</p>
+                  <p style={{ fontSize: 13, color: "#64748B", margin: 0 }}>{f.sub}</p>
                 </div>
               </div>
             ))}
@@ -319,7 +319,7 @@ export default function WhatsAppChat() {
                   padding: "8px 16px",
                   flex: 1,
                   fontSize: 13,
-                  color: "#8892A4",
+                  color: "#64748B",
                 }}
               >
                 Type a message
@@ -344,7 +344,7 @@ export default function WhatsAppChat() {
           <p
             style={{
               fontSize: 12,
-              color: "#8892A4",
+              color: "#64748B",
               fontStyle: "italic",
               textAlign: "center",
               margin: 0,

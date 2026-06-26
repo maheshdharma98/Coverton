@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import BubbleBackground from '@/components/ui/BubbleBackground';
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
@@ -219,43 +220,42 @@ export default function ClaimsPage() {
   const [claimSearch, setClaimSearch] = useState('');
   const [claimSector, setClaimSector] = useState<'All' | 'Private' | 'Public'>('All');
   const [claimTableView, setClaimTableView] = useState<'garages' | 'hospitals'>('garages');
+  const [claimPage, setClaimPage] = useState(1);
+  const PAGE_SIZE = 10;
   const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? '';
 
   return (
     <>
       <Navbar />
       <main>
+      <BubbleBackground>
 
         {/* ─── SECTION 1: HERO ──────────────────────────────────────────────── */}
         <section
           style={{
-            background: '#0f1f3d',
+            background: 'transparent',
             position: 'relative',
             overflow: 'hidden',
-            paddingTop: 120,
-            paddingBottom: 64,
+            paddingTop: 80,
+            paddingBottom: 24,
           }}
           className="px-5 lg:px-20"
         >
-          {/* Blobs */}
-          <div style={{ position: 'absolute', width: 300, height: 300, borderRadius: '50%', right: -80, top: -80, background: 'rgba(18,71,214,0.15)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', width: 200, height: 200, borderRadius: '50%', left: '10%', bottom: -80, background: 'rgba(245,184,0,0.07)', pointerEvents: 'none' }} />
-
           <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto' }}>
 
             {/* Tag */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#F5B800', borderRadius: 20, padding: '4px 12px', marginBottom: 16 }}>
-              <i className="ti ti-file-check" style={{ fontSize: 12, color: '#0A0F1E' }} />
-              <span style={{ fontSize: 10, fontWeight: 700, color: '#0A0F1E', letterSpacing: '0.06em' }}>CLAIMS SUPPORT</span>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#EEF3FF', borderRadius: 20, padding: '4px 12px', marginBottom: 16 }}>
+              <i className="ti ti-file-check" style={{ fontSize: 12, color: '#1247D6' }} />
+              <span style={{ fontSize: 10, fontWeight: 700, color: '#1247D6', letterSpacing: '0.06em' }}>CLAIMS SUPPORT</span>
             </div>
 
             {/* Headline */}
-            <h1 style={{ fontSize: 'clamp(30px, 4vw, 42px)', fontWeight: 800, color: 'white', letterSpacing: '-1.2px', lineHeight: 1.1, margin: '0 0 14px' }}>
+            <h1 style={{ fontSize: 'clamp(30px, 4vw, 42px)', fontWeight: 800, color: '#0A0F1E', letterSpacing: '-1.2px', lineHeight: 1.1, margin: '0 0 14px' }}>
               We're with you when<br className="hidden sm:block" /> it matters most.
             </h1>
 
             {/* Sub */}
-            <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.55)', lineHeight: 1.7, maxWidth: 520, margin: '0 0 28px' }}>
+            <p style={{ fontSize: 14, color: '#6B7280', lineHeight: 1.7, maxWidth: 520, margin: '0 0 20px' }}>
               Filing a claim can feel overwhelming. Our dedicated claims team handles everything — from first notification to final settlement. Fast, transparent, and stress-free.
             </p>
 
@@ -280,8 +280,8 @@ export default function ClaimsPage() {
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
                   background: 'transparent',
-                  border: '1px solid rgba(255,255,255,0.25)',
-                  color: 'rgba(255,255,255,0.8)',
+                  border: '1px solid #E5E7EB',
+                  color: '#374151',
                   padding: '13px 24px', borderRadius: 50,
                   fontSize: 13, textDecoration: 'none',
                 }}
@@ -294,7 +294,7 @@ export default function ClaimsPage() {
             {/* Stats row */}
             <div
               className="grid grid-cols-2 md:grid-cols-4 gap-4"
-              style={{ marginTop: 28, paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.1)' }}
+              style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid #E5E7EB' }}
             >
               {[
                 { num: '98%',    label: 'Claims settled successfully' },
@@ -303,8 +303,8 @@ export default function ClaimsPage() {
                 { num: 'Zero',   label: 'Hidden charges' },
               ].map(({ num, label }) => (
                 <div key={label}>
-                  <p style={{ fontSize: 22, fontWeight: 700, color: 'white', margin: 0 }}>{num}</p>
-                  <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', marginTop: 2 }}>{label}</p>
+                  <p style={{ fontSize: 22, fontWeight: 700, color: '#0A0F1E', margin: 0 }}>{num}</p>
+                  <p style={{ fontSize: 11, color: '#64748B', marginTop: 2 }}>{label}</p>
                 </div>
               ))}
             </div>
@@ -312,16 +312,16 @@ export default function ClaimsPage() {
         </section>
 
         {/* ─── SECTION 2: HOW TO FILE ───────────────────────────────────────── */}
-        <section style={{ background: 'white' }} className="px-5 lg:px-20 py-16">
+        <section style={{ background: 'transparent' }} className="px-5 lg:px-20 py-6">
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: 40 }}>
+            <div style={{ textAlign: 'center', marginBottom: 20 }}>
               <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: '#1247D6', display: 'block', marginBottom: 10 }}>
                 HOW IT WORKS
               </span>
               <h2 style={{ fontSize: 26, fontWeight: 800, color: '#0A0F1E', margin: '0 0 8px' }}>
                 Filing a claim is simple
               </h2>
-              <p style={{ fontSize: 14, color: '#8892A4', margin: 0 }}>4 steps. No jargon. No runaround.</p>
+              <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>4 steps. No jargon. No runaround.</p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -344,20 +344,22 @@ export default function ClaimsPage() {
                     />
                   )}
 
-                  {/* Step number */}
-                  <div style={{
-                    width: 32, height: 32, borderRadius: '50%',
-                    background: '#0f1f3d', color: 'white',
-                    fontSize: 13, fontWeight: 700,
-                    display: 'grid', placeItems: 'center',
-                    marginBottom: 16,
-                  }}>
-                    {step.num}
+                  {/* Step number + icon row */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+                    <div style={{
+                      width: 28, height: 28, borderRadius: '50%',
+                      background: '#0f1f3d', color: 'white',
+                      fontSize: 12, fontWeight: 700,
+                      display: 'grid', placeItems: 'center',
+                      flexShrink: 0,
+                    }}>
+                      {step.num}
+                    </div>
+                    <i className={`ti ${step.icon}`} style={{ fontSize: 24, color: '#1247D6' }} />
                   </div>
 
-                  <i className={`ti ${step.icon}`} style={{ fontSize: 28, color: '#1247D6', display: 'block', marginBottom: 12 }} />
                   <p style={{ fontSize: 14, fontWeight: 700, color: '#0A0F1E', margin: '0 0 6px' }}>{step.title}</p>
-                  <p style={{ fontSize: 12.5, color: '#8892A4', lineHeight: 1.6, margin: 0 }}>{step.desc}</p>
+                  <p style={{ fontSize: 12.5, color: '#64748B', lineHeight: 1.6, margin: 0 }}>{step.desc}</p>
                 </div>
               ))}
             </div>
@@ -365,7 +367,7 @@ export default function ClaimsPage() {
         </section>
 
         {/* ─── SECTION 3: CLAIMS BY TYPE ────────────────────────────────────── */}
-        <section style={{ background: '#FAFBFF' }} className="px-5 lg:px-20 py-16">
+        <section style={{ background: 'transparent' }} className="px-5 lg:px-20 py-6">
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 24 }}>
               <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: '#1247D6', display: 'block', marginBottom: 10 }}>
@@ -374,7 +376,7 @@ export default function ClaimsPage() {
               <h2 style={{ fontSize: 26, fontWeight: 800, color: '#0A0F1E', margin: '0 0 8px' }}>
                 Documents needed by claim type
               </h2>
-              <p style={{ fontSize: 14, color: '#8892A4', margin: 0 }}>
+              <p style={{ fontSize: 14, color: '#64748B', margin: 0 }}>
                 Select your insurance type to see the required documents
               </p>
             </div>
@@ -399,26 +401,35 @@ export default function ClaimsPage() {
               ))}
             </div>
 
-            {/* Document grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {(DOCS[activeTab] ?? []).map(({ name, note }) => (
+            {/* Document checklist */}
+            <div style={{
+              background: 'white', border: '1px solid #E8EBF5',
+              borderRadius: 16, overflow: 'hidden',
+              maxWidth: 680, margin: '0 auto',
+              boxShadow: '0 2px 16px rgba(0,0,0,0.04)',
+            }}>
+              {(DOCS[activeTab] ?? []).map(({ name, note }, i, arr) => (
                 <div
                   key={name}
                   style={{
-                    background: 'white', border: '1px solid #E8EBF5',
-                    borderRadius: 12, padding: '16px 18px',
-                    display: 'flex', alignItems: 'flex-start', gap: 12,
+                    display: 'flex', alignItems: 'center', gap: 14,
+                    padding: '14px 20px',
+                    borderBottom: i < arr.length - 1 ? '1px solid #F0F2F8' : 'none',
                   }}
                 >
+                  {/* Checkbox tick */}
                   <div style={{
-                    width: 36, height: 36, borderRadius: '50%',
-                    background: '#EEF3FF', display: 'grid', placeItems: 'center', flexShrink: 0,
+                    width: 22, height: 22, borderRadius: 6, flexShrink: 0,
+                    background: '#EEF3FF', border: '1.5px solid #BFDBFE',
+                    display: 'grid', placeItems: 'center',
                   }}>
-                    <i className="ti ti-file-text" style={{ fontSize: 17, color: '#1247D6' }} />
+                    <i className="ti ti-check" style={{ fontSize: 13, color: '#1247D6' }} />
                   </div>
-                  <div>
-                    <p style={{ fontSize: 13, fontWeight: 600, color: '#0A0F1E', margin: 0 }}>{name}</p>
-                    <p style={{ fontSize: 11.5, color: '#8892A4', margin: '2px 0 0' }}>{note}</p>
+                  <div style={{ flex: 1 }}>
+                    <span style={{ fontSize: 13.5, fontWeight: 600, color: '#0A0F1E' }}>{name}</span>
+                    {note && (
+                      <span style={{ fontSize: 12, color: '#64748B', marginLeft: 8 }}>— {note}</span>
+                    )}
                   </div>
                 </div>
               ))}
@@ -442,10 +453,15 @@ export default function ClaimsPage() {
             return matchSearch && matchSector;
           });
 
-          const resultCount = claimTableView === 'garages' ? filteredGarages.length : filteredHospitals.length;
+          const activeList = claimTableView === 'garages' ? filteredGarages : filteredHospitals;
+          const resultCount = activeList.length;
+          const totalPages = Math.max(1, Math.ceil(resultCount / PAGE_SIZE));
+          const safePage = Math.min(claimPage, totalPages);
+          const pageSliceG = filteredGarages.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+          const pageSliceH = filteredHospitals.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
           return (
-            <section style={{ background: 'white' }} className="px-5 lg:px-20 py-16">
+            <section id="cashless-garages" style={{ background: 'transparent', scrollMarginTop: 88 }} className="px-5 lg:px-20 py-6">
               <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
                 {/* Header */}
@@ -456,10 +472,13 @@ export default function ClaimsPage() {
                   <h2 style={{ fontSize: 26, fontWeight: 800, color: '#0A0F1E', margin: '0 0 8px', letterSpacing: '-0.5px' }}>
                     Cashless network &amp; claim contacts
                   </h2>
-                  <p style={{ fontSize: 14, color: '#8892A4', margin: 0, maxWidth: 540, marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.65 }}>
+                  <p style={{ fontSize: 14, color: '#64748B', margin: 0, maxWidth: 540, marginLeft: 'auto', marginRight: 'auto', lineHeight: 1.65 }}>
                     Find cashless garages for motor claims, network hospitals for health claims, and direct intimation numbers.
                   </p>
                 </div>
+
+                {/* Anchor target for hospital deep-link */}
+                <span id="network-hospitals" style={{ display: 'block', visibility: 'hidden', height: 0, scrollMarginTop: 88 }} />
 
                 {/* Tab switcher */}
                 <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 28 }}>
@@ -469,7 +488,7 @@ export default function ClaimsPage() {
                   ] as const).map((tab) => (
                     <button
                       key={tab.key}
-                      onClick={() => { setClaimTableView(tab.key); setClaimSearch(''); setClaimSector('All'); }}
+                      onClick={() => { setClaimTableView(tab.key); setClaimSearch(''); setClaimSector('All'); setClaimPage(1); }}
                       style={{
                         display: 'inline-flex', alignItems: 'center', gap: 7,
                         padding: '10px 22px', borderRadius: 50, fontSize: 13, fontWeight: 700,
@@ -490,12 +509,12 @@ export default function ClaimsPage() {
                 <div style={{ display: 'flex', gap: 12, marginBottom: 20, flexWrap: 'wrap', alignItems: 'center' }}>
                   {/* Search input */}
                   <div style={{ position: 'relative', flex: 1, minWidth: 220 }}>
-                    <i className="ti ti-search" style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', fontSize: 15, color: '#8892A4', pointerEvents: 'none' }} />
+                    <i className="ti ti-search" style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', fontSize: 15, color: '#64748B', pointerEvents: 'none' }} />
                     <input
                       type="text"
                       placeholder="Search insurer…"
                       value={claimSearch}
-                      onChange={(e) => setClaimSearch(e.target.value)}
+                      onChange={(e) => { setClaimSearch(e.target.value); setClaimPage(1); }}
                       style={{
                         width: '100%', boxSizing: 'border-box',
                         paddingLeft: 40, paddingRight: 14, paddingTop: 10, paddingBottom: 10,
@@ -511,7 +530,7 @@ export default function ClaimsPage() {
                     {(['All', 'Private', 'Public'] as const).map((s) => (
                       <button
                         key={s}
-                        onClick={() => setClaimSector(s)}
+                        onClick={() => { setClaimSector(s); setClaimPage(1); }}
                         style={{
                           padding: '8px 18px', borderRadius: 50, fontSize: 12.5, fontWeight: 600,
                           border: `1px solid ${claimSector === s ? '#0f1f3d' : '#E8EBF5'}`,
@@ -526,116 +545,122 @@ export default function ClaimsPage() {
                   </div>
 
                   {/* Result count */}
-                  <span style={{ fontSize: 12, color: '#8892A4', whiteSpace: 'nowrap' }}>
+                  <span style={{ fontSize: 12, color: '#64748B', whiteSpace: 'nowrap' }}>
                     {resultCount} insurer{resultCount !== 1 ? 's' : ''}
                   </span>
                 </div>
 
                 {/* ── Garages table ── */}
                 {claimTableView === 'garages' && (
-                  <div style={{ overflowX: 'auto', borderRadius: 16, border: '1px solid #E8EBF5', boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 720 }}>
-                      <thead>
-                        <tr style={{ background: '#0f1f3d' }}>
-                          {['Insurance Company', 'Sector', 'Cashless Garage List', 'RSA Number', 'Claim Intimation'].map((h) => (
-                            <th key={h} style={{ padding: '13px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', whiteSpace: 'nowrap' }}>
-                              {h}
-                            </th>
-                          ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {filteredGarages.length === 0 ? (
-                          <tr>
-                            <td colSpan={5} style={{ padding: '32px 16px', textAlign: 'center', fontSize: 13, color: '#8892A4' }}>
-                              No insurers match your search.
-                            </td>
+                  <div style={{ borderRadius: 16, border: '1px solid #E8EBF5', overflow: 'hidden', boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}>
+                    <div style={{ overflowX: 'auto' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 720 }}>
+                        <thead>
+                          <tr style={{ background: '#0f1f3d' }}>
+                            {['Insurance Company', 'Sector', 'Cashless Garage List', 'RSA Number', 'Claim Intimation'].map((h) => (
+                              <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' as const, color: 'rgba(255,255,255,0.7)', whiteSpace: 'nowrap' }}>{h}</th>
+                            ))}
                           </tr>
-                        ) : filteredGarages.map((row, i) => (
-                          <tr key={row.company} style={{ background: i % 2 === 0 ? 'white' : '#FAFBFF', borderBottom: '1px solid #F0F2F8' }}>
-                            <td style={{ padding: '13px 16px', fontSize: 13, fontWeight: 600, color: '#0A0F1E', minWidth: 200 }}>{row.company}</td>
-                            <td style={{ padding: '13px 16px', whiteSpace: 'nowrap' }}>
-                              <span style={{ display: 'inline-block', fontSize: 10.5, fontWeight: 700, padding: '3px 10px', borderRadius: 50, background: row.sector === 'Public' ? '#EFF6FF' : '#F0FDF4', color: row.sector === 'Public' ? '#1247D6' : '#0F8060', border: `1px solid ${row.sector === 'Public' ? '#BFDBFE' : '#BBF7D0'}` }}>
-                                {row.sector}
-                              </span>
-                            </td>
-                            <td style={{ padding: '13px 16px', fontSize: 12.5, maxWidth: 220 }}>
-                              {isUrl(row.garage) ? (
-                                <a href={row.garage} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, color: '#1247D6', fontWeight: 600, textDecoration: 'none', fontSize: 12.5 }}>
-                                  <i className="ti ti-external-link" style={{ fontSize: 12 }} />
-                                  View garage list
+                        </thead>
+                        <tbody>
+                          {pageSliceG.length === 0 ? (
+                            <tr><td colSpan={5} style={{ padding: '32px 16px', textAlign: 'center', fontSize: 13, color: '#64748B' }}>No insurers match your search.</td></tr>
+                          ) : pageSliceG.map((row, i) => (
+                            <tr key={row.company} style={{ background: i % 2 === 0 ? 'white' : '#FAFBFF', borderBottom: '1px solid #F0F2F8' }}>
+                              <td style={{ padding: '12px 16px', fontSize: 13, fontWeight: 600, color: '#0A0F1E', minWidth: 200 }}>{row.company}</td>
+                              <td style={{ padding: '12px 16px', whiteSpace: 'nowrap' as const }}>
+                                <span style={{ fontSize: 10.5, fontWeight: 700, padding: '2px 10px', borderRadius: 50, background: row.sector === 'Public' ? '#EFF6FF' : '#F0FDF4', color: row.sector === 'Public' ? '#1247D6' : '#0F8060', border: `1px solid ${row.sector === 'Public' ? '#BFDBFE' : '#BBF7D0'}` }}>{row.sector}</span>
+                              </td>
+                              <td style={{ padding: '12px 16px', fontSize: 12.5 }}>
+                                {isUrl(row.garage) ? (
+                                  <a href={row.garage} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, color: '#1247D6', fontWeight: 600, textDecoration: 'none', fontSize: 12.5 }}>
+                                    <i className="ti ti-external-link" style={{ fontSize: 12 }} /> View garage list
+                                  </a>
+                                ) : <span style={{ color: '#64748B', fontSize: 12 }}>{row.garage}</span>}
+                              </td>
+                              <td style={{ padding: '12px 16px', fontSize: 12.5, color: '#374151', whiteSpace: 'nowrap' as const }}>
+                                <a href={`tel:${row.rsa.split(' /')[0].replace(/\s/g, '')}`} style={{ color: 'inherit', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+                                  <i className="ti ti-phone" style={{ fontSize: 12, color: '#64748B' }} />{row.rsa}
                                 </a>
-                              ) : (
-                                <span style={{ color: '#8892A4', fontSize: 12 }}>{row.garage}</span>
-                              )}
-                            </td>
-                            <td style={{ padding: '13px 16px', fontSize: 12.5, color: '#374151', whiteSpace: 'nowrap' }}>
-                              <a href={`tel:${row.rsa.split(' /')[0].replace(/\s/g, '')}`} style={{ color: 'inherit', textDecoration: 'none' }}>
-                                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}>
-                                  <i className="ti ti-phone" style={{ fontSize: 12, color: '#8892A4' }} />
-                                  {row.rsa}
-                                </span>
-                              </a>
-                            </td>
-                            <td style={{ padding: '13px 16px', whiteSpace: 'nowrap' }}>
-                              <a href={`tel:${row.claim.split(' /')[0].split(',')[0].trim().replace(/\s/g, '')}`} style={{ textDecoration: 'none' }}>
-                                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#EEF3FF', borderRadius: 50, padding: '5px 12px', fontSize: 12.5, fontWeight: 600, color: '#1247D6' }}>
-                                  <i className="ti ti-phone-call" style={{ fontSize: 12 }} />
-                                  {row.claim}
-                                </span>
-                              </a>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                              </td>
+                              <td style={{ padding: '12px 16px', whiteSpace: 'nowrap' as const }}>
+                                <a href={`tel:${row.claim.split(' /')[0].split(',')[0].trim().replace(/\s/g, '')}`} style={{ textDecoration: 'none' }}>
+                                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#EEF3FF', borderRadius: 50, padding: '4px 12px', fontSize: 12.5, fontWeight: 600, color: '#1247D6' }}>
+                                    <i className="ti ti-phone-call" style={{ fontSize: 12 }} />{row.claim}
+                                  </span>
+                                </a>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    {/* Pagination */}
+                    {totalPages > 1 && (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 20px', borderTop: '1px solid #F0F2F8', background: 'white' }}>
+                        <span style={{ fontSize: 12, color: '#64748B' }}>Page {safePage} of {totalPages} · {resultCount} insurers</span>
+                        <div style={{ display: 'flex', gap: 8 }}>
+                          <button onClick={() => setClaimPage((p) => Math.max(1, p - 1))} disabled={safePage === 1} style={{ padding: '6px 16px', borderRadius: 50, fontSize: 12, fontWeight: 600, border: '1px solid #E8EBF5', background: 'white', color: safePage === 1 ? '#C4C9D4' : '#374151', cursor: safePage === 1 ? 'default' : 'pointer' }}>
+                            ← Prev
+                          </button>
+                          <button onClick={() => setClaimPage((p) => Math.min(totalPages, p + 1))} disabled={safePage === totalPages} style={{ padding: '6px 16px', borderRadius: 50, fontSize: 12, fontWeight: 600, border: '1px solid #E8EBF5', background: 'white', color: safePage === totalPages ? '#C4C9D4' : '#374151', cursor: safePage === totalPages ? 'default' : 'pointer' }}>
+                            Next →
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 
                 {/* ── Hospitals table ── */}
                 {claimTableView === 'hospitals' && (
-                  <div style={{ overflowX: 'auto', borderRadius: 16, border: '1px solid #E8EBF5', boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}>
-                    <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 500 }}>
-                      <thead>
-                        <tr style={{ background: '#0f1f3d' }}>
-                          {['Insurance Company', 'Sector', 'Cashless Hospital Network'].map((h) => (
-                            <th key={h} style={{ padding: '13px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', whiteSpace: 'nowrap' }}>
-                              {h}
-                            </th>
+                  <div style={{ borderRadius: 16, border: '1px solid #E8EBF5', overflow: 'hidden', boxShadow: '0 2px 16px rgba(0,0,0,0.05)' }}>
+                    <div style={{ overflowX: 'auto' }}>
+                      <table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 500 }}>
+                        <thead>
+                          <tr style={{ background: '#0f1f3d' }}>
+                            {['Insurance Company', 'Sector', 'Cashless Hospital Network'].map((h) => (
+                              <th key={h} style={{ padding: '12px 16px', textAlign: 'left', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase' as const, color: 'rgba(255,255,255,0.7)', whiteSpace: 'nowrap' }}>{h}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {pageSliceH.length === 0 ? (
+                            <tr><td colSpan={3} style={{ padding: '32px 16px', textAlign: 'center', fontSize: 13, color: '#64748B' }}>No insurers match your search.</td></tr>
+                          ) : pageSliceH.map((row, i) => (
+                            <tr key={row.company} style={{ background: i % 2 === 0 ? 'white' : '#FAFBFF', borderBottom: '1px solid #F0F2F8' }}>
+                              <td style={{ padding: '12px 16px', fontSize: 13, fontWeight: 600, color: '#0A0F1E', minWidth: 220 }}>{row.company}</td>
+                              <td style={{ padding: '12px 16px', whiteSpace: 'nowrap' as const }}>
+                                <span style={{ fontSize: 10.5, fontWeight: 700, padding: '2px 10px', borderRadius: 50, background: row.sector === 'Public' ? '#EFF6FF' : '#F0FDF4', color: row.sector === 'Public' ? '#1247D6' : '#0F8060', border: `1px solid ${row.sector === 'Public' ? '#BFDBFE' : '#BBF7D0'}` }}>{row.sector}</span>
+                              </td>
+                              <td style={{ padding: '12px 16px' }}>
+                                <a href={row.link} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#0F8060', fontWeight: 600, textDecoration: 'none', fontSize: 13 }}>
+                                  <i className="ti ti-building-hospital" style={{ fontSize: 14 }} />{row.linkText}<i className="ti ti-external-link" style={{ fontSize: 11, opacity: 0.6 }} />
+                                </a>
+                              </td>
+                            </tr>
                           ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {filteredHospitals.length === 0 ? (
-                          <tr>
-                            <td colSpan={3} style={{ padding: '32px 16px', textAlign: 'center', fontSize: 13, color: '#8892A4' }}>
-                              No insurers match your search.
-                            </td>
-                          </tr>
-                        ) : filteredHospitals.map((row, i) => (
-                          <tr key={row.company} style={{ background: i % 2 === 0 ? 'white' : '#FAFBFF', borderBottom: '1px solid #F0F2F8' }}>
-                            <td style={{ padding: '13px 16px', fontSize: 13, fontWeight: 600, color: '#0A0F1E', minWidth: 220 }}>{row.company}</td>
-                            <td style={{ padding: '13px 16px', whiteSpace: 'nowrap' }}>
-                              <span style={{ display: 'inline-block', fontSize: 10.5, fontWeight: 700, padding: '3px 10px', borderRadius: 50, background: row.sector === 'Public' ? '#EFF6FF' : '#F0FDF4', color: row.sector === 'Public' ? '#1247D6' : '#0F8060', border: `1px solid ${row.sector === 'Public' ? '#BFDBFE' : '#BBF7D0'}` }}>
-                                {row.sector}
-                              </span>
-                            </td>
-                            <td style={{ padding: '13px 16px' }}>
-                              <a href={row.link} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: '#0F8060', fontWeight: 600, textDecoration: 'none', fontSize: 13 }}>
-                                <i className="ti ti-building-hospital" style={{ fontSize: 14 }} />
-                                {row.linkText}
-                                <i className="ti ti-external-link" style={{ fontSize: 11, opacity: 0.6 }} />
-                              </a>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </tbody>
+                      </table>
+                    </div>
+                    {totalPages > 1 && (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 20px', borderTop: '1px solid #F0F2F8', background: 'white' }}>
+                        <span style={{ fontSize: 12, color: '#64748B' }}>Page {safePage} of {totalPages} · {resultCount} insurers</span>
+                        <div style={{ display: 'flex', gap: 8 }}>
+                          <button onClick={() => setClaimPage((p) => Math.max(1, p - 1))} disabled={safePage === 1} style={{ padding: '6px 16px', borderRadius: 50, fontSize: 12, fontWeight: 600, border: '1px solid #E8EBF5', background: 'white', color: safePage === 1 ? '#C4C9D4' : '#374151', cursor: safePage === 1 ? 'default' : 'pointer' }}>
+                            ← Prev
+                          </button>
+                          <button onClick={() => setClaimPage((p) => Math.min(totalPages, p + 1))} disabled={safePage === totalPages} style={{ padding: '6px 16px', borderRadius: 50, fontSize: 12, fontWeight: 600, border: '1px solid #E8EBF5', background: 'white', color: safePage === totalPages ? '#C4C9D4' : '#374151', cursor: safePage === totalPages ? 'default' : 'pointer' }}>
+                            Next →
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 
                 {/* Disclaimer */}
-                <p style={{ fontSize: 11.5, color: '#8892A4', marginTop: 14, textAlign: 'center', lineHeight: 1.6 }}>
+                <p style={{ fontSize: 11.5, color: '#64748B', marginTop: 14, textAlign: 'center', lineHeight: 1.6 }}>
                   Data last updated June 2026. Links and contact numbers are subject to change — always verify with the insurer directly.
                 </p>
               </div>
@@ -644,30 +669,34 @@ export default function ClaimsPage() {
         })()}
 
         {/* ─── SECTION 4: CLAIMS PROMISE ────────────────────────────────────── */}
-        <section style={{ background: '#0f1f3d' }} className="px-5 lg:px-20 py-12">
+        <section style={{ background: 'transparent' }} className="px-5 lg:px-20 py-6">
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: 32 }}>
-              <h2 style={{ fontSize: 22, fontWeight: 700, color: 'white', margin: '0 0 8px' }}>
-                Our claims promise to you
+            <div style={{ textAlign: 'center', marginBottom: 40 }}>
+              <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: '#1247D6', display: 'block', marginBottom: 10 }}>
+                OUR PROMISE
+              </span>
+              <h2 style={{ fontSize: 26, fontWeight: 800, color: '#0A0F1E', margin: '0 0 8px' }}>
+                The Coverton claims promise
               </h2>
-              <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', margin: 0 }}>
-                We don't just sell policies. We stand by you when you need to use them.
+              <p style={{ fontSize: 14, color: '#6B7280', margin: 0 }}>
+                We don't just sell insurance — we stand by you when you need it most.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {PROMISES.map(({ icon, title, desc }) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {PROMISES.map((promise) => (
                 <div
-                  key={title}
+                  key={promise.title}
                   style={{
-                    background: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    borderRadius: 14, padding: 22,
+                    background: 'white',
+                    border: '1px solid #E8EBF5',
+                    borderRadius: 16,
+                    padding: 24,
                   }}
                 >
-                  <i className={`ti ${icon}`} style={{ fontSize: 28, color: '#F5B800', display: 'block', marginBottom: 14 }} />
-                  <p style={{ fontSize: 14, fontWeight: 700, color: 'white', margin: '0 0 8px' }}>{title}</p>
-                  <p style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, margin: 0 }}>{desc}</p>
+                  <i className={`ti ${promise.icon}`} style={{ fontSize: 28, color: '#1247D6', display: 'block', marginBottom: 12 }} />
+                  <p style={{ fontSize: 14, fontWeight: 700, color: '#0A0F1E', margin: '0 0 6px' }}>{promise.title}</p>
+                  <p style={{ fontSize: 12.5, color: '#64748B', lineHeight: 1.6, margin: 0 }}>{promise.desc}</p>
                 </div>
               ))}
             </div>
@@ -675,7 +704,7 @@ export default function ClaimsPage() {
         </section>
 
         {/* ─── SECTION 5: FAQ ───────────────────────────────────────────────── */}
-        <section style={{ background: 'white' }} className="px-5 lg:px-20 py-16">
+        <section style={{ background: 'transparent' }} className="px-5 lg:px-20 py-6">
           <div style={{ maxWidth: 1200, margin: '0 auto' }}>
             <div style={{ textAlign: 'center', marginBottom: 40 }}>
               <span style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase' as const, color: '#1247D6', display: 'block', marginBottom: 10 }}>
@@ -698,14 +727,14 @@ export default function ClaimsPage() {
                     <i
                       className="ti ti-chevron-down"
                       style={{
-                        fontSize: 16, color: '#8892A4', flexShrink: 0,
+                        fontSize: 16, color: '#64748B', flexShrink: 0,
                         transform: openFaq === i ? 'rotate(180deg)' : 'rotate(0deg)',
                         transition: 'transform 0.2s ease',
                       }}
                     />
                   </div>
                   {openFaq === i && (
-                    <p style={{ fontSize: 13, color: '#8892A4', lineHeight: 1.7, margin: '10px 0 4px' }}>
+                    <p style={{ fontSize: 13, color: '#64748B', lineHeight: 1.7, margin: '10px 0 4px' }}>
                       {faq.a}
                     </p>
                   )}
@@ -760,6 +789,7 @@ export default function ClaimsPage() {
           </div>
         </section>
 
+      </BubbleBackground>
       </main>
       <Footer />
     </>

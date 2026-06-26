@@ -38,10 +38,10 @@ export default function Navbar() {
         style={{
           pointerEvents: "auto",
           marginTop: 14,
-          background: "rgba(255,255,255,0.95)",
+          background: "white",
           backdropFilter: "blur(18px)",
           WebkitBackdropFilter: "blur(18px)",
-          border: "1px solid rgba(0,0,0,0.07)",
+          border: "1px solid #E5E7EB",
           padding: "5px 10px 5px 16px",
           transition: "box-shadow 0.35s ease",
           boxShadow: scrolled ? "0 4px 28px rgba(0,0,0,0.12)" : "0 2px 16px rgba(0,0,0,0.08)",

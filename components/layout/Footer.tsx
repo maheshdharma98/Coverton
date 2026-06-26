@@ -11,6 +11,8 @@ const QUICK_LINKS = [
   { label: "Family Insurance",    href: "/products/health-individual" },
   { label: "Business Insurance",  href: "/products/fire" },
   { label: "Claims",              href: "/claims" },
+  { label: "Cashless Garages",    href: "/claims#cashless-garages" },
+  { label: "Network Hospitals",   href: "/claims#network-hospitals" },
   { label: "Resources & Tools",   href: "/about" },
 ];
 
@@ -53,7 +55,7 @@ export default function Footer() {
               style={{
                 fontSize: 12,
                 fontStyle: "italic",
-                color: "rgba(255,255,255,0.45)",
+                color: "rgba(255,255,255,0.82)",
                 lineHeight: 1.6,
                 margin: 0,
               }}
@@ -62,14 +64,10 @@ export default function Footer() {
             </p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", margin: 0, lineHeight: 1.6 }}>
+              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.75)", margin: 0, lineHeight: 1.6 }}>
                 IRDAI Direct Broker Reg. No.
               </p>
               <p style={{ fontSize: 13, fontWeight: 700, color: "#ffffff", margin: 0 }}>961</p>
-              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", margin: "8px 0 0", lineHeight: 1.6 }}>
-                Valid till:
-              </p>
-              <p style={{ fontSize: 13, fontWeight: 600, color: "#ffffff", margin: 0 }}>14-04-2027</p>
             </div>
           </div>
 
@@ -81,7 +79,7 @@ export default function Footer() {
                 fontWeight: 700,
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                color: "rgba(255,255,255,0.4)",
+                color: "rgba(255,255,255,0.82)",
                 marginBottom: 20,
               }}
             >
@@ -94,12 +92,12 @@ export default function Footer() {
                     href={href}
                     style={{
                       fontSize: 14,
-                      color: "rgba(255,255,255,0.65)",
+                      color: "rgba(255,255,255,0.82)",
                       textDecoration: "none",
                       transition: "color 0.15s ease",
                     }}
                     onMouseEnter={e => (e.currentTarget.style.color = "#ffffff")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.65)")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.82)")}
                   >
                     {label}
                   </Link>
@@ -116,7 +114,7 @@ export default function Footer() {
                 fontWeight: 700,
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                color: "rgba(255,255,255,0.4)",
+                color: "rgba(255,255,255,0.82)",
                 marginBottom: 20,
               }}
             >
@@ -130,7 +128,7 @@ export default function Footer() {
                   style={{ fontSize: 15, color: "#1247D6", marginTop: 2, flexShrink: 0 }}
                   aria-hidden="true"
                 />
-                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", margin: 0, lineHeight: 1.65 }}>
+                <p style={{ fontSize: 13, color: "rgba(255,255,255,0.82)", margin: 0, lineHeight: 1.65 }}>
                   No 190-192, Hameed Complex, Anna Salai,
                   <br />
                   Express Estate, Royapettah, Chennai,
@@ -155,9 +153,9 @@ export default function Footer() {
                   aria-hidden="true"
                 />
                 <span
-                  style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", transition: "color 0.15s ease" }}
+                  style={{ fontSize: 13, color: "rgba(255,255,255,0.82)", transition: "color 0.15s ease" }}
                   onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "#ffffff")}
-                  onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.65)")}
+                  onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.82)")}
                 >
                   +91 95660 85116
                 </span>
@@ -179,9 +177,9 @@ export default function Footer() {
                   aria-hidden="true"
                 />
                 <span
-                  style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", transition: "color 0.15s ease" }}
+                  style={{ fontSize: 13, color: "rgba(255,255,255,0.82)", transition: "color 0.15s ease" }}
                   onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "#ffffff")}
-                  onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.65)")}
+                  onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.82)")}
                 >
                   wecare@coverton.in
                 </span>
@@ -205,9 +203,9 @@ export default function Footer() {
                   aria-hidden="true"
                 />
                 <span
-                  style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", transition: "color 0.15s ease" }}
+                  style={{ fontSize: 13, color: "rgba(255,255,255,0.82)", transition: "color 0.15s ease" }}
                   onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = "#25D366")}
-                  onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.65)")}
+                  onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.82)")}
                 >
                   WhatsApp Us
                 </span>

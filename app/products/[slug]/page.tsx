@@ -3,6 +3,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import BubbleBackground from '@/components/ui/BubbleBackground';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -332,7 +333,7 @@ function FormSelect({
           padding: '9px 12px',
           fontSize: 13,
           width: '100%',
-          color: value ? '#0A0F1E' : '#8892A4',
+          color: value ? '#0A0F1E' : '#64748B',
           outline: 'none',
           background: 'white',
           boxSizing: 'border-box',
@@ -457,7 +458,7 @@ function DobPicker({
             width: '100%', display: 'flex', alignItems: 'center',
             justifyContent: 'space-between', gap: 8,
             padding: '9px 12px', fontSize: 13, textAlign: 'left',
-            color: selected ? '#0A0F1E' : '#8892A4',
+            color: selected ? '#0A0F1E' : '#64748B',
             background: 'white',
             border: `1px solid ${error ? '#E53E3E' : open ? '#1247D6' : '#E2E8F0'}`,
             borderRadius: 8, outline: 'none', cursor: 'pointer',
@@ -465,7 +466,7 @@ function DobPicker({
           }}
         >
           <span>{displayLabel}</span>
-          <i className="ti ti-calendar-event" style={{ fontSize: 15, color: '#8892A4', flexShrink: 0 }} />
+          <i className="ti ti-calendar-event" style={{ fontSize: 15, color: '#64748B', flexShrink: 0 }} />
         </button>
 
         {/* Dropdown */}
@@ -509,7 +510,7 @@ function DobPicker({
                 {/* Weekday headers */}
                 <div style={{ display: 'grid', gridTemplateColumns: `repeat(7, ${CAL_CELL}px)`, gap: CAL_GAP, marginBottom: 4 }}>
                   {CAL_DAYS.map(d => (
-                    <div key={d} style={{ width: CAL_CELL, textAlign: 'center', fontSize: 10, fontWeight: 700, color: '#8892A4', padding: '3px 0', letterSpacing: '0.05em' }}>{d}</div>
+                    <div key={d} style={{ width: CAL_CELL, textAlign: 'center', fontSize: 10, fontWeight: 700, color: '#64748B', padding: '3px 0', letterSpacing: '0.05em' }}>{d}</div>
                   ))}
                 </div>
                 {/* Date cells */}
@@ -627,12 +628,8 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
   const [companyName, setCompanyName] = useState('');
   const [numEmployees, setNumEmployees] = useState('');
   const [travelType, setTravelType] = useState('');
-  const [members, setMembers] = useState([
-    { label: 'Self', age: '', ped: '' },
-    { label: 'Spouse', age: '', ped: '' },
-    { label: 'Son', age: '', ped: '' },
-    { label: 'Daughter', age: '', ped: '' },
-  ]);
+  const [numAdults, setNumAdults] = useState('');
+  const [numChildren, setNumChildren] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -643,9 +640,17 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
   const clearErr = (key: string) =>
     setFieldErrors((prev) => { const next = { ...prev }; delete next[key]; return next; });
 
-  const updateMember = (i: number, field: 'age' | 'ped', val: string) => {
-    setMembers((prev) => prev.map((m, idx) => idx === i ? { ...m, [field]: val } : m));
-    if (i === 0 && field === 'age') clearErr('selfAge');
+  const resetForm = () => {
+    setName(''); setMobile(''); setEmail(''); setPincode('');
+    setCategory(''); setVehicleNumber('');
+    setPolicyFile(null); setUploadedFileData(null);
+    setDob(''); setPed('');
+    setCompanyName(''); setNumEmployees('');
+    setTravelType('');
+    setNumAdults(''); setNumChildren('');
+    setFieldErrors({}); setError(null);
+    setSubmitted(false);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const isHealthSlug = slug === 'health-individual' || slug === 'health-floater' || slug === 'health-group';
@@ -687,7 +692,8 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
       }
       if (!ped) errs.ped = 'Please select Yes or No';
     } else if (config.formType === 'health-floater') {
-      if (!members[0].age) errs.selfAge = 'Age for Self is required';
+      const a = Number(numAdults);
+      if (!numAdults || !Number.isInteger(a) || a < 1 || a > 10) errs.numAdults = 'Enter a valid number of adults (1–10)';
     } else if (config.formType === 'health-group') {
       const n = Number(numEmployees);
       if (!numEmployees || !Number.isInteger(n) || n <= 0) errs.numEmployees = 'Enter a valid number of employees';
@@ -728,7 +734,8 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
           payload.dob = dob;
           payload.preExistingDisease = ped;
         } else if (config.formType === 'health-floater') {
-          payload.members = members;
+          payload.numberOfAdults = numAdults;
+          payload.numberOfChildren = numChildren || '0';
         } else if (config.formType === 'travel') {
           payload.category = category;
           payload.travelType =
@@ -773,9 +780,9 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
       <div style={{ textAlign: 'center', padding: '32px 16px' }}>
         <i className="ti ti-circle-check" style={{ fontSize: 40, color: '#38A169', display: 'block', marginBottom: 12 }} />
         <div style={{ fontSize: 16, fontWeight: 700, color: '#0A0F1E', marginBottom: 6 }}>Enquiry Submitted!</div>
-        <div style={{ fontSize: 13, color: '#8892A4', marginBottom: 20 }}>We'll call you back within 60 minutes.</div>
+        <div style={{ fontSize: 13, color: '#64748B', marginBottom: 20 }}>We'll call you back within 60 minutes.</div>
         <button
-          onClick={() => setSubmitted(false)}
+          onClick={resetForm}
           style={{ fontSize: 12, color: accent, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
         >
           Submit another enquiry
@@ -812,7 +819,7 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
                   cursor: 'pointer',
                   border: isActive ? '1px solid #E8EBF5' : '1px solid transparent',
                   background: isActive ? 'white' : 'transparent',
-                  color: isActive ? '#1247D6' : '#8892A4',
+                  color: isActive ? '#1247D6' : '#64748B',
                   fontWeight: isActive ? 600 : 400,
                   transition: 'all 0.15s',
                 }}
@@ -827,7 +834,7 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
       {/* Form heading */}
       <div style={{ marginBottom: 4 }}>
         <div style={{ fontSize: 14, fontWeight: 700, color: '#0A0F1E' }}>Get a free quote</div>
-        <div style={{ fontSize: 11.5, color: '#8892A4', marginTop: 2 }}>Our advisor calls within 60 min.</div>
+        <div style={{ fontSize: 11.5, color: '#64748B', marginTop: 2 }}>Our advisor calls within 60 min.</div>
       </div>
 
       {/* Base fields — 2-col grid */}
@@ -873,7 +880,7 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
                 padding: 12,
                 textAlign: 'center',
                 fontSize: 11.5,
-                color: '#8892A4',
+                color: '#64748B',
                 cursor: 'pointer',
                 background: 'white',
               }}
@@ -952,57 +959,28 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
 
       {/* Health Floater extra fields */}
       {config.formType === 'health-floater' && (
-        <FormField label="Member Details">
-          <div style={{ maxHeight: 180, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 8, paddingRight: 4 }}>
-            {members.map((member, i) => (
-              <div key={member.label} style={{ display: 'grid', gridTemplateColumns: '70px 1fr auto', gap: 6, alignItems: 'center' }}>
-                <span style={{ fontSize: 11.5, color: '#3D4460', fontWeight: 500 }}>{member.label}</span>
-                <input
-                  type="number"
-                  placeholder="Age"
-                  value={member.age}
-                  onChange={(e) => updateMember(i, 'age', e.target.value)}
-                  style={{
-                    border: `1px solid ${i === 0 && fieldErrors.selfAge ? '#E53E3E' : '#E2E8F0'}`,
-                    borderRadius: 6,
-                    padding: '6px 8px',
-                    fontSize: 12,
-                    color: '#0A0F1E',
-                    outline: 'none',
-                    width: '100%',
-                    boxSizing: 'border-box',
-                  }}
-                />
-                <div style={{ display: 'flex', gap: 4 }}>
-                  {(['Y', 'N'] as const).map((opt) => {
-                    const val = opt === 'Y' ? 'yes' : 'no';
-                    const active = member.ped === val;
-                    return (
-                      <button
-                        key={opt}
-                        type="button"
-                        onClick={() => updateMember(i, 'ped', val)}
-                        style={{
-                          padding: '4px 7px',
-                          fontSize: 10,
-                          fontWeight: active ? 600 : 400,
-                          borderRadius: 5,
-                          border: `1px solid ${active ? accent : '#E2E8F0'}`,
-                          background: active ? accent : 'white',
-                          color: active ? 'white' : '#8892A4',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        {opt}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
-          {fieldErrors.selfAge && <span style={{ fontSize: 10.5, color: '#E53E3E', marginTop: 3, display: 'block' }}>{fieldErrors.selfAge}</span>}
-        </FormField>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
+          <FormInput
+            label="Number of Adults"
+            required
+            accent={accent}
+            value={numAdults}
+            onChange={(v) => { setNumAdults(v.replace(/\D/g, '').slice(0, 2)); clearErr('numAdults'); }}
+            placeholder="e.g. 2"
+            error={fieldErrors.numAdults}
+            inputMode="numeric"
+            maxLength={2}
+          />
+          <FormInput
+            label="Number of Children"
+            accent={accent}
+            value={numChildren}
+            onChange={(v) => setNumChildren(v.replace(/\D/g, '').slice(0, 2))}
+            placeholder="e.g. 1 (optional)"
+            inputMode="numeric"
+            maxLength={2}
+          />
+        </div>
       )}
 
       {/* Health Group extra fields */}
@@ -1085,7 +1063,7 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
         {submitting ? 'Submitting…' : 'Get Free Quote →'}
       </button>
 
-      <p style={{ fontSize: 10.5, color: '#8892A4', textAlign: 'center', marginTop: 2 }}>
+      <p style={{ fontSize: 10.5, color: '#64748B', textAlign: 'center', marginTop: 2 }}>
         No spam. Our advisor calls once. No hidden charges.
       </p>
     </form>
@@ -1098,46 +1076,36 @@ function HeroSection({ config, slug }: { config: ProductConfig; slug: string }) 
   const accent = config.accentColour;
   return (
     <section style={{
-      backgroundColor: config.heroBg,
-      backgroundImage: `url('https://source.unsplash.com/1600x600/?${config.bgKeyword}')`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat',
+      background: 'transparent',
       position: 'relative',
       overflow: 'hidden',
       minHeight: 420,
-      paddingTop: 100,
+      paddingTop: 96,
+      paddingBottom: 48,
     }}>
-      {/* Gradient overlay over background image */}
-      <div style={{ position: 'absolute', inset: 0, background: config.heroOverlay, zIndex: 0 }} />
-      {/* Blob 1 */}
-      <div style={{ position: 'absolute', width: 300, height: 300, borderRadius: '50%', right: -80, top: -80, background: 'rgba(0,0,0,0.15)', pointerEvents: 'none', zIndex: 1 }} />
-      {/* Blob 2 */}
-      <div style={{ position: 'absolute', width: 200, height: 200, borderRadius: '50%', left: '40%', bottom: -100, background: 'rgba(255,255,255,0.04)', pointerEvents: 'none', zIndex: 1 }} />
-
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-12 items-center max-w-[1200px] mx-auto px-5 lg:px-20 py-12" style={{ position: 'relative', zIndex: 2 }}>
         {/* LEFT */}
         <div>
           {/* Breadcrumb */}
           <nav style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 20 }}>
-            <a href="/products" style={{ fontSize: 12, color: 'rgba(255,255,255,0.55)', textDecoration: 'none', fontWeight: 500 }}>Products</a>
-            <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: 12 }}>/</span>
-            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.85)', fontWeight: 500 }}>{config.name}</span>
+            <a href="/products" style={{ fontSize: 12, color: '#64748B', textDecoration: 'none', fontWeight: 500 }}>Products</a>
+            <span style={{ color: '#64748B', fontSize: 12 }}>/</span>
+            <span style={{ fontSize: 12, color: '#64748B', fontWeight: 500 }}>{config.name}</span>
           </nav>
 
-          {/* Gold tag */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(245,184,0,0.18)', border: '1px solid rgba(245,184,0,0.35)', borderRadius: 50, padding: '4px 12px', marginBottom: 16 }}>
-            <i className={`ti ${config.icon}`} style={{ fontSize: 13, color: '#F5B800' }} />
-            <span style={{ fontSize: 11, fontWeight: 700, color: '#F5B800', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{config.tagText}</span>
+          {/* Tag/badge */}
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#EEF3FF', border: '1px solid #C7D7FA', borderRadius: 50, padding: '4px 12px', marginBottom: 16 }}>
+            <i className={`ti ${config.icon}`} style={{ fontSize: 13, color: '#1247D6' }} />
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#1247D6', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{config.tagText}</span>
           </div>
 
           {/* Headline */}
-          <h1 style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 900, color: 'white', lineHeight: 1.1, marginBottom: 16, margin: '0 0 16px' }}>
+          <h1 style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 900, color: '#0A0F1E', lineHeight: 1.1, marginBottom: 16, margin: '0 0 16px' }}>
             {config.name}
           </h1>
 
           {/* Description */}
-          <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', lineHeight: 1.65, marginBottom: 24, maxWidth: 480 }}>
+          <p style={{ fontSize: 15, color: '#6B7280', lineHeight: 1.65, marginBottom: 24, maxWidth: 480 }}>
             {config.description}
           </p>
 
@@ -1148,9 +1116,9 @@ function HeroSection({ config, slug }: { config: ProductConfig; slug: string }) 
                 key={sub}
                 style={{
                   fontSize: 11.5,
-                  color: 'rgba(255,255,255,0.7)',
-                  background: 'rgba(255,255,255,0.08)',
-                  border: '1px solid rgba(255,255,255,0.15)',
+                  color: '#3D4460',
+                  background: '#F3F4F6',
+                  border: '1px solid #E5E7EB',
                   borderRadius: 50,
                   padding: '4px 12px',
                   fontWeight: 500,
@@ -1172,7 +1140,7 @@ function HeroSection({ config, slug }: { config: ProductConfig; slug: string }) 
           border: '1px solid rgba(255, 255, 255, 0.60)',
           boxShadow: '0 8px 32px rgba(0, 0, 0, 0.22), 0 2px 8px rgba(0, 0, 0, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.95)',
         }}>
-          <QuoteForm config={config} slug={slug} />
+          <QuoteForm key={slug} config={config} slug={slug} />
         </div>
       </div>
     </section>
@@ -1190,7 +1158,7 @@ function InfoCardsRow({ config }: { config: ProductConfig }) {
   };
 
   return (
-    <section style={{ background: 'white' }} className="px-5 lg:px-20 py-7">
+    <section style={{ background: 'transparent' }} className="px-5 lg:px-20 py-7">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-[1200px] mx-auto">
         {/* Card 1 — What's covered */}
         <div style={cardBase}>
@@ -1249,7 +1217,7 @@ function InfoCardsRow({ config }: { config: ProductConfig }) {
             <i className="ti ti-brand-whatsapp" style={{ fontSize: 16, color: accent }} />
             <span style={{ fontSize: 13, fontWeight: 700, color: '#0A0F1E' }}>Need help choosing?</span>
           </div>
-          <p style={{ fontSize: 12, color: '#8892A4', lineHeight: 1.6, marginBottom: 16 }}>
+          <p style={{ fontSize: 12, color: '#64748B', lineHeight: 1.6, marginBottom: 16 }}>
             Not sure which plan covers you best? Our advisors compare all options and recommend the right fit — no pressure, no scripts.
           </p>
           <button
@@ -1289,7 +1257,7 @@ function TrustBar({ accent }: { accent: string }) {
   return (
     <div
       style={{
-        background: '#FAFBFF',
+        background: 'transparent',
         borderTop: '1px solid #E8EBF5',
         padding: '16px 80px',
         display: 'flex',
@@ -1329,9 +1297,11 @@ export default function ProductPage() {
     <>
       <Navbar />
       <main>
-        <HeroSection config={config} slug={slug} />
-        <InfoCardsRow config={config} />
-        <TrustBar accent={config.accentColour} />
+        <BubbleBackground>
+          <HeroSection config={config} slug={slug} />
+          <InfoCardsRow config={config} />
+          <TrustBar accent={config.accentColour} />
+        </BubbleBackground>
       </main>
       <Footer />
     </>

@@ -10,16 +10,21 @@ export const metadata: Metadata = {
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
 
-function RedFlag({ num, title, children }: { num: string; title: string; children: React.ReactNode }) {
+function RedFlag({ id, num: _num, title, children }: { id?: string; num: string; title: string; children: React.ReactNode }) {
+  const match = title.match(/^(Red Flag \d+):\s*(.+)$/);
+  const badge = match ? match[1] : "Red Flag";
+  const heading = match ? match[2] : title;
   return (
-    <div style={{ borderLeft: "3px solid #E53E3E", paddingLeft: 20, marginBottom: 32 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
-        <span style={{ fontSize: 22 }}>{num}</span>
-        <h2 style={{ fontSize: 20, fontWeight: 800, color: "#0A0F1E", margin: 0, letterSpacing: "-0.4px" }}>
-          {title}
+    <div id={id} style={{ border: "1px solid #FECACA", borderRadius: 14, overflow: "hidden", marginBottom: 20, scrollMarginTop: 100, background: "white" }}>
+      <div style={{ background: "#FEF2F2", borderBottom: "1px solid #FECACA", padding: "12px 20px", display: "flex", alignItems: "center", gap: 10 }}>
+        <span style={{ flexShrink: 0, fontSize: 10, fontWeight: 700, letterSpacing: "1.1px", textTransform: "uppercase", color: "#DC2626", background: "#FECACA", borderRadius: 50, padding: "3px 10px", whiteSpace: "nowrap" }}>
+          {badge}
+        </span>
+        <h2 style={{ fontSize: 15.5, fontWeight: 800, color: "#7F1D1D", margin: 0, letterSpacing: "-0.3px", lineHeight: 1.3 }}>
+          {heading}
         </h2>
       </div>
-      <div>{children}</div>
+      <div style={{ padding: "18px 20px" }}>{children}</div>
     </div>
   );
 }
@@ -96,6 +101,15 @@ export default function HealthRedFlagsGuide() {
       heroGradient="linear-gradient(135deg, #0f1f3d 0%, #1a3460 50%, #2d1b2e 100%)"
       heroIcon="ti-shield-exclamation"
       heroAccent="#F87171"
+      toc={[
+        { id: "red-flag-1", label: "Red Flag 1: Room rent sub-limits" },
+        { id: "red-flag-2", label: "Red Flag 2: Co-payment clauses" },
+        { id: "red-flag-3", label: "Red Flag 3: Waiting periods" },
+        { id: "red-flag-4", label: "Red Flag 4: Disease-specific sub-limits" },
+        { id: "red-flag-5", label: "Red Flag 5: Network hospital quality" },
+        { id: "red-flag-6", label: "Red Flag 6: Claim settlement ratio vs. claim amount ratio" },
+        { id: "red-flag-7", label: "Red Flag 7: Restoration benefit fine print" },
+      ]}
     >
       {/* ── Visual stat bar ────────────────────────────────────────────── */}
       <div
@@ -116,7 +130,7 @@ export default function HealthRedFlagsGuide() {
         ].map((s) => (
           <div key={s.stat} style={{ textAlign: "center" }}>
             <p style={{ fontSize: 28, fontWeight: 900, color: "#F5B800", margin: "0 0 4px", letterSpacing: "-1px" }}>{s.stat}</p>
-            <p style={{ fontSize: 11.5, color: "rgba(255,255,255,0.55)", margin: 0, lineHeight: 1.5 }}>{s.sub}</p>
+            <p style={{ fontSize: 11.5, color: "rgba(255,255,255,0.75)", margin: 0, lineHeight: 1.5 }}>{s.sub}</p>
           </div>
         ))}
       </div>
@@ -136,7 +150,7 @@ export default function HealthRedFlagsGuide() {
       <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: 36 }} />
 
       {/* ── Red Flags ─────────────────────────────────────────────────── */}
-      <RedFlag num="🚩" title="Red Flag 1: Room rent sub-limits">
+      <RedFlag id="red-flag-1" num="🚩" title="Red Flag 1: Room rent sub-limits">
         <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
           Many policies cap the room rent they'll cover at 1% of the sum insured per day. On a ₹5 lakh
           policy, that's ₹5,000 per night. In most private hospitals in Bengaluru or Mumbai, a standard
@@ -159,7 +173,7 @@ export default function HealthRedFlagsGuide() {
         </Callout>
       </RedFlag>
 
-      <RedFlag num="🚩" title="Red Flag 2: Co-payment clauses">
+      <RedFlag id="red-flag-2" num="🚩" title="Red Flag 2: Co-payment clauses">
         <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
           A co-payment clause means you pay a fixed percentage of every claim — typically 10–30% —
           regardless of the sum insured. It applies every single time you claim, for as long as you hold
@@ -181,7 +195,7 @@ export default function HealthRedFlagsGuide() {
         </Callout>
       </RedFlag>
 
-      <RedFlag num="🚩" title="Red Flag 3: Waiting periods">
+      <RedFlag id="red-flag-3" num="🚩" title="Red Flag 3: Waiting periods">
         <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
           Every health policy has waiting periods. The question is how long, and for what.
         </p>
@@ -207,7 +221,7 @@ export default function HealthRedFlagsGuide() {
         label="Share my policy for a free review"
       />
 
-      <RedFlag num="🚩" title="Red Flag 4: Disease-specific sub-limits">
+      <RedFlag id="red-flag-4" num="🚩" title="Red Flag 4: Disease-specific sub-limits">
         <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
           Even after the waiting period is over, many policies cap what they'll pay for specific
           treatments. Common examples:
@@ -228,7 +242,7 @@ export default function HealthRedFlagsGuide() {
         </Callout>
       </RedFlag>
 
-      <RedFlag num="🚩" title="Red Flag 5: Network hospital quality">
+      <RedFlag id="red-flag-5" num="🚩" title="Red Flag 5: Network hospital quality">
         <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
           Insurers advertise network sizes prominently — "10,000+ hospitals!" — but the number is largely
           meaningless if the hospitals in your city or neighbourhood aren't on the list, or are lower-tier
@@ -245,7 +259,7 @@ export default function HealthRedFlagsGuide() {
         </Callout>
       </RedFlag>
 
-      <RedFlag num="🚩" title="Red Flag 6: Claim settlement ratio vs. claim amount settlement ratio">
+      <RedFlag id="red-flag-6" num="🚩" title="Red Flag 6: Claim settlement ratio vs. claim amount settlement ratio">
         <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
           IRDAI publishes annual claim settlement ratios for all insurers. A 97% claim settlement ratio
           sounds excellent. But this ratio measures the <em>number</em> of claims settled — not the
@@ -264,7 +278,7 @@ export default function HealthRedFlagsGuide() {
         </Callout>
       </RedFlag>
 
-      <RedFlag num="🚩" title="Red Flag 7: Restoration benefit fine print">
+      <RedFlag id="red-flag-7" num="🚩" title="Red Flag 7: Restoration benefit fine print">
         <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
           Restoration benefit is widely advertised as a major advantage — "your sum insured gets restored
           if exhausted!" What many policyholders discover only at claim time: most restoration clauses
@@ -297,7 +311,7 @@ export default function HealthRedFlagsGuide() {
         <h2 style={{ fontSize: 19, fontWeight: 800, color: "#0A0F1E", marginBottom: 18, letterSpacing: "-0.3px" }}>
           ✅ Before you buy: 10 questions to ask
         </h2>
-        <ol style={{ paddingLeft: 20, display: "flex", flexDirection: "column", gap: 10, margin: 0 }}>
+        <ol style={{ paddingLeft: 20, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", margin: 0 }}>
           {[
             "Is there a room rent sub-limit? What is it in rupees per day?",
             "Is there a co-payment clause? What percentage, and does it apply to all claims?",
@@ -310,9 +324,10 @@ export default function HealthRedFlagsGuide() {
             "Are maternity benefits included? What is the waiting period?",
             "Are there any limits on day-care procedures (procedures that don't require 24-hour admission)?",
           ].map((q) => (
-            <li key={q} style={{ fontSize: 14.5, color: "#1E3A8A", lineHeight: 1.65 }}>{q}</li>
+            <li key={q} style={{ fontSize: 13.5, color: "#1E3A8A", lineHeight: 1.6 }}>{q}</li>
           ))}
         </ol>
+        <style>{`@media (max-width: 640px) { .q-grid { grid-template-columns: 1fr !important; } }`}</style>
       </div>
 
       <WaCta

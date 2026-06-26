@@ -38,93 +38,98 @@ function ProductCard({ item }: { item: ProductItem }) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <Link href={item.href} style={{ textDecoration: "none", display: "block" }}>
+    <Link href={item.href} style={{ textDecoration: "none", display: "flex", height: "100%" }}>
       <div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
           background: item.cardBg,
           borderRadius: 18,
-          padding: "22px 18px 22px 24px",
+          padding: "20px",
           display: "flex",
-          alignItems: "center",
-          gap: 12,
+          flexDirection: "column",
+          width: "100%",
           cursor: "pointer",
           transition: "transform 0.2s ease, box-shadow 0.2s ease",
           transform: hovered ? "translateY(-4px)" : "none",
           boxShadow: hovered
             ? `0 12px 36px ${item.accent}28`
             : "0 2px 10px rgba(0,0,0,0.05)",
-          minHeight: 164,
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* Subtle corner glow on hover */}
+        {/* Hover glow */}
         <div style={{
           position: "absolute", inset: 0, pointerEvents: "none",
-          background: hovered ? `radial-gradient(circle at 85% 50%, ${item.accent}12, transparent 60%)` : "transparent",
+          background: hovered ? `radial-gradient(circle at 85% 15%, ${item.accent}14, transparent 60%)` : "transparent",
           transition: "background 0.3s ease",
         }}/>
 
-        {/* Left: text content */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8, position: "relative", zIndex: 1 }}>
-          {item.badge && (
-            <span style={{
-              display: "inline-block", alignSelf: "flex-start",
-              background: item.accent + "18",
-              color: item.accent,
-              borderRadius: 50, padding: "2px 10px",
-              fontSize: 10.5, fontWeight: 700, letterSpacing: "0.04em",
-            }}>
-              {item.badge}
-            </span>
-          )}
-          <h3 style={{
-            margin: 0, fontSize: 15.5, fontWeight: 800,
-            color: "#0A0F1E", lineHeight: 1.25, letterSpacing: "-0.3px",
+        {/* Top row: icon (left) + Get a Quote (right) */}
+        <div style={{
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          marginBottom: 14, position: "relative", zIndex: 1,
+        }}>
+          <div style={{
+            width: 44, height: 44, borderRadius: 12, flexShrink: 0,
+            background: `linear-gradient(135deg, ${item.accent}22, ${item.accent}44)`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            transition: "transform 0.25s ease",
+            transform: hovered ? "scale(1.1) rotate(6deg)" : "scale(1)",
           }}>
-            {item.name}
-          </h3>
-          <p style={{
-            margin: 0, fontSize: 12.5, color: "#5A6476",
-            lineHeight: 1.65,
-          }}>
-            {item.shortDesc}
-          </p>
-          <div style={{ marginTop: 4 }}>
-            <span style={{
-              display: "inline-flex", alignItems: "center", gap: 5,
-              border: `1.5px solid ${item.accent}`,
-              color: hovered ? "#ffffff" : item.accent,
-              background: hovered ? item.accent : "transparent",
-              borderRadius: 50, padding: "5px 14px",
-              fontSize: 11.5, fontWeight: 600,
-              transition: "all 0.2s ease",
-            }}>
-              Get a Quote
-              <i className="ti ti-arrow-right" style={{ fontSize: 11 }} aria-hidden="true" />
-            </span>
+            <i className={`ti ${item.icon}`} style={{ fontSize: 22, color: item.accent }} aria-hidden="true" />
           </div>
+
+          <span style={{
+            display: "inline-flex", alignItems: "center", gap: 4,
+            border: `1.5px solid ${item.accent}`,
+            color: hovered ? "#ffffff" : item.accent,
+            background: hovered ? item.accent : "transparent",
+            borderRadius: 50, padding: "5px 13px",
+            fontSize: 11, fontWeight: 600,
+            transition: "all 0.2s ease",
+            whiteSpace: "nowrap",
+          }}>
+            Get a Quote
+            <i className="ti ti-arrow-right" style={{ fontSize: 10 }} aria-hidden="true" />
+          </span>
         </div>
 
-        {/* Right: icon */}
-        <div
+        {/* Badge */}
+        {item.badge && (
+          <span style={{
+            display: "inline-block", alignSelf: "flex-start",
+            background: item.accent + "18",
+            color: item.accent,
+            borderRadius: 50, padding: "2px 10px",
+            fontSize: 10, fontWeight: 700, letterSpacing: "0.04em",
+            marginBottom: 6, position: "relative", zIndex: 1,
+          }}>
+            {item.badge}
+          </span>
+        )}
+
+        {/* Title */}
+        <h3 style={{
+          margin: "0 0 6px", fontSize: 15, fontWeight: 800,
+          color: "#0A0F1E", lineHeight: 1.25, letterSpacing: "-0.3px",
+          position: "relative", zIndex: 1,
+        }}>
+          {item.name}
+        </h3>
+
+        {/* Description — clamped to 3 lines for consistent card height */}
+        <p
+          className="line-clamp-3"
           style={{
-            width: 92, height: 92, borderRadius: "50%", flexShrink: 0,
-            background: `linear-gradient(135deg, ${item.accent}20, ${item.accent}40)`,
-            display: "flex", alignItems: "center", justifyContent: "center",
+            margin: 0, fontSize: 12.5, color: "#5A6476",
+            lineHeight: 1.65, flex: 1,
             position: "relative", zIndex: 1,
-            transition: "transform 0.25s ease",
-            transform: hovered ? "scale(1.12) rotate(6deg)" : "scale(1)",
           }}
         >
-          <i
-            className={`ti ${item.icon}`}
-            style={{ fontSize: 42, color: item.accent, display: "block", lineHeight: 1 }}
-            aria-hidden="true"
-          />
-        </div>
+          {item.shortDesc}
+        </p>
       </div>
     </Link>
   );
@@ -134,12 +139,13 @@ function ProductCard({ item }: { item: ProductItem }) {
 
 export default function ProductCardsGrid() {
   return (
-    <div style={{ background: "#F0F4FA", width: "100%" }}>
+    <div style={{ background: "transparent", width: "100%" }}>
       <style>{`
         .pcg-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 20px;
+          gap: 14px;
+          align-items: stretch;
         }
         @media (max-width: 1024px) {
           .pcg-grid { grid-template-columns: repeat(2, 1fr); }
@@ -149,7 +155,7 @@ export default function ProductCardsGrid() {
         }
       `}</style>
 
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 24px 72px" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "20px 24px 48px" }}>
         <div className="pcg-grid">
           {PRODUCTS.map((item) => (
             <ProductCard key={item.id} item={item} />

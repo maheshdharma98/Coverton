@@ -34,7 +34,7 @@ function ClientCard({ src, alt }: { src: unknown; alt: string }) {
     <div
       style={{
         background: "white",
-        border: "1px solid rgba(255,255,255,0.12)",
+        border: "1px solid #E8EBF5",
         borderRadius: 14,
         padding: "20px 16px",
         display: "flex",
@@ -83,14 +83,14 @@ function ClientCard({ src, alt }: { src: unknown; alt: string }) {
 export default function ClientsSection() {
   return (
     <section
-      style={{ background: "#0f1f3d", textAlign: "center" }}
-      className="px-5 sm:px-10 lg:px-20 py-12 lg:py-16"
+      style={{ background: "transparent", textAlign: "center" }}
+      className="px-5 sm:px-10 lg:px-20 py-8 lg:py-12"
     >
       <p
         style={{
           fontSize: 12,
           fontWeight: 600,
-          color: "#1E90FF",
+          color: "#1247D6",
           letterSpacing: "2px",
           textTransform: "uppercase",
           marginBottom: 12,
@@ -103,7 +103,7 @@ export default function ClientsSection() {
         style={{
           fontSize: 28,
           fontWeight: 700,
-          color: "#ffffff",
+          color: "#0A0F1E",
           marginBottom: 12,
           lineHeight: 1.3,
         }}
@@ -117,7 +117,7 @@ export default function ClientsSection() {
           height: 3,
           background: "#1247D6",
           borderRadius: 2,
-          margin: "0 auto 48px",
+          margin: "0 auto 32px",
         }}
       />
 

@@ -1,64 +1,65 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 export default function CtaBand() {
   const waNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
   const [waHover, setWaHover] = useState(false);
-  const [callHover, setCallHover] = useState(false);
+  const [exploreHover, setExploreHover] = useState(false);
 
   return (
-    <section
-      style={{
-        background: "linear-gradient(135deg, #0f1f3d 0%, #1a3a6b 100%)",
-        padding: "72px 24px",
-        textAlign: "center",
-      }}
-    >
+    <section style={{ background: "#F5B800", padding: "0 24px" }}>
+      <style>{`
+        @media (max-width: 640px) {
+          .cta-band-inner { flex-direction: column !important; align-items: flex-start !important; gap: 20px !important; padding: 32px 0 !important; }
+          .cta-band-btns { flex-direction: column !important; width: 100%; }
+          .cta-band-btns a { justify-content: center; }
+        }
+      `}</style>
       <div
+        className="cta-band-inner"
         style={{
-          maxWidth: 640,
+          maxWidth: 1200,
           margin: "0 auto",
           display: "flex",
-          flexDirection: "column",
           alignItems: "center",
-          gap: 20,
+          justifyContent: "space-between",
+          gap: 32,
+          padding: "36px 0",
         }}
       >
-        <h2
-          style={{
-            fontSize: "clamp(28px, 4vw, 35px)",
-            fontWeight: 900,
-            lineHeight: 1.00,
-            color: "#ffffff",
-            margin: 0,
-            letterSpacing: "-0.02em",
-          }}
-        >
-          Have Questions? We're Here to Help.
-        </h2>
+        {/* Left — text */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <h2
+            style={{
+              fontSize: "clamp(18px, 2.4vw, 24px)",
+              fontWeight: 800,
+              color: "#0A0F1E",
+              margin: "0 0 6px",
+              letterSpacing: "-0.4px",
+              lineHeight: 1.2,
+            }}
+          >
+            Ready to work with Coverton?
+          </h2>
+          <p
+            style={{
+              fontSize: 14,
+              color: "rgba(10,15,30,0.75)",
+              margin: 0,
+              lineHeight: 1.5,
+            }}
+          >
+            Get unbiased insurance advice from our team today.
+          </p>
+        </div>
 
-        <p
-          style={{
-            fontSize: 16,
-            color: "rgba(255,255,255,0.55)",
-            margin: 0,
-            lineHeight: 1.6,
-          }}
-        >
-          Start with a simple conversation—no lengthy forms, no pressure, just expert guidance.
-        </p>
-
+        {/* Right — buttons */}
         <div
-          style={{
-            display: "flex",
-            gap: 12,
-            flexWrap: "wrap",
-            justifyContent: "center",
-            marginTop: 8,
-          }}
+          className="cta-band-btns"
+          style={{ display: "flex", gap: 10, flexShrink: 0, flexWrap: "wrap" }}
         >
-          {/* WhatsApp CTA */}
           <a
             href={`https://wa.me/${waNumber}`}
             target="_blank"
@@ -72,52 +73,40 @@ export default function CtaBand() {
               background: waHover ? "#1ebe59" : "#25D366",
               color: "#ffffff",
               borderRadius: 50,
-              padding: "14px 28px",
-              fontSize: 15,
+              padding: "13px 24px",
+              fontSize: 14,
               fontWeight: 700,
               textDecoration: "none",
-              transition: "background 0.2s ease, transform 0.2s ease",
-              transform: waHover ? "translateY(-1px)" : "translateY(0)",
-              minHeight: 50,
+              transition: "background 0.2s ease",
+              whiteSpace: "nowrap",
             }}
           >
-            <i
-              className="ti ti-brand-whatsapp"
-              style={{ fontSize: 20 }}
-              aria-hidden="true"
-            />
-            Start on WhatsApp
+            <i className="ti ti-brand-whatsapp" style={{ fontSize: 18 }} aria-hidden="true" />
+            Chat on WhatsApp
           </a>
 
-          {/* Call CTA */}
-          <a
-            href="tel:+919566085116"
-            onMouseEnter={() => setCallHover(true)}
-            onMouseLeave={() => setCallHover(false)}
+          <Link
+            href="/products"
+            onMouseEnter={() => setExploreHover(true)}
+            onMouseLeave={() => setExploreHover(false)}
             style={{
               display: "inline-flex",
               alignItems: "center",
               gap: 8,
-              background: callHover ? "rgba(255,255,255,0.1)" : "transparent",
+              background: exploreHover ? "#1a3060" : "#0f1f3d",
               color: "#ffffff",
-              border: "2px solid rgba(255,255,255,0.3)",
               borderRadius: 50,
-              padding: "14px 28px",
-              fontSize: 15,
-              fontWeight: 600,
+              padding: "13px 24px",
+              fontSize: 14,
+              fontWeight: 700,
               textDecoration: "none",
-              transition: "all 0.2s ease",
-              transform: callHover ? "translateY(-1px)" : "translateY(0)",
-              minHeight: 50,
+              transition: "background 0.2s ease",
+              whiteSpace: "nowrap",
             }}
           >
-            <i
-              className="ti ti-phone"
-              style={{ fontSize: 18 }}
-              aria-hidden="true"
-            />
-            Or just call us
-          </a>
+            <i className="ti ti-category" style={{ fontSize: 16 }} aria-hidden="true" />
+            Explore Insurance products
+          </Link>
         </div>
       </div>
     </section>

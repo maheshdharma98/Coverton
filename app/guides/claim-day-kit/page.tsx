@@ -11,13 +11,13 @@ const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
 
 function StepCard({ step, title, children }: { step: string; title: string; children: React.ReactNode }) {
   return (
-    <div style={{ display: "flex", gap: 16, marginBottom: 18 }}>
-      <div style={{ flexShrink: 0, width: 32, height: 32, borderRadius: "50%", background: "#0f1f3d", color: "white", display: "grid", placeItems: "center", fontWeight: 800, fontSize: 13, marginTop: 2 }}>
+    <div style={{ display: "flex", gap: 14, marginBottom: 10, background: "#FAFBFF", border: "1px solid #E8EBF5", borderRadius: 12, padding: "14px 16px" }}>
+      <div style={{ flexShrink: 0, width: 28, height: 28, borderRadius: "50%", background: "#1247D6", color: "white", display: "grid", placeItems: "center", fontWeight: 800, fontSize: 12, marginTop: 1 }}>
         {step}
       </div>
       <div>
-        <strong style={{ fontSize: 15, color: "#0A0F1E", display: "block", marginBottom: 6 }}>{title}</strong>
-        <div style={{ fontSize: 14.5, color: "#374151", lineHeight: 1.75 }}>{children}</div>
+        <strong style={{ fontSize: 14.5, color: "#0A0F1E", display: "block", marginBottom: 5 }}>{title}</strong>
+        <div style={{ fontSize: 14, color: "#374151", lineHeight: 1.72 }}>{children}</div>
       </div>
     </div>
   );
@@ -25,9 +25,11 @@ function StepCard({ step, title, children }: { step: string; title: string; chil
 
 function CategoryHeader({ id, emoji, title, color }: { id: string; emoji: string; title: string; color: string }) {
   return (
-    <div id={id} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22, marginTop: 40, paddingBottom: 12, borderBottom: `2px solid ${color}`, scrollMarginTop: 100 }}>
-      <span style={{ fontSize: 28 }}>{emoji}</span>
-      <h2 style={{ fontSize: 22, fontWeight: 800, color: "#0A0F1E", margin: 0, letterSpacing: "-0.4px" }}>{title}</h2>
+    <div id={id} style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16, marginTop: 36, background: `${color}0D`, border: `1.5px solid ${color}28`, borderRadius: 12, padding: "13px 18px", scrollMarginTop: 100 }}>
+      <div style={{ flexShrink: 0, width: 40, height: 40, borderRadius: 10, background: `${color}1A`, display: "grid", placeItems: "center", fontSize: 22 }}>
+        {emoji}
+      </div>
+      <h2 style={{ fontSize: 19, fontWeight: 800, color, margin: 0, letterSpacing: "-0.4px" }}>{title}</h2>
     </div>
   );
 }
@@ -46,7 +48,7 @@ function ClaimBuddyCta() {
       <p style={{ fontSize: 14, fontWeight: 700, color: "#F5B800", marginBottom: 8, letterSpacing: "0.5px" }}>
         How Coverton's Claim Buddy helps
       </p>
-      <p style={{ fontSize: 14, color: "rgba(255,255,255,0.65)", lineHeight: 1.7, marginBottom: 16 }}>
+      <p style={{ fontSize: 14, color: "rgba(255,255,255,0.82)", lineHeight: 1.7, marginBottom: 16 }}>
         If you're a Coverton client, you don't have to handle any of this alone. On claim day,
         WhatsApp Claim Buddy with the incident details. We will:
       </p>
@@ -58,10 +60,10 @@ function ClaimBuddyCta() {
           "Follow up directly with the TPA or insurer's claims team",
           "Contest any rejection or low assessment with documented grounds",
         ].map((t) => (
-          <li key={t} style={{ fontSize: 13.5, color: "rgba(255,255,255,0.75)", lineHeight: 1.6 }}>{t}</li>
+          <li key={t} style={{ fontSize: 13.5, color: "rgba(255,255,255,0.85)", lineHeight: 1.6 }}>{t}</li>
         ))}
       </ul>
-      <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", marginBottom: 16 }}>
+      <p style={{ fontSize: 13, color: "rgba(255,255,255,0.82)", marginBottom: 16 }}>
         There is no additional charge for this service. It's what we do.
       </p>
       <a
@@ -89,6 +91,13 @@ export default function ClaimDayKitGuide() {
       heroGradient="linear-gradient(135deg, #0a2010 0%, #0f3a20 50%, #0f1f3d 100%)"
       heroIcon="ti-checklist"
       heroAccent="#4ADE80"
+      toc={[
+        { id: "motor-claims",    label: "Motor claims: accident or theft" },
+        { id: "health-claims",   label: "Health claims: hospitalisation" },
+        { id: "property-claims", label: "Property & fire claims: damage or theft" },
+        { id: "document-kit",    label: "Your claim-day document kit" },
+        { id: "three-mistakes",  label: "3 mistakes that turn a simple claim into a dispute" },
+      ]}
     >
       {/* ── 3 category nav cards ───────────────────────────────────────── */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 36 }}>
@@ -125,17 +134,15 @@ export default function ClaimDayKitGuide() {
         — or didn't do — in the first few hours after an incident. A missed intimation window, a missing
         photograph, a document signed under pressure from the other party.
       </p>
-      <p style={{ fontSize: 15.5, color: "#374151", lineHeight: 1.8, marginBottom: 36 }}>
+      <p style={{ fontSize: 15.5, color: "#374151", lineHeight: 1.8, marginBottom: 24 }}>
         This guide covers the three most common claim scenarios: motor, health, and property.{" "}
         <strong>Bookmark this page before you ever need it.</strong>
       </p>
 
-      <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: 8 }} />
-
       {/* ── MOTOR ─────────────────────────────────────────────────────── */}
       <CategoryHeader id="motor-claims" emoji="🚗" title="Motor claims: accident or theft" color="#1247D6" />
 
-      <h3 style={{ fontSize: 17, fontWeight: 700, color: "#0A0F1E", marginBottom: 18 }}>If there's been an accident</h3>
+      <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0A0F1E", marginBottom: 10, marginTop: 4 }}>If there's been an accident</h3>
 
       <StepCard step="1" title="Don't move the vehicle.">
         This sounds counterintuitive if you're blocking traffic, but moving the vehicle before
@@ -167,7 +174,7 @@ export default function ClaimDayKitGuide() {
         claim citing lack of evidence.
       </Callout>
 
-      <h3 style={{ fontSize: 17, fontWeight: 700, color: "#0A0F1E", margin: "28px 0 14px" }}>If it's a theft</h3>
+      <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0A0F1E", margin: "16px 0 8px" }}>If it's a theft</h3>
       <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75 }}>
         File an FIR at the nearest police station immediately. Then intimate the insurer. For theft
         claims, both the police complaint number and the FIR copy are mandatory. If the vehicle is
@@ -179,7 +186,7 @@ export default function ClaimDayKitGuide() {
       {/* ── HEALTH ────────────────────────────────────────────────────── */}
       <CategoryHeader id="health-claims" emoji="🏥" title="Health claims: hospitalisation" color="#0F8060" />
 
-      <h3 style={{ fontSize: 17, fontWeight: 700, color: "#0A0F1E", marginBottom: 18 }}>Cashless claims</h3>
+      <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0A0F1E", marginBottom: 10, marginTop: 4 }}>Cashless claims</h3>
 
       <StepCard step="1" title="Confirm the hospital is in the network before admission if the situation is non-emergency.">
         Call the TPA (Third Party Administrator) helpline on the back of your health card.
@@ -197,7 +204,7 @@ export default function ClaimDayKitGuide() {
         up with the TPA regularly.
       </StepCard>
 
-      <h3 style={{ fontSize: 17, fontWeight: 700, color: "#0A0F1E", margin: "28px 0 14px" }}>Reimbursement claims (non-network hospital)</h3>
+      <h3 style={{ fontSize: 15, fontWeight: 700, color: "#0A0F1E", margin: "16px 0 8px" }}>Reimbursement claims (non-network hospital)</h3>
       <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
         You pay the bills upfront and claim later. The intimation window still applies — call the
         insurer within 24 hours of admission. Submit all documents within 15–30 days of discharge
@@ -239,35 +246,35 @@ export default function ClaimDayKitGuide() {
         happen, follow up in writing.
       </Callout>
 
-      <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", margin: "40px 0 32px" }} />
+      <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", margin: "28px 0 24px" }} />
 
       {/* ── Document Kit ──────────────────────────────────────────────── */}
-      <div style={{ background: "#F8FAFF", border: "1px solid #DBEAFE", borderRadius: 16, padding: "28px 28px", marginBottom: 32 }}>
+      <div id="document-kit" style={{ background: "#F8FAFF", border: "1px solid #DBEAFE", borderRadius: 16, padding: "28px 28px", marginBottom: 32, scrollMarginTop: 100 }}>
         <h2 style={{ fontSize: 19, fontWeight: 800, color: "#0A0F1E", marginBottom: 18, letterSpacing: "-0.3px" }}>
           📋 Your claim-day document kit
         </h2>
         <p style={{ fontSize: 14, color: "#374151", lineHeight: 1.65, marginBottom: 16 }}>
           Keep a digital copy of each of these accessible on your phone — not just in a physical folder at home:
         </p>
-        <ul style={{ paddingLeft: 20, display: "flex", flexDirection: "column", gap: 9, margin: 0 }}>
+        <ul style={{ paddingLeft: 20, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "7px 24px", margin: 0 }}>
           {[
-            "Policy document (all pages, including schedule and endorsements)",
-            "TPA card / insurer helpline number (for health policies)",
+            "Policy document (all pages, including endorsements)",
+            "TPA card / insurer helpline number (health policies)",
             "Government-issued ID (Aadhaar, PAN, or passport)",
-            "Photographs and video of damage (taken immediately after incident)",
-            "FIR copy or police complaint acknowledgement (for theft, accident with injury, arson)",
-            "All bills, invoices, and receipts related to the loss or treatment",
-            "Original claim form (insurer-specific; download from their website in advance)",
-            "Bank account details and a cancelled cheque (for reimbursement claims)",
-            "Any previous correspondence with the insurer about this policy",
+            "Photographs and video of damage — taken immediately",
+            "FIR copy or police complaint acknowledgement",
+            "All bills, invoices, and receipts for loss or treatment",
+            "Original claim form (download from insurer's website)",
+            "Bank account details and a cancelled cheque",
+            "Any previous correspondence with the insurer",
           ].map((t) => (
-            <li key={t} style={{ fontSize: 14, color: "#1E3A8A", lineHeight: 1.65 }}>{t}</li>
+            <li key={t} style={{ fontSize: 13.5, color: "#1E3A8A", lineHeight: 1.6 }}>{t}</li>
           ))}
         </ul>
       </div>
 
       {/* ── 3 Mistakes ────────────────────────────────────────────────── */}
-      <h2 style={{ fontSize: 21, fontWeight: 800, color: "#0A0F1E", marginBottom: 20, letterSpacing: "-0.4px" }}>
+      <h2 id="three-mistakes" style={{ fontSize: 21, fontWeight: 800, color: "#0A0F1E", marginBottom: 20, letterSpacing: "-0.4px", scrollMarginTop: 100 }}>
         ⚠️ 3 mistakes that turn a simple claim into a dispute
       </h2>
 
@@ -275,22 +282,25 @@ export default function ClaimDayKitGuide() {
         {
           n: "1",
           t: "Accepting a partial settlement without checking",
-          p: "Insurers sometimes make an initial offer that is significantly lower than the actual loss. Many policyholders, exhausted by the process, accept the first offer. Once you sign the discharge voucher (the final settlement receipt), you typically cannot claim the remainder. Never sign a discharge voucher without first verifying the amount covers your full eligible loss.",
+          p: "Once you sign the discharge voucher you typically cannot claim the remainder. Never sign without verifying the amount covers your full eligible loss.",
         },
         {
           n: "2",
           t: "Missing the intimation window",
-          p: "Most policies require intimation within 24–48 hours. Missing this window gives the insurer legitimate grounds to reduce or reject the claim — even if the loss is fully covered otherwise. If you've missed the window due to an emergency, document why and intimate as soon as possible with a written explanation.",
+          p: "Most policies require intimation within 24–48 hours. Missing it gives the insurer grounds to reduce or reject the claim — even if the loss is fully covered otherwise.",
         },
         {
           n: "3",
-          t: "Disposing of damaged items before the surveyor visit",
-          p: "The surveyor's job is to verify the extent of loss. If the damaged item — car part, appliance, inventory — no longer exists at the time of their visit, they can only rely on photographs and your testimony. Strong photographic evidence is your protection here.",
+          t: "Disposing of damaged items before the surveyor visits",
+          p: "Without a pre-repair or pre-disposal survey, the insurer can reject citing lack of evidence. Photograph everything first.",
         },
       ].map((m) => (
-        <div key={m.n} style={{ background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 12, padding: "18px 20px", marginBottom: 14 }}>
-          <p style={{ fontSize: 15, fontWeight: 700, color: "#991B1B", marginBottom: 8 }}>{m.n}. {m.t}</p>
-          <p style={{ fontSize: 14.5, color: "#374151", lineHeight: 1.7, margin: 0 }}>{m.p}</p>
+        <div key={m.n} style={{ border: "1px solid #FECACA", borderRadius: 12, overflow: "hidden", marginBottom: 10 }}>
+          <div style={{ background: "#FEF2F2", borderBottom: "1px solid #FECACA", padding: "10px 16px", display: "flex", alignItems: "center", gap: 10 }}>
+            <span style={{ flexShrink: 0, width: 22, height: 22, borderRadius: "50%", background: "#DC2626", color: "white", display: "grid", placeItems: "center", fontSize: 11, fontWeight: 800 }}>{m.n}</span>
+            <p style={{ fontSize: 14, fontWeight: 700, color: "#991B1B", margin: 0 }}>{m.t}</p>
+          </div>
+          <p style={{ fontSize: 13.5, color: "#374151", lineHeight: 1.68, margin: 0, padding: "12px 16px" }}>{m.p}</p>
         </div>
       ))}
 

@@ -17,7 +17,7 @@ interface HeroCardData {
   icon: string;
   iconBg: string;
   blobColor: string;
-  num: string;
+  cardBg: string;
   subs: Sub[];
 }
 
@@ -29,7 +29,7 @@ const CARDS: HeroCardData[] = [
     icon: "ti-car",
     iconBg: "#1247D6",
     blobColor: "#1247D6",
-    num: "01",
+    cardBg: "#EEF3FF",
     subs: [
       { label: "Bike", param: "Bike", icon: "ti-motorbike" },
       { label: "Car", param: "Car", icon: "ti-car" },
@@ -44,7 +44,7 @@ const CARDS: HeroCardData[] = [
     icon: "ti-shield-plus",
     iconBg: "#E24B4A",
     blobColor: "#E24B4A",
-    num: "02",
+    cardBg: "#FFF2F2",
     subs: [
       { label: "Individual Health", param: "", icon: "ti-user" },
       { label: "Floater", param: "", icon: "ti-users" },
@@ -58,7 +58,7 @@ const CARDS: HeroCardData[] = [
     icon: "ti-user-check",
     iconBg: "#F5A623",
     blobColor: "#F5A623",
-    num: "03",
+    cardBg: "#FFFBF0",
     subs: [
       { label: "Individual", param: "Individual", icon: "ti-user" },
       { label: "Group", param: "Group", icon: "ti-users" },
@@ -71,7 +71,7 @@ const CARDS: HeroCardData[] = [
     icon: "ti-plane",
     iconBg: "#0F9D8A",
     blobColor: "#0F9D8A",
-    num: "04",
+    cardBg: "#F0FAF8",
     subs: [
       { label: "Business / Leisure", param: "Business/Leisure", icon: "ti-briefcase" },
       { label: "Corporate", param: "Corporate", icon: "ti-building" },
@@ -125,17 +125,17 @@ function SubRow({
         style={{
           display: "flex",
           alignItems: "center",
-          gap: 7,
-          fontSize: 12,
-          color: hovered ? "#ffffff" : "rgba(255,255,255,0.6)",
+          gap: 6,
+          fontSize: 11,
+          color: hovered ? "#0A0F1E" : "#6B7280",
           transition: "color 0.15s ease",
         }}
       >
         <i
           className={`ti ${icon}`}
           style={{
-            fontSize: 13,
-            color: hovered ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.35)",
+            fontSize: 11,
+            color: hovered ? "#1247D6" : "#64748B",
             transition: "color 0.15s ease",
           }}
           aria-hidden="true"
@@ -146,7 +146,7 @@ function SubRow({
         className="ti ti-chevron-right"
         style={{
           fontSize: 12,
-          color: hovered ? "#ffffff" : "rgba(255,255,255,0.3)",
+          color: hovered ? "#1247D6" : "#D1D5DB",
           transition: "color 0.15s ease",
         }}
         aria-hidden="true"
@@ -165,16 +165,17 @@ function HeroCard({ card }: { card: HeroCardData }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        background: "#1a2f5a",
-        borderRadius: 16,
-        padding: "20px 20px 16px",
+        background: card.cardBg,
+        borderRadius: 14,
+        padding: "14px 16px 12px",
         cursor: "pointer",
         position: "relative",
         overflow: "hidden",
         border: hovered
-          ? "1px solid rgba(255,255,255,0.18)"
-          : "1px solid rgba(255,255,255,0.07)",
-        transition: "border-color 0.2s ease, transform 0.2s ease",
+          ? `1px solid ${card.blobColor}55`
+          : "1px solid #E8EBF5",
+        boxShadow: hovered ? `0 6px 24px ${card.blobColor}18` : "0 2px 8px rgba(0,0,0,0.05)",
+        transition: "border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease",
         transform: hovered ? "translateY(-2px)" : "translateY(0)",
       }}
     >
@@ -182,10 +183,10 @@ function HeroCard({ card }: { card: HeroCardData }) {
       <div
         style={{
           position: "absolute",
-          top: -30,
-          right: -30,
-          width: 100,
-          height: 100,
+          top: -20,
+          right: -20,
+          width: 72,
+          height: 72,
           borderRadius: "50%",
           background: card.blobColor,
           opacity: 0.18,
@@ -193,52 +194,34 @@ function HeroCard({ card }: { card: HeroCardData }) {
         }}
       />
 
-      {/* Number + icon row */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-          marginBottom: 12,
-        }}
-      >
+      {/* Icon row */}
+      <div style={{ marginBottom: 12 }}>
         <div
           style={{
-            width: 40,
-            height: 40,
-            borderRadius: 10,
+            width: 32,
+            height: 32,
+            borderRadius: 8,
             background: card.iconBg,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            flexShrink: 0,
           }}
         >
           <i
             className={`ti ${card.icon}`}
-            style={{ fontSize: 20, color: "#ffffff" }}
+            style={{ fontSize: 16, color: "#ffffff" }}
             aria-hidden="true"
           />
         </div>
-        <span
-          style={{
-            fontSize: 11,
-            fontWeight: 700,
-            color: "rgba(255,255,255,0.25)",
-            letterSpacing: "0.05em",
-          }}
-        >
-          {card.num}
-        </span>
       </div>
 
       {/* Card title */}
       <p
         style={{
-          fontSize: 14,
+          fontSize: 12.5,
           fontWeight: 700,
-          color: "#ffffff",
-          margin: "0 0 4px",
+          color: "#0A0F1E",
+          margin: "0 0 3px",
           lineHeight: 1.3,
         }}
       >
@@ -248,9 +231,9 @@ function HeroCard({ card }: { card: HeroCardData }) {
       {/* Card description */}
       <p
         style={{
-          fontSize: 11,
-          color: "rgba(255,255,255,0.45)",
-          margin: "0 0 12px",
+          fontSize: 10.5,
+          color: "#64748B",
+          margin: "0 0 10px",
           lineHeight: 1.5,
         }}
       >
@@ -261,7 +244,7 @@ function HeroCard({ card }: { card: HeroCardData }) {
       <div
         style={{
           height: 1,
-          background: "rgba(255,255,255,0.08)",
+          background: "#F0F2F8",
           marginBottom: 10,
         }}
       />
@@ -279,37 +262,6 @@ function HeroCard({ card }: { card: HeroCardData }) {
         ))}
       </div>
 
-      {/* Explore more link */}
-      <div
-        style={{
-          marginTop: 10,
-          paddingTop: 8,
-          borderTop: "1px solid rgba(255,255,255,0.06)",
-          display: "flex",
-          alignItems: "center",
-          gap: 4,
-        }}
-      >
-        <span
-          style={{
-            fontSize: 11,
-            color: hovered ? "#F5B800" : "rgba(245,184,0,0.65)",
-            fontWeight: 600,
-            transition: "color 0.15s ease",
-          }}
-        >
-          Explore More
-        </span>
-        <i
-          className="ti ti-arrow-right"
-          style={{
-            fontSize: 11,
-            color: hovered ? "#F5B800" : "rgba(245,184,0,0.65)",
-            transition: "color 0.15s ease",
-          }}
-          aria-hidden="true"
-        />
-      </div>
     </div>
   );
 }
@@ -320,8 +272,8 @@ export default function BentoHero() {
   return (
     <section
       style={{
-        background: "#0f1f3d",
-        minHeight: "85vh",
+        background: "transparent",
+        minHeight: "78vh",
         display: "flex",
         alignItems: "center",
       }}
@@ -330,7 +282,7 @@ export default function BentoHero() {
         style={{
           maxWidth: 1200,
           margin: "0 auto",
-          padding: "120px 24px 64px",
+          padding: "96px 24px 48px",
           width: "100%",
         }}
       >
@@ -343,13 +295,13 @@ export default function BentoHero() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 6,
-                background: "rgba(245,184,0,0.1)",
-                border: "1px solid rgba(245,184,0,0.28)",
+                background: "#EEF3FF",
+                border: "1px solid #BFDBFE",
                 borderRadius: 50,
                 padding: "5px 14px",
                 fontSize: 10,
                 fontWeight: 700,
-                color: "#F5B800",
+                color: "#1247D6",
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
                 width: "fit-content",
@@ -366,10 +318,10 @@ export default function BentoHero() {
             {/* Headline */}
             <h1
               style={{
-                fontSize: "clamp(32px, 4.5vw, 50px)",
+                fontSize: "clamp(28px, 3.8vw, 44px)",
                 fontWeight: 900,
-                lineHeight: 1.1,
-                color: "#ffffff",
+                lineHeight: 1.12,
+                color: "#0A0F1E",
                 margin: 0,
                 letterSpacing: "-0.02em",
               }}
@@ -379,7 +331,7 @@ export default function BentoHero() {
               The real test is when
               <br />
               you need to{" "}
-              <span style={{ color: "#F5B800" }}>make a claim.</span>
+              <span style={{ color: "#1247D6" }}>make a claim.</span>
             </h1>
 
             {/* Body */}
@@ -387,7 +339,7 @@ export default function BentoHero() {
               style={{
                 fontSize: 15,
                 lineHeight: 1.75,
-                color: "rgba(255,255,255,0.55)",
+                color: "#6B7280",
                 maxWidth: 460,
                 margin: 0,
               }}
@@ -414,12 +366,12 @@ export default function BentoHero() {
                   gap: 6,
                   fontSize: 12,
                   fontWeight: 600,
-                  color: "rgba(255,255,255,0.7)",
+                  color: "#374151",
                 }}
               >
                 <i
                   className="ti ti-check"
-                  style={{ fontSize: 13, color: "#F5B800" }}
+                  style={{ fontSize: 13, color: "#1247D6" }}
                   aria-hidden="true"
                 />
                 IRDAI Licensed Insurance Broker
@@ -428,7 +380,7 @@ export default function BentoHero() {
                 style={{
                   width: 1,
                   height: 14,
-                  background: "rgba(255,255,255,0.2)",
+                  background: "#D1D5DB",
                   display: "inline-block",
                 }}
               />
@@ -439,12 +391,12 @@ export default function BentoHero() {
                   gap: 6,
                   fontSize: 12,
                   fontWeight: 600,
-                  color: "rgba(255,255,255,0.7)",
+                  color: "#374151",
                 }}
               >
                 <i
                   className="ti ti-check"
-                  style={{ fontSize: 13, color: "#F5B800" }}
+                  style={{ fontSize: 13, color: "#1247D6" }}
                   aria-hidden="true"
                 />
                 Right Comparison. Right Protection.
@@ -474,8 +426,8 @@ export default function BentoHero() {
                       width: 36,
                       height: 36,
                       borderRadius: 10,
-                      background: "rgba(255,255,255,0.07)",
-                      border: "1px solid rgba(255,255,255,0.1)",
+                      background: "#F3F4F6",
+                      border: "1px solid #E5E7EB",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -484,7 +436,7 @@ export default function BentoHero() {
                   >
                     <i
                       className={`ti ${s.icon}`}
-                      style={{ fontSize: 16, color: "rgba(255,255,255,0.55)" }}
+                      style={{ fontSize: 16, color: "#1247D6" }}
                       aria-hidden="true"
                     />
                   </div>
@@ -493,7 +445,7 @@ export default function BentoHero() {
                       style={{
                         fontSize: 12,
                         fontWeight: 700,
-                        color: "#ffffff",
+                        color: "#0A0F1E",
                         margin: 0,
                         lineHeight: 1.3,
                       }}
@@ -503,7 +455,7 @@ export default function BentoHero() {
                     <p
                       style={{
                         fontSize: 11,
-                        color: "rgba(255,255,255,0.45)",
+                        color: "#64748B",
                         margin: 0,
                         lineHeight: 1.3,
                       }}
@@ -522,7 +474,7 @@ export default function BentoHero() {
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
-                gap: 12,
+                gap: 8,
               }}
             >
               {CARDS.map((card) => (
@@ -536,8 +488,8 @@ export default function BentoHero() {
                 style={{
                   width: "100%",
                   background: "transparent",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                  color: "rgba(255,255,255,0.6)",
+                  border: "1px solid #E5E7EB",
+                  color: "#6B7280",
                   borderRadius: 10,
                   padding: "13px 24px",
                   fontSize: 13,
@@ -551,13 +503,13 @@ export default function BentoHero() {
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget as HTMLButtonElement;
-                  el.style.borderColor = "rgba(255,255,255,0.35)";
-                  el.style.color = "rgba(255,255,255,0.85)";
+                  el.style.borderColor = "#1247D6";
+                  el.style.color = "#1247D6";
                 }}
                 onMouseLeave={e => {
                   const el = e.currentTarget as HTMLButtonElement;
-                  el.style.borderColor = "rgba(255,255,255,0.15)";
-                  el.style.color = "rgba(255,255,255,0.6)";
+                  el.style.borderColor = "#E5E7EB";
+                  el.style.color = "#6B7280";
                 }}
               >
                 <i

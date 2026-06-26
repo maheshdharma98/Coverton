@@ -9,18 +9,18 @@ export const metadata: Metadata = {
 
 const WA = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
 
-function Gap({ num, title, children }: { num: number; title: string; children: React.ReactNode }) {
+function Gap({ id, num, title, children }: { id?: string; num: number; title: string; children: React.ReactNode }) {
   return (
-    <div style={{ marginBottom: 36 }}>
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 14, marginBottom: 12 }}>
-        <div style={{ flexShrink: 0, width: 36, height: 36, borderRadius: "50%", background: "#F5B800", color: "#0f1f3d", display: "grid", placeItems: "center", fontWeight: 900, fontSize: 15 }}>
+    <div id={id} style={{ border: "1px solid #E5E7EB", borderRadius: 14, overflow: "hidden", marginBottom: 20, scrollMarginTop: 100 }}>
+      <div style={{ background: "#0f1f3d", padding: "14px 20px", display: "flex", alignItems: "center", gap: 14 }}>
+        <div style={{ flexShrink: 0, width: 30, height: 30, borderRadius: "50%", background: "#F5B800", color: "#0f1f3d", display: "grid", placeItems: "center", fontWeight: 900, fontSize: 14 }}>
           {num}
         </div>
-        <h2 style={{ fontSize: 20, fontWeight: 800, color: "#0A0F1E", margin: 0, letterSpacing: "-0.4px", lineHeight: 1.25 }}>
+        <h2 style={{ fontSize: 15.5, fontWeight: 800, color: "white", margin: 0, letterSpacing: "-0.3px", lineHeight: 1.3 }}>
           Gap {num}: {title}
         </h2>
       </div>
-      <div style={{ paddingLeft: 50 }}>{children}</div>
+      <div style={{ padding: "18px 20px", background: "white" }}>{children}</div>
     </div>
   );
 }
@@ -67,10 +67,17 @@ export default function EmployerCoverGuide() {
       heroGradient="linear-gradient(135deg, #1a1400 0%, #3d2e00 40%, #0f1f3d 100%)"
       heroIcon="ti-building"
       heroAccent="#F5B800"
+      toc={[
+        { id: "gap-1", label: "Gap 1: The cover disappears the moment you leave" },
+        { id: "gap-2", label: "Gap 2: ₹5 lakhs isn't what it used to be" },
+        { id: "gap-3", label: "Gap 3: Sub-limits and restrictions you probably don't know about" },
+        { id: "gap-4", label: "Gap 4: Parents are often excluded — or very expensive to add" },
+        { id: "gap-5", label: "Gap 5: Waiting periods restart if you port to an individual policy" },
+      ]}
     >
       {/* ── Cover vs real costs visual ─────────────────────────────────── */}
       <div style={{ background: "#0f1f3d", borderRadius: 16, padding: "22px 24px", marginBottom: 36 }}>
-        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.4)", marginBottom: 14 }}>
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.82)", marginBottom: 14 }}>
           Typical employer cover vs. real costs
         </p>
         <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -131,7 +138,7 @@ export default function EmployerCoverGuide() {
       <hr style={{ border: "none", borderTop: "1px solid #E5E7EB", marginBottom: 8 }} />
 
       {/* ── 5 Gaps ────────────────────────────────────────────────────── */}
-      <Gap num={1} title="The cover disappears the moment you leave">
+      <Gap id="gap-1" num={1} title="The cover disappears the moment you leave">
         <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
           This is the most important and least understood gap. Your group cover is tied to your
           employment. The day you resign, are laid off, or retire, your health cover ends. If you've
@@ -150,7 +157,7 @@ export default function EmployerCoverGuide() {
         </Callout>
       </Gap>
 
-      <Gap num={2} title="₹5 lakhs isn't what it used to be">
+      <Gap id="gap-2" num={2} title="₹5 lakhs isn't what it used to be">
         <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
           A ₹5 lakh sum insured sounds like a lot until you're actually in a hospital. A cardiac event
           — stenting, bypass, or even a complex angioplasty — in a private hospital in any metro city
@@ -167,7 +174,7 @@ export default function EmployerCoverGuide() {
         </Callout>
       </Gap>
 
-      <Gap num={3} title="Sub-limits and restrictions you probably don't know about">
+      <Gap id="gap-3" num={3} title="Sub-limits and restrictions you probably don't know about">
         <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
           Group policies are purchased at bulk rates and often include restrictions that the HR
           department doesn't highlight in the benefits overview. Common ones:
@@ -193,7 +200,7 @@ export default function EmployerCoverGuide() {
         label="Send us my employer policy PDF"
       />
 
-      <Gap num={4} title="Parents are often excluded — or very expensive to add">
+      <Gap id="gap-4" num={4} title="Parents are often excluded — or very expensive to add">
         <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
           Most group policies cover the employee, spouse, and two children as standard. Parents (or
           in-laws) are either excluded entirely or available as an optional paid rider — typically at
@@ -213,7 +220,7 @@ export default function EmployerCoverGuide() {
         </Callout>
       </Gap>
 
-      <Gap num={5} title="Waiting periods restart if you port to an individual policy">
+      <Gap id="gap-5" num={5} title="Waiting periods restart if you port to an individual policy">
         <p style={{ fontSize: 15, color: "#374151", lineHeight: 1.75, marginBottom: 12 }}>
           Suppose you've been on your employer's group cover for 5 years. You developed a mild thyroid
           condition in year 2, which was covered from day one (no PED wait in group policies). You now
@@ -240,7 +247,7 @@ export default function EmployerCoverGuide() {
         <h2 style={{ fontSize: 19, fontWeight: 800, color: "white", marginBottom: 18, letterSpacing: "-0.3px" }}>
           The right approach: base + top-up
         </h2>
-        <p style={{ fontSize: 14.5, color: "rgba(255,255,255,0.65)", lineHeight: 1.75, marginBottom: 16 }}>
+        <p style={{ fontSize: 14.5, color: "rgba(255,255,255,0.82)", lineHeight: 1.75, marginBottom: 16 }}>
           You don't have to choose between employer cover and individual cover. The optimal structure
           for most salaried employees:
         </p>
@@ -256,7 +263,7 @@ export default function EmployerCoverGuide() {
               </div>
               <div>
                 <p style={{ fontSize: 14, fontWeight: 700, color: "white", margin: "0 0 4px" }}>{s.title}</p>
-                <p style={{ fontSize: 13.5, color: "rgba(255,255,255,0.55)", margin: 0, lineHeight: 1.6 }}>{s.desc}</p>
+                <p style={{ fontSize: 13.5, color: "rgba(255,255,255,0.75)", margin: 0, lineHeight: 1.6 }}>{s.desc}</p>
               </div>
             </div>
           ))}
@@ -268,7 +275,7 @@ export default function EmployerCoverGuide() {
         <h2 style={{ fontSize: 19, fontWeight: 800, color: "#0A0F1E", marginBottom: 18, letterSpacing: "-0.3px" }}>
           ✅ 6 questions to audit your own employer cover
         </h2>
-        <ol style={{ paddingLeft: 20, display: "flex", flexDirection: "column", gap: 10, margin: 0 }}>
+        <ol style={{ paddingLeft: 20, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 24px", margin: 0 }}>
           {[
             "What is the sum insured per person / family? Is it a floater or individual?",
             "Are there room rent sub-limits? What is the cap per night in rupees?",
@@ -277,7 +284,7 @@ export default function EmployerCoverGuide() {
             "What are the most common reasons claims have been rejected under this policy?",
             "Am I building any long-term continuity benefit, or is my coverage reset every year?",
           ].map((q) => (
-            <li key={q} style={{ fontSize: 14.5, color: "#1E3A8A", lineHeight: 1.65 }}>{q}</li>
+            <li key={q} style={{ fontSize: 13.5, color: "#1E3A8A", lineHeight: 1.6 }}>{q}</li>
           ))}
         </ol>
       </div>

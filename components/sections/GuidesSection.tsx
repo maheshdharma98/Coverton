@@ -40,8 +40,8 @@ const GUIDES = [
 export default function GuidesSection() {
   return (
     <section
-      style={{ background: "#0f1f3d", overflow: "hidden" }}
-      className="px-5 sm:px-10 lg:px-16 py-14 lg:py-20"
+      style={{ background: "transparent", overflow: "hidden" }}
+      className="px-5 sm:px-10 lg:px-16 py-10 lg:py-14"
     >
       <style>{`
         .guide-card {
@@ -72,29 +72,24 @@ export default function GuidesSection() {
 
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
         {/* ── Section header ─────────────────────────────────────────── */}
-        <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <span
+        <div style={{ textAlign: "center", marginBottom: 32 }}>
+          <p
             style={{
-              display: "inline-block",
-              fontSize: 10.5,
-              fontWeight: 700,
+              fontSize: 12,
+              fontWeight: 600,
+              color: "#1247D6",
               letterSpacing: "2px",
               textTransform: "uppercase",
-              color: "#F5B800",
-              background: "rgba(245,184,0,0.1)",
-              border: "1px solid rgba(245,184,0,0.2)",
-              borderRadius: 50,
-              padding: "4px 14px",
-              marginBottom: 16,
+              marginBottom: 12,
             }}
           >
             Guides
-          </span>
+          </p>
           <h2
             style={{
               fontSize: "clamp(24px, 3.8vw, 38px)",
               fontWeight: 800,
-              color: "white",
+              color: "#0A0F1E",
               letterSpacing: "-0.6px",
               lineHeight: 1.18,
               margin: "0 auto 12px",
@@ -102,11 +97,11 @@ export default function GuidesSection() {
             }}
           >
             Learn before you buy.{" "}
-            <span style={{ color: "rgba(255,255,255,0.38)" }}>
+            <span style={{ color: "#64748B" }}>
               Know before you claim.
             </span>
           </h2>
-          <p style={{ fontSize: 15, color: "rgba(255,255,255,0.42)", maxWidth: 460, margin: "0 auto", lineHeight: 1.65 }}>
+          <p style={{ fontSize: 15, color: "#64748B", maxWidth: 460, margin: "0 auto", lineHeight: 1.65 }}>
             Plain-language guides from the Coverton advisory team — no jargon, no sales pitch.
           </p>
         </div>
@@ -123,8 +118,8 @@ export default function GuidesSection() {
                 className="guide-card"
                 style={
                   {
-                    background: "rgba(255,255,255,0.045)",
-                    border: "1px solid rgba(255,255,255,0.09)",
+                    background: "white",
+                    border: "1px solid #E8EBF5",
                     borderRadius: 20,
                     padding: "28px 26px 24px",
                     height: "100%",
@@ -132,7 +127,7 @@ export default function GuidesSection() {
                     flexDirection: "column",
                     gap: 0,
                     cursor: "pointer",
-                    boxShadow: "0 4px 24px rgba(0,0,0,0.18)",
+                    boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
                     "--g-accent": g.accent,
                   } as React.CSSProperties
                 }
@@ -181,7 +176,7 @@ export default function GuidesSection() {
                   style={{
                     fontSize: 17,
                     fontWeight: 700,
-                    color: "white",
+                    color: "#0A0F1E",
                     lineHeight: 1.35,
                     letterSpacing: "-0.3px",
                     margin: "0 0 10px",
@@ -194,7 +189,7 @@ export default function GuidesSection() {
                 <p
                   style={{
                     fontSize: 13.5,
-                    color: "rgba(255,255,255,0.48)",
+                    color: "#6B7280",
                     lineHeight: 1.65,
                     margin: "0 0 20px",
                     flex: 1,
@@ -205,7 +200,7 @@ export default function GuidesSection() {
 
                 {/* Footer row */}
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto" }}>
-                  <span style={{ fontSize: 12, color: "rgba(255,255,255,0.28)" }}>
+                  <span style={{ fontSize: 12, color: "#64748B" }}>
                     <i className="ti ti-clock" style={{ fontSize: 12, marginRight: 4 }} aria-hidden="true" />
                     {g.meta}
                   </span>
