@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { appendEnquiry, type EnquiryRow } from "@/lib/sheets";
+import { appendEnquiry, uploadPolicyFile, type EnquiryRow } from "@/lib/sharepoint";
+import { appendToExcel } from "@/lib/excel";
+import { formatTimestamp } from "@/lib/formatTimestamp";
 import { sendEnquiryEmail } from "@/lib/mailer";
 import { checkRateLimit } from "@/lib/middleware/rateLimit";
 import { validateEnquiryRequest } from "@/lib/middleware/validateRequest";
@@ -114,41 +116,36 @@ function toEnquiryRow(formType: string, payload: any, refId: string, motorPolicy
   let name: string = payload.name ?? "";
   const subcategory: string = payload.category ?? "";
 
+  // Remarks — captured for all form types
+  if (payload.remarks) {
+    extraFields["Remarks"] = String(payload.remarks);
+  }
+
   switch (formType) {
     case "motor":
       extraFields["Vehicle Number"] = payload.vehicleNumber ?? "";
       extraFields["Policy Upload"] = motorPolicyFileName
         ? `Attached (${motorPolicyFileName})`
-        : "Not uploaded";
+        : "No";
       break;
 
     case "health-individual":
       extraFields["Date of Birth"] = payload.dob ?? "";
       extraFields["Pre-existing Disease"] =
         payload.preExistingDisease === "yes" ? "Yes" : "No";
+      if (payload.preExistingDisease === "yes" && payload.diseaseType) {
+        extraFields["Disease Type"] = String(payload.diseaseType);
+      }
       break;
 
-    case "health-floater": {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const included = (payload.members ?? []).filter(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (m: any) => m.key === "self" || m.included
-      );
-      extraFields["Members JSON"] = JSON.stringify(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        included.map((m: any) => ({
-          label: m.label,
-          ageDob: m.ageDob,
-          ped: m.ped,
-        }))
-      );
-      extraFields["Member Count"] = String(included.length);
+    case "health-floater":
+      extraFields["Number of Adults"]   = payload.numberOfAdults   ?? "";
+      extraFields["Number of Children"] = payload.numberOfChildren ?? "0";
       break;
-    }
 
     case "health-group":
       name = payload.companyName ?? "";
-      extraFields["Company Name"] = payload.companyName ?? "";
+      extraFields["Company Name"]        = payload.companyName      ?? "";
       extraFields["Number of Employees"] = payload.numberOfEmployees ?? "";
       break;
 
@@ -164,7 +161,7 @@ function toEnquiryRow(formType: string, payload: any, refId: string, motorPolicy
 
   return {
     refId,
-    timestamp: new Date().toISOString(),
+    timestamp: formatTimestamp(),
     insuranceType: formType,
     subcategory,
     name,
@@ -316,21 +313,50 @@ export async function POST(request: NextRequest) {
         }
       : undefined;
 
+  console.log("[enquiry] Policy file present:", !!policyAttachment);
+  if (policyAttachment) {
+    console.log("[enquiry] File name:", policyAttachment.filename);
+    console.log("[enquiry] File size (base64 chars):", policyAttachment.content.length);
+  }
+
+  // ── Step 8b: Upload policy file to drive before creating the list item ─
+  // The webUrl is included in the initial POST so no PATCH is needed.
+  let policyDocumentUrl: string | undefined;
+  if (policyAttachment) {
+    const uploadResult = await uploadPolicyFile(
+      refId,
+      policyAttachment.filename,
+      policyAttachment.content,
+      policyAttachment.mimeType
+    );
+    if (uploadResult.success) {
+      policyDocumentUrl = uploadResult.webUrl;
+    }
+  }
+
   const row = toEnquiryRow(formType, zodResult.data, refId, policyAttachment?.filename);
+  if (policyDocumentUrl) row.policyDocumentUrl = policyDocumentUrl;
 
-  // ── Step 9: Sheets + email in parallel ────────────────────────────────────
+  // ── Step 9: SharePoint + Excel + email in parallel ───────────────────────
 
-  const [sheetsResult, emailResult] = await Promise.allSettled([
+  const [sharepointResult, excelResult, emailResult] = await Promise.allSettled([
     appendEnquiry(row),
+    appendToExcel(row),
     sendEnquiryEmail(row, policyAttachment),
   ]);
 
   // ── Step 10: Handle integration failures ──────────────────────────────────
 
-  // appendEnquiry throws on permanent failure → "rejected" means failure
-  const sheetsOk = sheetsResult.status === "fulfilled";
-  if (!sheetsOk) {
-    addToQueue(row); // retry queue handles re-submission to Sheets
+  const sharepointOk =
+    sharepointResult.status === "fulfilled" && sharepointResult.value?.success;
+
+  if (!sharepointOk) {
+    console.error("[enquiry] SharePoint failed, queuing for retry");
+    addToQueue(row);
+  }
+
+  if (excelResult.status === "rejected" || !excelResult.value?.success) {
+    console.error("[enquiry] Excel append failed — logged but non-blocking");
   }
 
   // Email failure is non-critical — log only, still return success to the user
@@ -338,7 +364,7 @@ export async function POST(request: NextRequest) {
     console.error("[enquiry] Email send rejected:", emailResult.reason);
   }
 
-  const finalStatus = sheetsOk ? "success" : "queued";
+  const finalStatus = sharepointOk ? "success" : "queued";
 
   // ── Step 11: Log event ────────────────────────────────────────────────────
 

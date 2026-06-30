@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-import type { EnquiryRow } from "./sheets";
+import type { EnquiryRow } from "./sharepoint";
 import { buildEnquiryEmailHtml } from "./email-templates/enquiry";
 import { buildConfirmationEmailHtml } from "./email-templates/confirmation";
 
@@ -10,10 +10,15 @@ let _transporter: nodemailer.Transporter | null = null;
 function getTransporter(): nodemailer.Transporter {
   if (!_transporter) {
     _transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || "587"),
+      secure: false,
       auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
+        user: process.env.SMTP_USERNAME,
+        pass: process.env.SMTP_PASSWORD,
+      },
+      tls: {
+        rejectUnauthorized: false,
       },
     });
   }
@@ -44,7 +49,7 @@ function formatInsuranceType(type: string): string {
 }
 
 function customerEmailEnabled(): boolean {
-  return process.env.CUSTOMER_EMAIL_ENABLED !== "false";
+  return process.env.CUSTOMER_EMAIL_ENABLED === "true";
 }
 
 function getLogoUrl(): string {
@@ -65,8 +70,8 @@ export async function sendEnquiryEmail(
   policyAttachment?: { filename: string; content: string; mimeType: string }
 ): Promise<void> {
   const transporter = getTransporter();
-  const from = `"Coverton Insurance" <${process.env.GMAIL_USER}>`;
-  const subject = `New ${formatInsuranceType(data.insuranceType)} Enquiry from ${data.name} (Ref ${data.refId})`;
+  const from = `"Coverton Insurance" <${process.env.SMTP_USERNAME}>`;
+  const subject = `New ${formatInsuranceType(data.insuranceType)} Enquiry — ${data.name}`;
 
   // Team email: attach policy file if uploaded
   const teamAttachments: nodemailer.SendMailOptions["attachments"] = policyAttachment
@@ -88,7 +93,7 @@ export async function sendEnquiryEmail(
   });
 
   const insuranceLabel = formatInsuranceType(data.insuranceType);
-  const customerSubject = `Your ${insuranceLabel} Enquiry Confirmation — Ref ${data.refId}`;
+  const customerSubject = `Your ${insuranceLabel} enquiry received — Coverton`;
   const firstName = data.name.split(" ")[0] ?? data.name;
   const customerText = [
     `Hi ${firstName},`,
@@ -115,12 +120,13 @@ export async function sendEnquiryEmail(
     ? transporter.sendMail({
         from,
         to: data.email,
+        replyTo: process.env.TEAM_EMAIL,
         subject: customerSubject,
         text: customerText,
         html: buildConfirmationEmailHtml(data.name, data.insuranceType, data.refId, logoDataUri),
         headers: {
           "X-Entity-Ref-ID": data.refId,
-          "List-Unsubscribe": `<mailto:${process.env.GMAIL_USER}?subject=Unsubscribe>`,
+          "List-Unsubscribe": `<mailto:${process.env.TEAM_EMAIL}?subject=Unsubscribe>`,
         },
       })
     : Promise.resolve(null);

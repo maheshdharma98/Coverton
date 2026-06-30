@@ -17,9 +17,12 @@ export const pincodeSchema = z
   .string()
   .regex(/^\d{6}$/, "Enter a valid 6-digit pincode");
 
+export const remarksSchema = z.string().max(500).optional();
+
 export const commonFields = {
   name: nameSchema,
   mobile: mobileSchema,
   email: emailSchema,
   pincode: pincodeSchema,
+  remarks: remarksSchema,
 };

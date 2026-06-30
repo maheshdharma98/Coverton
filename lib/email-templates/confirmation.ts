@@ -191,10 +191,10 @@ export function buildConfirmationEmailHtml(
         <!-- Dark footer -->
         <tr>
           <td style="background:#0A0F1E;padding:22px 40px;text-align:center">
-            <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#ffffff">Coverton Insurance</p>
+            <p style="margin:0 0 6px;font-size:13px;font-weight:700;color:#ffffff">Coverton Insurance Broking Pvt Ltd</p>
             <p style="margin:0;font-size:12px;color:#8892A4;line-height:1.6">
-              You received this because an enquiry was submitted on our website.<br>
-              Did not make this enquiry? <a href="mailto:support@coverton.in" style="color:#F5B800;text-decoration:none">Contact us</a> and we&rsquo;ll remove your details.
+              Reply to this email or contact <a href="mailto:wecare@coverton.in" style="color:#F5B800;text-decoration:none">wecare@coverton.in</a><br>
+              Did not make this enquiry? <a href="mailto:wecare@coverton.in" style="color:#8892A4;text-decoration:none">Contact us</a> and we&rsquo;ll remove your details.
             </p>
           </td>
         </tr>

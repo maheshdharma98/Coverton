@@ -1,32 +1,32 @@
 import { NextResponse } from "next/server";
-import { getSheetStats } from "@/lib/sheets";
+import { getListStats } from "@/lib/sharepoint";
 import { getQueueStatus } from "@/lib/failureQueue";
 
 export async function GET() {
   const timestamp = new Date().toISOString();
 
-  let sheetsConnected = false;
-  let sheetStats: { totalEnquiries: number; todayEnquiries: number } | null =
-    null;
+  let sharepointConnected = false;
+  let total = 0;
 
   try {
-    sheetStats = await getSheetStats();
-    sheetsConnected = true;
+    const stats = await getListStats();
+    sharepointConnected = true;
+    total = stats.total;
   } catch (err) {
-    console.error("[health] Sheets unreachable:", err);
+    console.error("[health] SharePoint unreachable:", err);
   }
 
   const { pending: queuePending } = getQueueStatus();
 
   const body = {
-    status: sheetsConnected ? "ok" : "degraded",
+    status: sharepointConnected ? "ok" : "degraded",
     timestamp,
-    sheetsConnected,
+    sharepointConnected,
+    totalEnquiries: total,
     queuePending,
-    ...(sheetStats ?? {}),
   };
 
   return NextResponse.json(body, {
-    status: sheetsConnected ? 200 : 503,
+    status: sharepointConnected ? 200 : 503,
   });
 }

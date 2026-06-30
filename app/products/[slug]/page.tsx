@@ -118,7 +118,7 @@ const PRODUCT_CONFIG: Record<string, ProductConfig> = {
     subcategories: ['Crop Insurance', 'Cattle Insurance'],
     benefits: ['Crop failure protection', 'Natural disaster cover', 'Livestock protection', 'Weather-based coverage', 'Post-harvest loss cover', 'Government scheme support'],
     formType: 'standard',
-    categories: ['Crop Insurance', 'Cattle Insurance'],
+    categories: ['Cattle', 'Crop'],
   },
   fire: {
     name: 'Fire Insurance',
@@ -623,6 +623,7 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
   const [uploadedFileData, setUploadedFileData] = useState<{
     fileData: string; fileName: string; mimeType: string;
   } | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
   const [dob, setDob] = useState('');
   const [ped, setPed] = useState<'yes' | 'no' | ''>('');
   const [companyName, setCompanyName] = useState('');
@@ -630,6 +631,8 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
   const [travelType, setTravelType] = useState('');
   const [numAdults, setNumAdults] = useState('');
   const [numChildren, setNumChildren] = useState('');
+  const [diseaseType, setDiseaseType] = useState('');
+  const [remarks, setRemarks] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -643,11 +646,12 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
   const resetForm = () => {
     setName(''); setMobile(''); setEmail(''); setPincode('');
     setCategory(''); setVehicleNumber('');
-    setPolicyFile(null); setUploadedFileData(null);
+    setPolicyFile(null); setUploadedFileData(null); setFileError(null);
     setDob(''); setPed('');
     setCompanyName(''); setNumEmployees('');
     setTravelType('');
     setNumAdults(''); setNumChildren('');
+    setDiseaseType(''); setRemarks('');
     setFieldErrors({}); setError(null);
     setSubmitted(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
@@ -691,6 +695,7 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
         }
       }
       if (!ped) errs.ped = 'Please select Yes or No';
+      if (ped === 'yes' && !diseaseType.trim()) errs.diseaseType = 'Please describe your pre-existing condition';
     } else if (config.formType === 'health-floater') {
       const a = Number(numAdults);
       if (!numAdults || !Number.isInteger(a) || a < 1 || a > 10) errs.numAdults = 'Enter a valid number of adults (1–10)';
@@ -720,6 +725,7 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
           : config.formType;
 
       const payload: Record<string, unknown> = { mobile, email, pincode };
+      if (remarks.trim()) payload.remarks = remarks.trim();
 
       if (config.formType === 'health-group') {
         payload.companyName = companyName;
@@ -733,6 +739,7 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
         } else if (config.formType === 'health-individual') {
           payload.dob = dob;
           payload.preExistingDisease = ped;
+          if (ped === 'yes') payload.diseaseType = diseaseType;
         } else if (config.formType === 'health-floater') {
           payload.numberOfAdults = numAdults;
           payload.numberOfChildren = numChildren || '0';
@@ -897,12 +904,23 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
             <input
               ref={fileInputRef}
               type="file"
-              accept=".pdf,image/*"
+              accept=".pdf,.jpg,.jpeg,.png,.webp"
               style={{ display: 'none' }}
               onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (!file) return;
-                if (file.size > 5 * 1024 * 1024) return;
+                setFileError(null);
+                const allowed = ['application/pdf', 'image/jpeg', 'image/png', 'image/webp'];
+                if (!allowed.includes(file.type)) {
+                  setFileError('Only PDF, JPG, PNG, or WEBP files are accepted.');
+                  if (fileInputRef.current) fileInputRef.current.value = '';
+                  return;
+                }
+                if (file.size > 5 * 1024 * 1024) {
+                  setFileError('File must be under 5 MB.');
+                  if (fileInputRef.current) fileInputRef.current.value = '';
+                  return;
+                }
                 setPolicyFile(file);
                 const reader = new FileReader();
                 reader.onload = (ev) => {
@@ -912,6 +930,9 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
                 reader.readAsDataURL(file);
               }}
             />
+            {fileError && (
+              <span style={{ fontSize: 10.5, color: '#E53E3E', marginTop: 3, display: 'block' }}>{fileError}</span>
+            )}
           </FormField>
         </>
       )}
@@ -954,6 +975,18 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
             </div>
             {fieldErrors.ped && <span style={{ fontSize: 10.5, color: '#E53E3E', marginTop: 3, display: 'block' }}>{fieldErrors.ped}</span>}
           </FormField>
+          {ped === 'yes' && (
+            <FormInput
+              label="Type of Pre-existing Disease"
+              required
+              accent={accent}
+              value={diseaseType}
+              onChange={(v) => { setDiseaseType(v); clearErr('diseaseType'); }}
+              placeholder="e.g. Diabetes, Hypertension, Asthma"
+              error={fieldErrors.diseaseType}
+              maxLength={200}
+            />
+          )}
         </>
       )}
 
@@ -1034,6 +1067,33 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
           onChange={(v) => { setCategory(v); clearErr('category'); }}
           error={fieldErrors.category} />
       )}
+
+      {/* Remarks — optional for all forms */}
+      <FormField label="Remarks (Optional)">
+        <textarea
+          value={remarks}
+          onChange={(e) => setRemarks(e.target.value)}
+          placeholder="Any specific requirements or additional information..."
+          maxLength={500}
+          rows={3}
+          style={{
+            border: '1px solid #E2E8F0',
+            borderRadius: 8,
+            padding: '9px 12px',
+            fontSize: 13,
+            width: '100%',
+            color: '#0A0F1E',
+            outline: 'none',
+            background: 'white',
+            boxSizing: 'border-box',
+            resize: 'vertical',
+            fontFamily: 'inherit',
+            transition: 'border-color 0.15s',
+          }}
+          onFocus={(e) => (e.target.style.borderColor = accent)}
+          onBlur={(e) => (e.target.style.borderColor = '#E2E8F0')}
+        />
+      </FormField>
 
       {/* Error */}
       {error && (

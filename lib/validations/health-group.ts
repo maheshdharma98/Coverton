@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { emailSchema, mobileSchema, pincodeSchema } from "./_common";
+import { emailSchema, mobileSchema, pincodeSchema, remarksSchema } from "./_common";
 
 export const healthGroupSchema = z.object({
   companyName: z
@@ -15,6 +15,7 @@ export const healthGroupSchema = z.object({
     }, "Must be a positive whole number"),
   email: emailSchema,
   pincode: pincodeSchema,
+  remarks: remarksSchema,
 });
 
 export type HealthGroupFormValues = z.infer<typeof healthGroupSchema>;

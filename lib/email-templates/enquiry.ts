@@ -1,4 +1,4 @@
-import type { EnquiryRow } from "@/lib/sheets";
+import type { EnquiryRow } from "@/lib/sharepoint";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -178,7 +178,8 @@ export function buildEnquiryEmailHtml(data: EnquiryRow, logoDataUri = ""): strin
         <tr>
           <td style="background:#F4F7FF;border-top:2px solid #E8EBF5;padding:20px 40px;text-align:center">
             <p style="margin:0;font-size:12px;color:#8892A4;line-height:1.6">
-              Automated notification from <strong style="color:#5A6080">Coverton Insurance</strong> website &nbsp;·&nbsp; Do not reply to this email
+              <strong style="color:#5A6080">Coverton Insurance Broking Pvt Ltd</strong><br>
+              Reply to this email or contact <a href="mailto:wecare@coverton.in" style="color:#1247D6;text-decoration:none">wecare@coverton.in</a>
             </p>
           </td>
         </tr>

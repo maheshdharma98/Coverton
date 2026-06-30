@@ -1,4 +1,4 @@
-import { appendEnquiry, type EnquiryRow } from "./sheets";
+import { appendEnquiry, type EnquiryRow } from "./sharepoint";
 
 interface QueueItem {
   row: EnquiryRow;
@@ -32,7 +32,8 @@ export async function processQueue(): Promise<void> {
 
   for (const item of due) {
     try {
-      await appendEnquiry(item.row); // throws on permanent failure
+      const result = await appendEnquiry(item.row);
+      if (!result.success) throw new Error("SharePoint append returned failure");
 
       const idx = pending.indexOf(item);
       if (idx !== -1) pending.splice(idx, 1);
