@@ -59,8 +59,14 @@ function getLogoUrl(): string {
     (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "") ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "")
   ).replace(/\/$/, "");
-  const url = baseUrl ? `${baseUrl}/coverton-logo.png` : "";
-  console.log(`[mailer] logo URL: ${url || "(none — text fallback)"}`);
+
+  // Email clients cannot fetch images from localhost — return empty so templates use text fallback
+  if (!baseUrl || baseUrl.includes("localhost")) {
+    return "";
+  }
+
+  const url = `${baseUrl}/coverton-logo.png`;
+  console.log(`[mailer] logo URL: ${url}`);
   return url;
 }
 

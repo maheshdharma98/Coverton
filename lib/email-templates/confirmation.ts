@@ -71,19 +71,8 @@ export function buildConfirmationEmailHtml(
   }
   .hero {
     background: #0f1f3d;
-    padding: 0 32px 32px;
+    padding: 28px 32px 32px;
     text-align: center;
-  }
-  .check-circle {
-    width: 52px;
-    height: 52px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 50%;
-    display: inline-block;
-    text-align: center;
-    line-height: 52px;
-    margin-bottom: 16px;
-    border: 2px solid rgba(255,255,255,0.2);
   }
   .hero-title {
     color: #ffffff;
@@ -297,9 +286,6 @@ export function buildConfirmationEmailHtml(
 
   <!-- HERO -->
   <div class="hero">
-    <div class="check-circle">
-      <span style="color:#F5B800;font-size:24px;font-weight:700">&#10003;</span>
-    </div>
     <div class="hero-title">
       Thank you, <span>${displayName}!</span>
     </div>
