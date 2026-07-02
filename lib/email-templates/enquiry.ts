@@ -83,9 +83,9 @@ function resolveValue(label: string, raw: string): string {
 // ─── Main builder ─────────────────────────────────────────────────────────────
 
 export function buildEnquiryEmailHtml(data: EnquiryRow, logoDataUri = ""): string {
-  const logoBadgeCell = logoDataUri
-    ? `<td style="vertical-align:middle;padding-right:12px"><img src="${logoDataUri}" alt="Coverton Insurance" height="38" style="display:block;height:38px;width:auto;border:0;max-width:130px" /></td>`
-    : `<td style="vertical-align:middle;padding-right:10px"><div style="width:36px;height:36px;background:#1247D6;border-radius:8px;display:inline-block;text-align:center;line-height:36px;font-size:18px;color:#F5B800;font-weight:700">C</div></td>`;
+  const logoAreaHtml = logoDataUri
+    ? `<img src="${logoDataUri}" alt="Coverton Insurance Broking Pvt Ltd" width="160" height="50" style="display:block;width:160px;height:50px;object-fit:contain;object-position:left center;border:0" />`
+    : `<table cellpadding="0" cellspacing="0" role="presentation"><tr><td style="vertical-align:middle;padding-right:10px"><div style="width:36px;height:36px;background:#1247D6;border-radius:8px;display:inline-block;text-align:center;line-height:36px;font-size:18px;color:#F5B800;font-weight:700">C</div></td><td style="vertical-align:middle"><div style="color:#ffffff;font-size:17px;font-weight:700;letter-spacing:0.5px;font-family:Arial,sans-serif;line-height:1.2">COVERTON</div><div style="color:rgba(255,255,255,0.45);font-size:9px;letter-spacing:1px;text-transform:uppercase;font-family:Arial,sans-serif">Insurance Broking Pvt Ltd</div></td></tr></table>`;
 
   const displayRef          = esc(data.refId);
   const displayType         = esc(data.insuranceType);
@@ -163,16 +163,8 @@ export function buildEnquiryEmailHtml(data: EnquiryRow, logoDataUri = ""): strin
       <td class="header-cell" style="padding:20px 32px">
         <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
           <tr>
-            <td>
-              <table cellpadding="0" cellspacing="0" role="presentation">
-                <tr>
-                  ${logoBadgeCell}
-                  <td style="vertical-align:middle">
-                    <div style="color:#ffffff;font-size:17px;font-weight:700;letter-spacing:0.5px;font-family:Arial,sans-serif;line-height:1.2">COVERTON</div>
-                    <div style="color:rgba(255,255,255,0.45);font-size:9px;letter-spacing:1px;text-transform:uppercase;font-family:Arial,sans-serif">Insurance Broking Pvt Ltd</div>
-                  </td>
-                </tr>
-              </table>
+            <td style="vertical-align:middle">
+              ${logoAreaHtml}
             </td>
             <td align="right" style="vertical-align:middle">
               <span style="background:rgba(245,184,0,0.15);border:1px solid rgba(245,184,0,0.3);color:#F5B800;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.5px;white-space:nowrap">NEW ENQUIRY</span>

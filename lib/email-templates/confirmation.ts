@@ -43,9 +43,9 @@ export function buildConfirmationEmailHtml(
   const displayRef  = esc(refId);
   const waNumber    = (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "919566085116").replace(/^\+/, "");
 
-  const logoBadgeCell = logoDataUri
-    ? `<td style="vertical-align:middle;padding-right:12px"><img src="${logoDataUri}" alt="Coverton Insurance" height="38" style="display:block;height:38px;width:auto;border:0;max-width:130px" /></td>`
-    : `<td style="vertical-align:middle;padding-right:10px"><div style="width:36px;height:36px;background:#1247D6;border-radius:8px;display:inline-block;text-align:center;line-height:36px;font-size:18px;color:#F5B800;font-weight:700">C</div></td>`;
+  const logoHeaderContent = logoDataUri
+    ? `<img src="${logoDataUri}" alt="Coverton Insurance Broking Pvt Ltd" width="160" height="50" style="display:block;width:160px;height:50px;object-fit:contain;object-position:left center;border:0" />`
+    : `<table cellpadding="0" cellspacing="0" role="presentation"><tr><td style="vertical-align:middle;padding-right:10px"><div style="width:36px;height:36px;background:#1247D6;border-radius:8px;display:inline-block;text-align:center;line-height:36px;font-size:18px;color:#F5B800;font-weight:700">C</div></td><td style="vertical-align:middle"><div style="color:#0f1f3d;font-size:17px;font-weight:700;letter-spacing:0.5px;font-family:Arial,sans-serif;line-height:1.2">COVERTON</div><div style="color:#8892A4;font-size:9px;letter-spacing:1px;text-transform:uppercase;font-family:Arial,sans-serif">Insurance Broking Pvt Ltd</div></td></tr></table>`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -275,15 +275,7 @@ export function buildConfirmationEmailHtml(
 
   <!-- HEADER -->
   <div class="header">
-    <table cellpadding="0" cellspacing="0" role="presentation">
-      <tr>
-        ${logoBadgeCell}
-        <td style="vertical-align:middle">
-          <div style="color:#0f1f3d;font-size:17px;font-weight:700;letter-spacing:0.5px;font-family:Arial,sans-serif;line-height:1.2">COVERTON</div>
-          <div style="color:#8892A4;font-size:9px;letter-spacing:1px;text-transform:uppercase;font-family:Arial,sans-serif">Insurance Broking Pvt Ltd</div>
-        </td>
-      </tr>
-    </table>
+    ${logoHeaderContent}
   </div>
 
   <!-- HERO -->
@@ -306,7 +298,7 @@ export function buildConfirmationEmailHtml(
   </div>
 
   <!-- BODY -->
-  <div class="body">
+  <div class="body" style="background:#ffffff">
 
     <!-- HELP + HOURS ROW -->
     <table class="help-row" role="presentation">
