@@ -53,21 +53,15 @@ function customerEmailEnabled(): boolean {
 }
 
 function getLogoUrl(): string {
-  const baseUrl = (
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    process.env.SITE_URL ||
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "") ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "")
-  ).replace(/\/$/, "");
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
-  // Email clients cannot fetch images from localhost — return empty so templates use text fallback
-  if (!baseUrl || baseUrl.includes("localhost")) {
+  if (!siteUrl || siteUrl.includes("localhost")) {
     return "";
   }
 
-  const url = `${baseUrl}/coverton-logo.png`;
-  console.log(`[mailer] logo URL: ${url}`);
-  return url;
+  const cleanUrl = siteUrl.endsWith("/") ? siteUrl.slice(0, -1) : siteUrl;
+
+  return `${cleanUrl}/coverton-logo.png`;
 }
 
 // ─── sendEnquiryEmail ─────────────────────────────────────────────────────────
