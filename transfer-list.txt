@@ -1,0 +1,36 @@
+TRANSFER TO HOSTINGER VPS (/var/www/coverton/)
+===============================================
+
+REQUIRED — Transfer these:
+  .next/                  (built app — most important)
+                          NOTE: Skip .next/dev/ — it is Turbopack's local
+                          dev cache (1.4 GB) and is NOT needed on the server.
+                          Only transfer: .next/build/ .next/cache/
+                          .next/server/ .next/static/ and .next/BUILD_ID
+  public/                 (logo, fonts, static files)
+  package.json            (app config)
+  package-lock.json       (exact dependency versions)
+  next.config.ts          (Next.js config)
+  ecosystem.config.js     (PM2 config)
+  deploy.sh               (deployment script)
+
+OPTIONAL — Skip to save transfer time:
+  node_modules/           (run npm ci on server instead)
+
+DO NOT TRANSFER — These are not needed:
+  .env.local              (create manually on server)
+  .env.production.example (reference only)
+  app/                    (source code — already built)
+  components/             (source code — already built)
+  lib/                    (source code — already built)
+  .git/                   (not needed on server)
+  node_modules/           (if running npm ci on server)
+  *.md files              (documentation only)
+
+ON SERVER AFTER TRANSFER:
+  1. Create .env.local with all credentials
+  2. Run: npm ci --production
+     (only if node_modules not transferred)
+  3. Run: bash deploy.sh
+  4. Setup Nginx (see deployment guide)
+  5. Run: sudo certbot --nginx -d coverton.in
