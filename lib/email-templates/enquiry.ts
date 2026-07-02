@@ -83,6 +83,10 @@ function resolveValue(label: string, raw: string): string {
 // ─── Main builder ─────────────────────────────────────────────────────────────
 
 export function buildEnquiryEmailHtml(data: EnquiryRow, logoDataUri = ""): string {
+  const logoBadgeCell = logoDataUri
+    ? `<td style="vertical-align:middle;padding-right:12px"><img src="${logoDataUri}" alt="Coverton Insurance" height="38" style="display:block;height:38px;width:auto;border:0;max-width:130px" /></td>`
+    : `<td style="vertical-align:middle;padding-right:10px"><div style="width:36px;height:36px;background:#1247D6;border-radius:8px;display:inline-block;text-align:center;line-height:36px;font-size:18px;color:#F5B800;font-weight:700">C</div></td>`;
+
   const displayRef          = esc(data.refId);
   const displayType         = esc(data.insuranceType);
   const displaySubcategory  = esc(data.subcategory ?? "N/A");
@@ -162,9 +166,7 @@ export function buildEnquiryEmailHtml(data: EnquiryRow, logoDataUri = ""): strin
             <td>
               <table cellpadding="0" cellspacing="0" role="presentation">
                 <tr>
-                  <td style="vertical-align:middle;padding-right:10px">
-                    <div style="width:36px;height:36px;background:#1247D6;border-radius:8px;display:inline-block;text-align:center;line-height:36px;font-size:18px;color:#F5B800;font-weight:700">C</div>
-                  </td>
+                  ${logoBadgeCell}
                   <td style="vertical-align:middle">
                     <div style="color:#ffffff;font-size:17px;font-weight:700;letter-spacing:0.5px;font-family:Arial,sans-serif;line-height:1.2">COVERTON</div>
                     <div style="color:rgba(255,255,255,0.45);font-size:9px;letter-spacing:1px;text-transform:uppercase;font-family:Arial,sans-serif">Insurance Broking Pvt Ltd</div>
