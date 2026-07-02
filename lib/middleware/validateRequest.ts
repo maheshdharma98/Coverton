@@ -1,10 +1,23 @@
-// All 13 valid insurance form types
+// All 15 valid insurance form types — lowercase kebab-case canonical;
+// legacy Title-case entries kept during transition
 const VALID_FORM_TYPES = new Set([
   "motor",
   "health-individual",
   "health-floater",
   "health-group",
   "travel",
+  // canonical lowercase kebab-case
+  "life",
+  "agriculture",
+  "fire",
+  "credit",
+  "engineering",
+  "liability",
+  "marine",
+  "miscellaneous",
+  "personal-accident",
+  "surety",
+  // legacy Title-case — accepted during transition
   "Life",
   "Agriculture",
   "Fire",

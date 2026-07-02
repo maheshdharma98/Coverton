@@ -47,7 +47,7 @@ const CARDS: HeroCardData[] = [
     cardBg: "#FFF2F2",
     subs: [
       { label: "Individual Health", param: "", icon: "ti-user" },
-      { label: "Floater", param: "", icon: "ti-users" },
+      { label: "Family", param: "", icon: "ti-users" },
       { label: "Group Health", param: "", icon: "ti-users-group" },
     ],
   },
@@ -470,20 +470,8 @@ export default function BentoHero() {
 
           {/* ── RIGHT — 2×2 card grid ────────────────────────────────────── */}
           <div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 8,
-              }}
-            >
-              {CARDS.map((card) => (
-                <HeroCard key={card.slug} card={card} />
-              ))}
-            </div>
-
             {/* View all button */}
-            <Link href="/products" style={{ display: "block", marginTop: 12 }}>
+            <Link href="/products" style={{ display: "block", marginBottom: 12 }}>
               <button
                 style={{
                   width: "100%",
@@ -525,6 +513,18 @@ export default function BentoHero() {
                 />
               </button>
             </Link>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 8,
+              }}
+            >
+              {CARDS.map((card) => (
+                <HeroCard key={card.slug} card={card} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

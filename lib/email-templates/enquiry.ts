@@ -48,6 +48,18 @@ function formatTimestamp(iso: string): string {
   }
 }
 
+function formatReceivedTime(iso: string): string {
+  try {
+    const date = new Date(iso);
+    const day   = date.toLocaleString("en-IN", { timeZone: "Asia/Kolkata", day: "2-digit" });
+    const month = date.toLocaleString("en-US", { timeZone: "Asia/Kolkata", month: "short" });
+    const time  = date.toLocaleString("en-US", { timeZone: "Asia/Kolkata", hour: "2-digit", minute: "2-digit", hour12: true });
+    return `${day} ${month}, ${time}`;
+  } catch {
+    return iso;
+  }
+}
+
 function formatMembersJson(json: string): string {
   try {
     const members = JSON.parse(json) as Array<{
@@ -56,7 +68,7 @@ function formatMembersJson(json: string): string {
       ped: string;
     }>;
     return members
-      .map((m) => `${esc(m.label)}: ${esc(m.ageDob)} &nbsp;·&nbsp; PED: ${m.ped === "yes" ? "Yes" : "No"}`)
+      .map((m) => `${esc(m.label)}: ${esc(m.ageDob)} &nbsp;&middot;&nbsp; PED: ${m.ped === "yes" ? "Yes" : "No"}`)
       .join("<br>");
   } catch {
     return esc(json);
@@ -65,130 +77,230 @@ function formatMembersJson(json: string): string {
 
 function resolveValue(label: string, raw: string): string {
   if (label === "Members JSON") return formatMembersJson(raw);
-  if (label === "Policy Upload" && raw.startsWith("Attached (")) {
-    const filename = esc(raw.slice("Attached (".length, -1));
-    return `<span style="display:inline-flex;align-items:center;gap:6px;background:#DCFCE7;color:#166534;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700">&#128206; Attached &nbsp;&mdash;&nbsp; ${filename}</span>`;
-  }
-  if (label === "Policy Upload" && raw === "Not uploaded") {
-    return `<span style="color:#8892A4;font-size:13px">Not uploaded</span>`;
-  }
   return esc(raw) || "—";
-}
-
-function buildRows(fields: Array<[label: string, value: string]>): string {
-  return fields
-    .filter(([, v]) => v !== "")
-    .map(([label, value], i) => {
-      const bg = i % 2 === 0 ? "#ffffff" : "#F4F7FF";
-      const display = resolveValue(label, value);
-      return `
-      <tr style="background:${bg}">
-        <td style="padding:11px 20px;font-size:13px;font-weight:600;color:#5A6080;width:38%;border-bottom:1px solid #EEF1F8;white-space:nowrap;vertical-align:top">${esc(label)}</td>
-        <td style="padding:11px 20px;font-size:13px;color:#0A0F1E;border-bottom:1px solid #EEF1F8;line-height:1.6">${display}</td>
-      </tr>`;
-    })
-    .join("");
 }
 
 // ─── Main builder ─────────────────────────────────────────────────────────────
 
 export function buildEnquiryEmailHtml(data: EnquiryRow, logoDataUri = ""): string {
-  const fields: Array<[string, string]> = [
-    ["Insurance Type",  formatInsuranceType(data.insuranceType)],
-    ...(data.subcategory ? [["Category", data.subcategory] as [string, string]] : []),
-    ["Name",    data.name],
-    ["Mobile",  data.mobile],
-    ["Email",   data.email],
-    ["Pincode", data.pincode],
-    ...Object.entries(data.extraFields) as Array<[string, string]>,
-    ["Submitted At", formatTimestamp(data.timestamp)],
-  ];
+  const displayRef          = esc(data.refId);
+  const displayType         = esc(data.insuranceType);
+  const displaySubcategory  = esc(data.subcategory ?? "N/A");
+  const displayName         = esc(data.name);
+  const displayMobile       = esc(data.mobile);
+  const displayEmail        = esc(data.email);
+  const displayPincode      = esc(data.pincode);
+  const displaySubmittedAt  = esc(formatTimestamp(data.timestamp));
+  const displayReceivedTime = esc(formatReceivedTime(data.timestamp));
 
-  const rows = buildRows(fields);
+  // ── Policy file ─────────────────────────────────────────────────────────────
+  const policyUploadRaw = data.extraFields["Policy Upload"] ?? "";
+  const policyFileName  = policyUploadRaw.startsWith("Attached (")
+    ? policyUploadRaw.slice("Attached (".length, -1)
+    : null;
+
+  const sharePointBase = "https://covertoninsurance.sharepoint.com/sites/CovertonIB/Shared%20Documents/PolicyUploads";
+  const policyDocUrl   = policyFileName
+    ? `${sharePointBase}/${data.refId}/${encodeURIComponent(policyFileName)}`
+    : null;
+
+  // ── Extra fields rows (Policy Upload handled as separate row) ───────────────
+  const extraEntries = Object.entries(data.extraFields).filter(([k]) => k !== "Policy Upload");
+  const extraFieldsRows = extraEntries
+    .map(([label, value], i) => {
+      const bg      = i % 2 === 0 ? "#f8faff" : "#ffffff";
+      const display = resolveValue(label, value);
+      return `
+          <tr style="background:${bg}">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;font-weight:600;color:#3D4460;width:140px">${esc(label)}</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;color:#0f1f3d">${display}</td>
+          </tr>`;
+    })
+    .join("");
+
+  // ── Policy document row ─────────────────────────────────────────────────────
+  const policyBg          = extraEntries.length % 2 === 0 ? "#f8faff" : "#ffffff";
+  const policyDocumentRow = policyFileName && policyDocUrl
+    ? `
+          <tr style="background:${policyBg}">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;font-weight:600;color:#3D4460;width:140px">Policy Document</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px">
+              <span style="display:inline-flex;align-items:center;gap:5px;background:#EAF3DE;color:#3B6D11;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;border:1px solid #c0dd97">&#128206; ${esc(policyFileName)}</span>
+              <a href="${policyDocUrl}" style="display:inline-flex;align-items:center;gap:4px;color:#1247D6;font-size:11px;font-weight:600;text-decoration:none;border:1px solid #d4e0ff;background:#EEF3FF;padding:4px 10px;border-radius:20px;margin-left:6px">&#8599; View in SharePoint</a>
+            </td>
+          </tr>`
+    : "";
+
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>New Enquiry — Coverton Insurance</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Enquiry — Coverton</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, Helvetica, sans-serif; background: #f0f2f7; padding: 24px 16px; }
+  .wrap { max-width: 580px; margin: 0 auto; background: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e5e7eb; }
+  @media only screen and (max-width: 480px) {
+    .body-cell { padding: 16px 20px !important; }
+    .header-cell { padding: 16px 20px !important; }
+    .alert-cell { padding: 10px 20px !important; }
+    .footer-cell { padding: 14px 20px !important; }
+  }
+</style>
 </head>
-<body style="margin:0;padding:32px 12px;background:#EEF3FF;font-family:Arial,Helvetica,sans-serif">
+<body>
+<div class="wrap">
 
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-    <tr><td align="center">
-
-      <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(18,71,214,0.13)">
-
-        <!-- Header: logo -->
-        <tr>
-          <td style="background:#ffffff;padding:28px 40px 20px;text-align:center;border-top:6px solid #1247D6">
-            ${logoDataUri
-              ? `<img src="${logoDataUri}" alt="Coverton Insurance" style="height:56px;width:auto;display:block;margin:0 auto" />`
-              : `<p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:900;color:#1247D6;letter-spacing:2px">COVERTON</p>
-            <p style="margin:3px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:9px;font-weight:600;color:#8892A4;letter-spacing:3px;text-transform:uppercase">Insurance Broking Pvt Ltd</p>`
-            }
-          </td>
-        </tr>
-
-        <!-- Blue badge row -->
-        <tr>
-          <td style="background:#1247D6;padding:14px 40px 20px;text-align:center">
-            <table cellpadding="0" cellspacing="0" border="0" align="center">
-              <tr>
-                <td style="background:rgba(255,255,255,0.15);border-radius:20px;padding:5px 18px">
-                  <span style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.92)">NEW ENQUIRY RECEIVED</span>
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-
-        <!-- Gold accent stripe -->
-        <tr>
-          <td style="background:#F5B800;height:5px;font-size:0;line-height:0">&nbsp;</td>
-        </tr>
-
-        <!-- Ref number bar -->
-        <tr>
-          <td style="background:#0A0F1E;padding:16px 40px;text-align:center">
-            <p style="margin:0;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#8892A4;font-weight:600;display:inline">REF &nbsp;</p>
-            <p style="margin:0;font-size:20px;font-weight:800;color:#F5B800;letter-spacing:2px;display:inline">${esc(data.refId)}</p>
-            <p style="margin:0 0 0 12px;font-size:12px;color:#8892A4;display:inline">&nbsp;·&nbsp; ${esc(formatInsuranceType(data.insuranceType))}</p>
-          </td>
-        </tr>
-
-        <!-- Section label -->
-        <tr>
-          <td style="background:#F8FAFF;padding:16px 40px 8px;border-bottom:1px solid #E8EBF5">
-            <p style="margin:0;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8892A4">Enquiry Details</p>
-          </td>
-        </tr>
-
-        <!-- Field table -->
-        <tr>
-          <td style="background:#ffffff;padding:0">
-            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-              ${rows}
-            </table>
-          </td>
-        </tr>
-
-        <!-- Footer -->
-        <tr>
-          <td style="background:#F4F7FF;border-top:2px solid #E8EBF5;padding:20px 40px;text-align:center">
-            <p style="margin:0;font-size:12px;color:#8892A4;line-height:1.6">
-              <strong style="color:#5A6080">Coverton Insurance Broking Pvt Ltd</strong><br>
-              Reply to this email or contact <a href="mailto:wecare@coverton.in" style="color:#1247D6;text-decoration:none">wecare@coverton.in</a>
-            </p>
-          </td>
-        </tr>
-
-      </table>
-
-    </td></tr>
+  <!-- HEADER -->
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#0f1f3d">
+    <tr>
+      <td class="header-cell" style="padding:20px 32px">
+        <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+          <tr>
+            <td>
+              <table cellpadding="0" cellspacing="0" role="presentation">
+                <tr>
+                  <td style="vertical-align:middle;padding-right:10px">
+                    <div style="width:36px;height:36px;background:#1247D6;border-radius:8px;display:inline-block;text-align:center;line-height:36px;font-size:18px;color:#F5B800;font-weight:700">C</div>
+                  </td>
+                  <td style="vertical-align:middle">
+                    <div style="color:#ffffff;font-size:17px;font-weight:700;letter-spacing:0.5px;font-family:Arial,sans-serif;line-height:1.2">COVERTON</div>
+                    <div style="color:rgba(255,255,255,0.45);font-size:9px;letter-spacing:1px;text-transform:uppercase;font-family:Arial,sans-serif">Insurance Broking Pvt Ltd</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td align="right" style="vertical-align:middle">
+              <span style="background:rgba(245,184,0,0.15);border:1px solid rgba(245,184,0,0.3);color:#F5B800;font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;letter-spacing:0.5px;white-space:nowrap">NEW ENQUIRY</span>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
   </table>
 
+  <!-- ALERT BAR -->
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#1247D6">
+    <tr>
+      <td class="alert-cell" style="padding:10px 32px">
+        <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+          <tr>
+            <td style="color:#ffffff;font-size:12px;font-weight:600">&#9889; New enquiry received &mdash; action required</td>
+            <td align="right" style="color:#F5B800;font-size:13px;font-weight:700;font-family:monospace;letter-spacing:1px;white-space:nowrap">${displayRef}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <!-- BODY -->
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+    <tr>
+      <td class="body-cell" style="padding:20px 32px 24px">
+
+        <!-- META ROW -->
+        <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#f8faff;border:1px solid #e5e9f5;border-radius:8px;margin-bottom:20px">
+          <tr>
+            <td style="padding:10px 16px;border-right:1px solid #e5e9f5;font-size:11px;width:33%">
+              <span style="color:#8892A4;display:block;margin-bottom:2px">Type</span>
+              <span style="color:#0f1f3d;font-weight:600;font-size:12px">${displayType}</span>
+            </td>
+            <td style="padding:10px 16px;border-right:1px solid #e5e9f5;font-size:11px;width:33%">
+              <span style="color:#8892A4;display:block;margin-bottom:2px">Category</span>
+              <span style="color:#0f1f3d;font-weight:600;font-size:12px">${displaySubcategory}</span>
+            </td>
+            <td style="padding:10px 16px;font-size:11px;width:33%">
+              <span style="color:#8892A4;display:block;margin-bottom:2px">Received</span>
+              <span style="color:#0f1f3d;font-weight:600;font-size:12px">${displayReceivedTime}</span>
+            </td>
+          </tr>
+        </table>
+
+        <!-- SECTION LABEL -->
+        <div style="font-size:10px;font-weight:700;color:#8892A4;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px">Enquiry details</div>
+
+        <!-- DETAILS TABLE -->
+        <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;margin-bottom:20px">
+
+          <tr style="background:#f8faff">
+            <td style="padding:10px 14px;border-top:1px solid #e5e9f5;border-bottom:1px solid #e5e9f5;font-size:12px;font-weight:600;color:#3D4460;width:140px">Full Name</td>
+            <td style="padding:10px 14px;border-top:1px solid #e5e9f5;border-bottom:1px solid #e5e9f5;font-size:12px;color:#0f1f3d">${displayName}</td>
+          </tr>
+
+          <tr style="background:#ffffff">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;font-weight:600;color:#3D4460">Mobile</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px">
+              <a href="tel:${displayMobile}" style="color:#1247D6;text-decoration:none">${displayMobile}</a>
+            </td>
+          </tr>
+
+          <tr style="background:#f8faff">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;font-weight:600;color:#3D4460">Email</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px">
+              <a href="mailto:${displayEmail}" style="color:#1247D6;text-decoration:none">${displayEmail}</a>
+            </td>
+          </tr>
+
+          <tr style="background:#ffffff">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;font-weight:600;color:#3D4460">Pincode</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;color:#0f1f3d">${displayPincode}</td>
+          </tr>
+
+          <tr style="background:#f8faff">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;font-weight:600;color:#3D4460">Insurance Type</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;color:#0f1f3d">${displayType}</td>
+          </tr>
+
+          <tr style="background:#ffffff">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;font-weight:600;color:#3D4460">Category</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;color:#0f1f3d">${displaySubcategory}</td>
+          </tr>
+
+          ${extraFieldsRows}
+
+          ${policyDocumentRow}
+
+          <tr style="background:#f8faff">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;font-weight:600;color:#3D4460">Submitted At</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;color:#0f1f3d">${displaySubmittedAt}</td>
+          </tr>
+
+          <tr style="background:#ffffff">
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;font-weight:600;color:#3D4460">Reference ID</td>
+            <td style="padding:10px 14px;border-bottom:1px solid #e5e9f5;font-size:12px;font-family:monospace;font-weight:700;color:#1247D6">${displayRef}</td>
+          </tr>
+
+        </table>
+
+        <!-- QUICK ACTIONS -->
+        <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#f8faff;border:1px solid #e5e9f5;border-radius:8px">
+          <tr>
+            <td style="padding:14px 16px">
+              <div style="font-size:11px;font-weight:700;color:#0f1f3d;margin-bottom:10px">Quick actions</div>
+              <a href="tel:${displayMobile}" style="display:inline-block;padding:7px 16px;border-radius:6px;font-size:11.5px;font-weight:600;text-decoration:none;background:#1247D6;color:#ffffff;margin-right:6px">&#128222; Call customer</a>
+              <a href="https://wa.me/91${displayMobile}" style="display:inline-block;padding:7px 16px;border-radius:6px;font-size:11.5px;font-weight:600;text-decoration:none;background:#25D366;color:#ffffff;margin-right:6px">&#128172; WhatsApp</a>
+              <a href="mailto:${displayEmail}" style="display:inline-block;padding:7px 16px;border-radius:6px;font-size:11.5px;font-weight:600;text-decoration:none;background:#ffffff;color:#0f1f3d;border:1px solid #e5e9f5">&#9993; Reply by email</a>
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+  <!-- FOOTER -->
+  <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background:#f8faff;border-top:1px solid #e5e9f5">
+    <tr>
+      <td class="footer-cell" style="padding:14px 32px;text-align:center">
+        <div style="font-size:11px;font-weight:700;color:#0f1f3d">Coverton Insurance Broking Pvt Ltd</div>
+        <div style="font-size:10px;color:#8892A4;margin-top:3px">Automated notification &middot; <a href="mailto:wecare@coverton.in" style="color:#1247D6;text-decoration:none">wecare@coverton.in</a></div>
+      </td>
+    </tr>
+  </table>
+
+</div>
 </body>
 </html>`;
 }

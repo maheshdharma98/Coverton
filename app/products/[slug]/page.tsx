@@ -48,7 +48,7 @@ const PRODUCT_CONFIG: Record<string, ProductConfig> = {
     icon: 'ti-heart',
     tagText: 'Health',
     description: 'Comprehensive health coverage for individuals, families, and corporate groups. Access to 5,000+ cashless network hospitals across India.',
-    subcategories: ['Individual', 'Floater', 'Group Health'],
+    subcategories: ['Individual', 'Family', 'Group Health'],
     benefits: ['Hospitalisation expenses', 'Pre & post hospitalisation', 'Day care treatments', 'Ambulance charges', '5,000+ cashless hospitals', 'Annual health check-up'],
     formType: 'health-individual',
   },
@@ -61,7 +61,7 @@ const PRODUCT_CONFIG: Record<string, ProductConfig> = {
     icon: 'ti-heart',
     tagText: 'Health',
     description: 'Comprehensive health coverage for individuals, families, and corporate groups. Access to 5,000+ cashless network hospitals across India.',
-    subcategories: ['Individual', 'Floater', 'Group Health'],
+    subcategories: ['Individual', 'Family', 'Group Health'],
     benefits: ['Hospitalisation expenses', 'Pre & post hospitalisation', 'Day care treatments', 'Ambulance charges', '5,000+ cashless hospitals', 'Annual health check-up'],
     formType: 'health-floater',
   },
@@ -74,7 +74,7 @@ const PRODUCT_CONFIG: Record<string, ProductConfig> = {
     icon: 'ti-heart',
     tagText: 'Health',
     description: 'Comprehensive health coverage for individuals, families, and corporate groups. Access to 5,000+ cashless network hospitals across India.',
-    subcategories: ['Individual', 'Floater', 'Group Health'],
+    subcategories: ['Individual', 'Family', 'Group Health'],
     benefits: ['Hospitalisation expenses', 'Pre & post hospitalisation', 'Day care treatments', 'Ambulance charges', '5,000+ cashless hospitals', 'Annual health check-up'],
     formType: 'health-group',
   },
@@ -597,16 +597,16 @@ function DobPicker({
 // ─── Quote Form ───────────────────────────────────────────────────────────────
 
 const STANDARD_SLUG_TO_API_TYPE: Record<string, string> = {
-  life: "Life",
-  agriculture: "Agriculture",
-  fire: "Fire",
-  credit: "Credit",
-  engineering: "Engineering",
-  liability: "Liability",
-  marine: "Marine",
-  miscellaneous: "Miscellaneous",
-  "personal-accident": "Personal Accident",
-  surety: "Surety",
+  life: "life",
+  agriculture: "agriculture",
+  fire: "fire",
+  credit: "credit",
+  engineering: "engineering",
+  liability: "liability",
+  marine: "marine",
+  miscellaneous: "miscellaneous",
+  "personal-accident": "personal-accident",
+  surety: "surety",
 };
 
 function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
@@ -805,12 +805,12 @@ function QuoteForm({ config, slug }: { config: ProductConfig; slug: string }) {
         <div style={{ display: 'flex', background: '#f1f3f6', borderRadius: 10, padding: 4, marginBottom: 16 }}>
           {[
             { label: 'Individual', href: '/products/health-individual' },
-            { label: 'Floater', href: '/products/health-floater' },
+            { label: 'Family', href: '/products/health-floater' },
             { label: 'Group', href: '/products/health-group' },
           ].map((tab) => {
             const isActive =
               (tab.label === 'Individual' && slug === 'health-individual') ||
-              (tab.label === 'Floater' && slug === 'health-floater') ||
+              (tab.label === 'Family' && slug === 'health-floater') ||
               (tab.label === 'Group' && slug === 'health-group');
             return (
               <button

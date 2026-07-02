@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { healthIndividualSchema, type HealthIndividualFormValues } from "@/lib/validations/health-individual";
 import { FormInput } from "@/components/ui/FormInput";
@@ -31,8 +31,11 @@ export default function HealthIndividualForm() {
       pincode: "",
       dob: "",
       preExistingDisease: undefined,
+      diseaseType: "",
     },
   });
+
+  const ped = useWatch({ control, name: "preExistingDisease" });
 
   const handleReset = () => {
     reset();
@@ -65,7 +68,7 @@ export default function HealthIndividualForm() {
   };
 
   if (submitted) {
-    return <FormSuccess refId={refId} insuranceType="Health Insurance" onReset={handleReset} />;
+    return <FormSuccess refId={refId} insuranceType="Health Individual Insurance" onReset={handleReset} />;
   }
 
   return (
@@ -135,6 +138,17 @@ export default function HealthIndividualForm() {
           />
         )}
       />
+
+      {ped === "yes" && (
+        <FormInput
+          label="Type of Pre-existing Disease"
+          required
+          placeholder="e.g. Diabetes, Hypertension, Asthma"
+          maxLength={200}
+          error={errors.diseaseType?.message}
+          {...register("diseaseType")}
+        />
+      )}
 
       {submitError && (
         <FormError message={submitError} onRetry={handleSubmit(onSubmit)} />

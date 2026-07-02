@@ -53,12 +53,13 @@ function customerEmailEnabled(): boolean {
 }
 
 function getLogoUrl(): string {
-  const siteUrl = (
+  const baseUrl = (
+    process.env.NEXT_PUBLIC_SITE_URL ||
     process.env.SITE_URL ||
     (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "") ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "")
   ).replace(/\/$/, "");
-  const url = siteUrl ? `${siteUrl}/coverton-logo.png` : "";
+  const url = baseUrl ? `${baseUrl}/coverton-logo.png` : "";
   console.log(`[mailer] logo URL: ${url || "(none — text fallback)"}`);
   return url;
 }
@@ -71,7 +72,7 @@ export async function sendEnquiryEmail(
 ): Promise<void> {
   const transporter = getTransporter();
   const from = `"Coverton Insurance" <${process.env.SMTP_USERNAME}>`;
-  const subject = `New ${formatInsuranceType(data.insuranceType)} Enquiry — ${data.name}`;
+  const subject = `[${data.refId}] New ${data.insuranceType} Enquiry — ${data.name}`;
 
   // Team email: attach policy file if uploaded
   const teamAttachments: nodemailer.SendMailOptions["attachments"] = policyAttachment

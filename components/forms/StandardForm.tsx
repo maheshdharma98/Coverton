@@ -12,16 +12,16 @@ import { HoneypotField } from "@/components/ui/HoneypotField";
 
 // Lowercase-hyphen slug → API formType mapping
 const SLUG_TO_FORM_TYPE: Record<string, string> = {
-  life: "Life",
-  agriculture: "Agriculture",
-  fire: "Fire",
-  credit: "Credit",
-  engineering: "Engineering",
-  liability: "Liability",
-  marine: "Marine",
-  miscellaneous: "Miscellaneous",
-  "personal-accident": "Personal Accident",
-  surety: "Surety",
+  life: "life",
+  agriculture: "agriculture",
+  fire: "fire",
+  credit: "credit",
+  engineering: "engineering",
+  liability: "liability",
+  marine: "marine",
+  miscellaneous: "miscellaneous",
+  "personal-accident": "personal-accident",
+  surety: "surety",
 };
 
 interface StandardFormProps {

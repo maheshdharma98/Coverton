@@ -236,18 +236,12 @@ export default function ClaimsPage() {
             background: 'transparent',
             position: 'relative',
             overflow: 'hidden',
-            paddingTop: 80,
+            paddingTop: 120,
             paddingBottom: 24,
           }}
           className="px-5 lg:px-20"
         >
           <div style={{ position: 'relative', zIndex: 1, maxWidth: 1200, margin: '0 auto' }}>
-
-            {/* Tag */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#EEF3FF', borderRadius: 20, padding: '4px 12px', marginBottom: 16 }}>
-              <i className="ti ti-file-check" style={{ fontSize: 12, color: '#1247D6' }} />
-              <span style={{ fontSize: 10, fontWeight: 700, color: '#1247D6', letterSpacing: '0.06em' }}>CLAIMS SUPPORT</span>
-            </div>
 
             {/* Headline */}
             <h1 style={{ fontSize: 'clamp(30px, 4vw, 42px)', fontWeight: 800, color: '#0A0F1E', letterSpacing: '-1.2px', lineHeight: 1.1, margin: '0 0 14px' }}>

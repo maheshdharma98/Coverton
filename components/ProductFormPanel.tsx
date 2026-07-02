@@ -20,7 +20,7 @@ interface Props {
 
 const HEALTH_TABS: { id: HealthTab; label: string; shortLabel: string }[] = [
   { id: "individual", label: "Individual",       shortLabel: "Individual" },
-  { id: "floater",    label: "Family Floater",   shortLabel: "Floater" },
+  { id: "floater",    label: "Family",   shortLabel: "Family" },
   { id: "group",      label: "Group / Corporate", shortLabel: "Group" },
 ];
 

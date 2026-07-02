@@ -61,6 +61,20 @@ function generateRefId(): string {
 
 // ─── Schema selector ─────────────────────────────────────────────────────────
 
+// Maps lowercase-kebab formTypes to STANDARD_CATEGORIES keys (Title-case)
+const STANDARD_TYPE_KEY: Record<string, StandardInsuranceType> = {
+  "life":              "Life",
+  "agriculture":       "Agriculture",
+  "fire":              "Fire",
+  "credit":            "Credit",
+  "engineering":       "Engineering",
+  "liability":         "Liability",
+  "marine":            "Marine",
+  "miscellaneous":     "Miscellaneous",
+  "personal-accident": "Personal Accident",
+  "surety":            "Surety",
+};
+
 function getSchema(formType: string): z.ZodTypeAny | null {
   switch (formType) {
     case "motor":             return motorSchema;
@@ -69,7 +83,9 @@ function getSchema(formType: string): z.ZodTypeAny | null {
     case "health-group":      return healthGroupSchema;
     case "travel":            return travelSchema;
     default: {
-      const cats = STANDARD_CATEGORIES[formType as StandardInsuranceType];
+      // Accept both new lowercase ("life") and legacy Title-case ("Life")
+      const standardKey = STANDARD_TYPE_KEY[formType] ?? (formType as StandardInsuranceType);
+      const cats = STANDARD_CATEGORIES[standardKey];
       return cats ? createStandardSchema([...cats]) : null;
     }
   }
@@ -108,6 +124,38 @@ function runIndianValidators(formType: string, data: any): FieldErrors {
   return { errors };
 }
 
+// ─── formType → human-readable insurance type label ──────────────────────────
+
+const INSURANCE_TYPE_LABELS: Record<string, string> = {
+  // lowercase kebab-case (canonical)
+  "motor":             "Motor Insurance",
+  "health-individual": "Health Individual",
+  "health-floater":    "Health Floater",
+  "health-group":      "Group Health",
+  "travel":            "Travel Insurance",
+  "life":              "Life Insurance",
+  "agriculture":       "Agriculture Insurance",
+  "fire":              "Fire Insurance",
+  "credit":            "Credit Insurance",
+  "engineering":       "Engineering Insurance",
+  "liability":         "Liability Insurance",
+  "marine":            "Marine Insurance",
+  "miscellaneous":     "Miscellaneous Insurance",
+  "personal-accident": "Personal Accident Insurance",
+  "surety":            "Surety Insurance",
+  // legacy Title-case — kept during transition
+  "Life":              "Life Insurance",
+  "Agriculture":       "Agriculture Insurance",
+  "Fire":              "Fire Insurance",
+  "Credit":            "Credit Insurance",
+  "Engineering":       "Engineering Insurance",
+  "Liability":         "Liability Insurance",
+  "Marine":            "Marine Insurance",
+  "Miscellaneous":     "Miscellaneous Insurance",
+  "Personal Accident": "Personal Accident Insurance",
+  "Surety":            "Surety Insurance",
+};
+
 // ─── Payload → EnquiryRow ────────────────────────────────────────────────────
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -126,7 +174,7 @@ function toEnquiryRow(formType: string, payload: any, refId: string, motorPolicy
       extraFields["Vehicle Number"] = payload.vehicleNumber ?? "";
       extraFields["Policy Upload"] = motorPolicyFileName
         ? `Attached (${motorPolicyFileName})`
-        : "No";
+        : "Not uploaded";
       break;
 
     case "health-individual":
@@ -162,7 +210,7 @@ function toEnquiryRow(formType: string, payload: any, refId: string, motorPolicy
   return {
     refId,
     timestamp: formatTimestamp(),
-    insuranceType: formType,
+    insuranceType: INSURANCE_TYPE_LABELS[formType] ?? formType,
     subcategory,
     name,
     mobile:  payload.mobile  ?? "",

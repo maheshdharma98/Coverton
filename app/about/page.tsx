@@ -32,7 +32,7 @@ export default function AboutPage() {
         <BubbleBackground>
 
           {/* ── HERO ──────────────────────────────────────────────────────── */}
-          <section style={{ background: 'transparent', paddingTop: 80, paddingBottom: 32 }} className="px-5 lg:px-20">
+          <section style={{ background: 'transparent', paddingTop: 120, paddingBottom: 32 }} className="px-5 lg:px-20">
             <div style={{ maxWidth: 1200, margin: '0 auto' }}>
 
               {/* Badge + headline in one column */}
@@ -41,46 +41,14 @@ export default function AboutPage() {
                 <span style={{ fontSize: 10, fontWeight: 700, color: '#1247D6', letterSpacing: '0.06em' }}>IRDAI LICENSED BROKER · CHENNAI</span>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-                <div>
-                  <h1 style={{ fontSize: 'clamp(28px, 3.8vw, 44px)', fontWeight: 900, color: '#0A0F1E', letterSpacing: '-1.5px', lineHeight: 1.08, margin: '0 0 16px' }}>
-                    Protecting Today.<br />
-                    <span style={{ color: '#F5B800' }}>Securing Tomorrow.</span>
-                  </h1>
-                  <p style={{ fontSize: 14, color: '#6B7280', lineHeight: 1.7, maxWidth: 480, margin: '0 0 24px' }}>
-                    Coverton Insurance Broking — making insurance simple, transparent, and customer-centric through ethical practices and technical expertise.
-                  </p>
-                  {/* Compact stat strip */}
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px 28px', paddingTop: 18, borderTop: '1px solid #E8EBF5' }}>
-                    {[
-                      { num: 'IRDAI', label: 'Licensed' },
-                      { num: '30+',   label: 'Insurers' },
-                      { num: '100%',  label: 'Client-first' },
-                      { num: 'Chennai', label: 'Based' },
-                    ].map(({ num, label }) => (
-                      <div key={label} style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                        <span style={{ fontSize: 17, fontWeight: 800, color: '#0A0F1E' }}>{num}</span>
-                        <span style={{ fontSize: 11, color: '#64748B' }}>{label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Mission + Vision — editorial side-by-side */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  <div style={{ background: 'white', border: '1px solid #E8EBF5', borderRadius: 16, padding: '20px 22px' }}>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: '#1247D6', letterSpacing: '1.5px', textTransform: 'uppercase', margin: '0 0 8px' }}>Mission</p>
-                    <p style={{ fontSize: 13.5, color: '#374151', lineHeight: 1.7, margin: 0 }}>
-                      To equip individuals and businesses with reliable insurance counsel and risk management solutions that deliver financial security through transparent disclosure and responsive service.
-                    </p>
-                  </div>
-                  <div style={{ background: '#F5B800', borderRadius: 16, padding: '20px 22px' }}>
-                    <p style={{ fontSize: 10, fontWeight: 700, color: 'rgba(10,15,30,0.55)', letterSpacing: '1.5px', textTransform: 'uppercase', margin: '0 0 8px' }}>Vision</p>
-                    <p style={{ fontSize: 13.5, color: '#0A0F1E', lineHeight: 1.7, margin: 0 }}>
-                      To lead with trust in every policy we place — making insurance accessible, understandable, and customer-centric through innovation and ethical practices.
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <h1 style={{ fontSize: 'clamp(28px, 3.8vw, 44px)', fontWeight: 900, color: '#0A0F1E', letterSpacing: '-1.5px', lineHeight: 1.08, margin: '0 0 16px' }}>
+                  Protecting Today.<br />
+                  <span style={{ color: '#F5B800' }}>Securing Tomorrow.</span>
+                </h1>
+                <p style={{ fontSize: 14, color: '#6B7280', lineHeight: 1.7, maxWidth: 580, margin: 0 }}>
+                  Coverton Insurance Broking — making insurance simple, transparent, and customer-centric through ethical practices and technical expertise.
+                </p>
               </div>
             </div>
           </section>
